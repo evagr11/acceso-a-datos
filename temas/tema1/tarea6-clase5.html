@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 6: Lectura de Ficheros con BufferedReader - Acceso a Datos</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/vscode-theme.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar dinámico -->
+        <div id="sidebar-container"></div>
+
+        <!-- Contenido principal -->
+        <main class="content-container">
+            <h1>Tarea 6: Lectura de Ficheros de Texto con BufferedReader</h1>
+
+            <!-- SECCIÓN 1: Explicación detallada -->
+            <section class="tarea-section">
+                <h2>Explicación del Ejercicio</h2>
+                <p>
+                    En esta tarea se aborda la lectura eficiente de archivos de texto en Java utilizando las clases del paquete <code>java.io</code>[cite: 10]. El programa lee su propio código fuente (<code>Clase5.java</code>) línea por línea y lo imprime por consola[cite: 10].
+                </p>
+
+                <h3>Conceptos y métodos clave:</h3>
+                <ul>
+                    <li>
+                        <strong>Validación previa del fichero (<code>exists()</code>):</strong> Se comprueba la existencia del archivo antes de intentar abrir el flujo de lectura para evitar excepciones innecesarias[cite: 10].
+                    </li>
+                    <li>
+                        <strong>Lectura de caracteres (<code>FileReader</code>):</strong> Flujo de entrada de caracteres que permite conectarse directamente con un archivo físico en el disco[cite: 10].
+                    </li>
+                    <li>
+                        <strong>Buffer de lectura (<code>BufferedReader</code>):</strong> Empaqueta el <code>FileReader</code> para proporcionar un almacenamiento en búfer eficiente y habilitar el método <code>readLine()</code>, el cual lee el contenido línea a línea hasta devolver <code>null</code> al alcanzar el final del archivo[cite: 10].
+                    </li>
+                    <li>
+                        <strong>Estructura <code>try-with-resources</code>:</strong> Se utiliza la declaración <code>try (...)</code> para asegurar el cierre automático e implícito del flujo de lectura al finalizar la ejecución o al ocurrir una excepción[cite: 10].
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SECCIÓN 2: Código e impresión en terminal -->
+            <section class="tarea-section">
+                <h2>Código Fuente y Salida</h2>
+
+                <!-- Bloque de código estilo VSCode -->
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">Clase5.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">package</span> ClaseFile;
+
+<span class="token keyword">import</span> java.io.BufferedReader;
+<span class="token keyword">import</span> java.io.File;
+<span class="token keyword">import</span> java.io.FileReader;
+<span class="token keyword">import</span> java.io.IOException;
+
+<span class="token keyword">public class</span> <span class="token class-name">Clase5</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) {
+
+        <span class="token comment">// Nombre del archivo fuente</span>
+        String nombreArchivo = <span class="string">"Clase5.java"</span>;
+
+        <span class="token comment">// Objeto File apuntando al archivo actual</span>
+        File archivo = <span class="token keyword">new</span> File(<span class="string">"./src/ClaseFile/"</span> + nombreArchivo);
+
+        <span class="token comment">// Comprobamos si existe</span>
+        <span class="token keyword">if</span> (!archivo.exists()) {
+            System.out.println(<span class="string">"El archivo no existe: "</span> + archivo.getAbsolutePath());
+            <span class="token keyword">return</span>;
+        }
+
+        System.out.println(<span class="string">"Mostrando el contenido de: "</span> + nombreArchivo + <span class="string">"\n"</span>);
+
+        <span class="token comment">// Leemos línea a línea</span>
+        <span class="token keyword">try</span> (BufferedReader br = <span class="token keyword">new</span> BufferedReader(<span class="token keyword">new</span> FileReader(archivo))) {
+
+            String linea;
+
+            <span class="token keyword">while</span> ((linea = br.readLine()) != <span class="token keyword">null</span>) {
+                System.out.println(linea);
+            }
+
+        } <span class="token keyword">catch</span> (IOException e) {
+            System.out.println(<span class="string">"Error al leer el archivo: "</span> + e.getMessage());
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Resultado por terminal -->
+                <h3>Resultado Mostrado por Terminal</h3>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola</div>
+Mostrando el contenido de: Clase5.java
+
+package ClaseFile;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Clase5 {
+
+    public static void main(String[] args) {
+
+        // Nombre del archivo fuente
+        String nombreArchivo = "Clase5.java";
+
+        // Objeto File apuntando al archivo actual
+        File archivo = new File("./src/ClaseFile/" + nombreArchivo);
+
+        // Comprobamos si existe
+        if (!archivo.exists()) {
+            System.out.println("El archivo no existe: " + archivo.getAbsolutePath());
+            return;
+        }
+
+        System.out.println("Mostrando el contenido de: " + nombreArchivo + "\n");
+
+        // Leemos línea a línea
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+
+            String linea;
+
+            while ((linea = br.readLine()) != null) {
+                System.out.println(linea);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+        }
+    }
+}
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales -->
+    <script src="/js/components.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

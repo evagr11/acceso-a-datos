@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 5: Creación, Manejo y Renombrado de Ficheros - Acceso a Datos</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/vscode-theme.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar dinámico -->
+        <div id="sidebar-container"></div>
+
+        <!-- Contenido principal -->
+        <main class="content-container">
+            <h1>Tarea 5: Creación, Manejo y Renombrado de Ficheros</h1>
+
+            <!-- SECCIÓN 1: Explicación detallada -->
+            <section class="tarea-section">
+                <h2>Explicación del Ejercicio</h2>
+                <p>
+                    En esta tarea se implementa un flujo completo de gestión de archivos y directorios mediante la clase <code>java.io.File</code> y colecciones dinámicas (<code>ArrayList</code>)[cite: 9]. El programa crea una carpeta de utilidades, genera dos ficheros de texto en su interior y posteriormente los renombra a extensión <code>.dat</code>[cite: 9].
+                </p>
+
+                <h3>Conceptos y métodos clave:</h3>
+                <ul>
+                    <li>
+                        <strong>Creación de directorios (<code>mkdir()</code>):</strong> Se comprueba mediante <code>exists()</code> si la carpeta <code>"util"</code> existe; si no es así, se crea con el método <code>mkdir()</code>[cite: 9].
+                    </li>
+                    <li>
+                        <strong>Uso de Colecciones (<code>ArrayList</code>):</strong> Se emplean listas de cadenas y objetos <code>File</code> para organizar de forma dinámica los nombres originales, sus rutas y los nombres a aplicar tras el renombrado[cite: 9].
+                    </li>
+                    <li>
+                        <strong>Generación de archivos (<code>createNewFile()</code>):</strong> Se instancian objetos <code>File</code> pasando el directorio contenedor (<code>File(carpeta, archivos)</code>) y se crean físicamente en el disco[cite: 9].
+                    </li>
+                    <li>
+                        <strong>Renombrado de ficheros (<code>renameTo()</code>):</strong> Se recorren las listas de archivos y nuevos nombres para ejecutar la conversión mediante el método <code>renameTo()</code>[cite: 9].
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SECCIÓN 2: Código e impresión en terminal -->
+            <section class="tarea-section">
+                <h2>Código Fuente y Salida</h2>
+
+                <!-- Bloque de código estilo VSCode -->
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">Clase4.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">package</span> ClaseFile;
+
+<span class="token keyword">import</span> java.io.*;
+<span class="token keyword">import</span> java.util.ArrayList;
+<span class="token keyword">import</span> java.util.Collection;
+
+<span class="token comment">/**
+ * @author Eva Gallardo Romero
+ * @date 21 de sep de 2026
+ * Crear en java una carpeta "util" en la carpeta actual.
+ * Crear en la carpeta "util" dos ficheros de texto:
+ * - text1.txt
+ * - text2.txt
+ * Finalmente renombrar ambos ficheros a:
+ * - util1.dat
+ * - util2.dat
+ */</span>
+<span class="token keyword">public class</span> <span class="token class-name">Clase4</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) <span class="token keyword">throws</span> IOException {
+
+        <span class="token comment">// objeto file de la carpeta util</span>
+        String nombreCarpeta = <span class="string">"util"</span>;
+        File carpeta = <span class="token keyword">new</span> File(<span class="string">"./"</span> + nombreCarpeta);
+
+        <span class="token keyword">if</span> (!carpeta.exists()) {
+            carpeta.mkdir();
+            System.out.println(<span class="string">"Se ha creado la carpeta "</span> + nombreCarpeta);
+        }
+
+        <span class="token comment">// si la carpeta existe</span>
+        <span class="token keyword">if</span> (carpeta.exists()) {
+
+            ArrayList&lt;String&gt; nombre = <span class="token keyword">new</span> ArrayList&lt;&gt;();
+            ArrayList&lt;File&gt; ficheros = <span class="token keyword">new</span> ArrayList&lt;&gt;();
+
+            <span class="token comment">// agregar nombres</span>
+            nombre.add(<span class="string">"text1.txt"</span>);
+            nombre.add(<span class="string">"text2.txt"</span>);
+
+            <span class="token comment">// Añadimos a la colección de ficheros</span>
+            <span class="token keyword">for</span> (String archivos : nombre) {
+
+                <span class="token comment">// Creamos objeto File</span>
+                File archivo = <span class="token keyword">new</span> File(carpeta, archivos);
+                ficheros.add(archivo);
+            }
+
+            <span class="token comment">// creamos los ficheros</span>
+            <span class="token keyword">for</span> (File arch : ficheros) {
+
+                <span class="token comment">// si no está creado el fichero</span>
+                <span class="token keyword">if</span> (arch.createNewFile()) {
+                    System.out.println(<span class="string">"creando: "</span> + arch.getName() + <span class="string">" En "</span> + arch.getAbsolutePath());
+                }
+            }
+
+            <span class="token comment">// Renombrar los archivos</span>
+            ArrayList&lt;String&gt; renombrar = <span class="token keyword">new</span> ArrayList&lt;&gt;();
+
+            <span class="token comment">// Añadimos los nuevos nombres</span>
+            renombrar.add(<span class="string">"util1.dat"</span>);
+            renombrar.add(<span class="string">"util2.dat"</span>);
+
+            <span class="token keyword">for</span> (<span class="token keyword">int</span> i = <span class="token number">0</span>; i &lt; renombrar.size(); i++) {
+
+                <span class="token comment">// Creamos la variable file con la posición i</span>
+                File archivo = ficheros.get(i);
+                File renombrado = <span class="token keyword">new</span> File(carpeta, renombrar.get(i));
+
+                <span class="token keyword">if</span> (archivo.renameTo(renombrado)) {
+                    System.out.println(<span class="string">"Renombrado "</span> + archivo.getName() + <span class="string">" a "</span> + renombrado.getName());
+                }
+            }
+
+        } <span class="token keyword">else</span> {
+            System.out.println(<span class="string">"Creara"</span>);
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Resultado por terminal -->
+                <h3>Resultado Mostrado por Terminal</h3>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola</div>
+Se ha creado la carpeta util
+creando: text1.txt En C:\PROYECTOS\AccesoDatos\util\text1.txt
+creando: text2.txt En C:\PROYECTOS\AccesoDatos\util\text2.txt
+Renombrado text1.txt a util1.dat
+Renombrado text2.txt a util2.dat
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales (Rutas absolutas) -->
+    <script src="/js/components.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

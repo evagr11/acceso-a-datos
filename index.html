@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso a Datos - 2º DAM</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <main class="content-container" style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
+        <!-- Cabecera principal -->
+        <header style="text-align: center; margin-bottom: 3rem;">
+            <h1 style="border: none;">Acceso a Datos — 2º DAM</h1>
+            <p style="font-size: 1.1rem; color: var(--text-muted, #666);">
+                Repositorio de apuntes, prácticas y tareas del módulo profesional (IES Donoso Cortés).
+            </p>
+        </header>
+
+        <!-- Sección de Temas -->
+        <section>
+            <h2>Temas del Curso</h2>
+            <div class="card-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+                
+                <!-- Tema 1: Manejo de Ficheros -->
+                <div class="card" style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                    <h3>Tema 1: Manejo de Ficheros</h3>
+                    <p style="margin: 0.8rem 0; color: #555;">
+                        Gestión del sistema de archivos local con Java mediante la clase <code>java.io.File</code>, tratamiento de metadatos, rutas absolutas/relativas e inspección de directorios.
+                    </p>
+                    <hr style="margin: 1rem 0; border: 0; border-top: 1px solid #eee;">
+                    <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">Contenidos del tema:</h4>
+                    <ul style="padding-left: 1.2rem; margin-bottom: 1.2rem; font-size: 0.9rem;">
+                        <li><a href="temas/tema1/apuntes.html">Apuntes teóricos</a></li>
+                        <li><a href="temas/tema1/tarea1-clase0.html">Tarea 1: Listado del Directorio Actual (Clase0)</a></li>
+                        <li><a href="temas/tema1/tarea2-clase1.html">Tarea 2: Listado Parametrizado por Argumentos (Clase1)</a></li>
+                        <li><a href="temas/tema1/tarea3-clase2.html">Tarea 3: Metadatos de un Fichero (Clase2)</a></li>
+                        <li><a href="temas/tema1/tarea4-clase3.html">Tarea 4: Metadatos de un Directorio (Clase3)</a></li>
+                        <li><a href="temas/tema1/tarea5-clase4.html">Tarea 5: Creación y Renombrado de Ficheros (Clase4)</a></li>
+                        <li><a href="temas/tema1/tarea6-clase5.html">Tarea 6: Lectura de Ficheros (Clase5)</a></li>
+                        <li><a href="temas/tema1/tarea7-clase6.html">Tarea 7: Lectura Carácter a Carácter (Clase6)</a></li>
+                    </ul>
+                </div>
+
+                <!-- Tarjeta para temas futuros -->
+                <div class="card" style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem; background: #fafafa; opacity: 0.6;">
+                    <h3>Tema 2: Conectores y Bases de Datos (JDBC)</h3>
+                    <p style="margin: 0.8rem 0; color: #777;">
+                        Conexión y gestión de bases de datos relacionales desde Java utilizando la API JDBC.
+                    </p>
+                    <p style="font-size: 0.85rem; font-style: italic; color: #888;">Próximamente...</p>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales -->
+    <script src="js/components.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

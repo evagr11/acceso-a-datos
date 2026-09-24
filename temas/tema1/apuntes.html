@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apuntes Tema 1: Manejo de Ficheros - Acceso a Datos</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/vscode-theme.css">
+</head>
+<body>
+    <!-- Navbar inyectado dinámicamente -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar inyectado dinámicamente -->
+        <div id="sidebar-container"></div>
+
+        <!-- Contenido principal de los apuntes -->
+        <main class="content-container">
+            <h1>Tema 1: Manejo de Ficheros y Acceso a Datos</h1>
+
+            <section class="apuntes-section">
+                <h2>1. Conceptos Fundamentales</h2>
+                <p>Para entender la gestión de ficheros en Java, es clave distinguir entre los conceptos base de la asignatura[cite: 7]:</p>
+                <ul>
+                    <li><strong>Dato:</strong> Representación simbólica de un hecho, objeto o situación, sin significado por sí mismo hasta que es interpretado[cite: 7].</li>
+                    <li><strong>Información:</strong> Conjunto de datos procesados, organizados y estructurados con un contexto determinado, de modo que adquieren significado útil para la toma de decisiones[cite: 7].</li>
+                </ul>
+
+                <div class="terminal-window">
+                    <div class="terminal-header">Fórmulas Clave de la Asignatura</div>
+                    SOFTWARE = DATOS + INSTRUCCIONES + DOCUMENTACIÓN[cite: 7]
+                    INFORMACIÓN = DATOS + SIGNIFICADO[cite: 7]
+                </div>
+
+                <h2>2. Serialización y Deserialización</h2>
+                <ul>
+                    <li><strong>Serializar:</strong> Proceso de volcar o escribir en un fichero u origen de datos los objetos instanciados en memoria por el programa[cite: 7].</li>
+                    <li><strong>Deserializar:</strong> Proceso inverso, consistente en leer datos de un fichero para reconstruir los objetos correspondientes en memoria Java[cite: 7].</li>
+                </ul>
+
+                <h2>3. Clasificación de Ficheros</h2>
+                
+                <h3>3.1. Según el tipo de contenido[cite: 7]</h3>
+                <ul>
+                    <li>
+                        <strong>Ficheros de texto:</strong>
+                        <p>Contienen caracteres legibles directamente por el usuario en programas de texto plano (codificados en ASCII, UTF-8, etc.)[cite: 7].</p>
+                        <p><em>Ejemplos:</em> <code>.txt</code>, <code>.csv</code>, <code>.json</code>, <code>.xml</code>, <code>.html</code>[cite: 7].</p>
+                        <p><em>Clases en Java:</em> Se gestionan mediante clases como <code>FileReader</code> / <code>FileWriter</code> o <code>BufferedReader</code> / <code>BufferedWriter</code>[cite: 7].</p>
+                    </li>
+                    <li>
+                        <strong>Ficheros binarios:</strong>
+                        <p>Contienen datos en el formato interno del ordenador (secuencias de bytes) y no son legibles directamente como texto plano[cite: 7].</p>
+                        <p><em>Ejemplos:</em> <code>.dat</code>, <code>.bin</code>, imágenes (<code>.jpg</code>, <code>.png</code>), ejecutables o bytecode (<code>.exe</code>, <code>.class</code>)[cite: 7].</p>
+                        <p><em>Clases en Java:</em> Se leen y escriben mediante <code>FileInputStream</code> / <code>FileOutputStream</code> o <code>DataInputStream</code> / <code>DataOutputStream</code>[cite: 7].</p>
+                        <p><em>Ventaja:</em> Ocupan menos espacio en disco y se procesan sustancialmente más rápido[cite: 7].</p>
+                    </li>
+                </ul>
+
+                <h3>3.2. Según el modo de acceso[cite: 7]</h3>
+                <ul>
+                    <li>
+                        <strong>Acceso Secuencial:</strong>
+                        <p>Los datos se leen o escriben de forma continua, uno detrás de otro desde el inicio del archivo hasta el final, sin posibilidad de saltar arbitrariamente a una posición concreta[cite: 7].</p>
+                        <p><em>Ejemplos:</em> Ficheros de texto convencionales, flujos de red (streams)[cite: 7].</p>
+                    </li>
+                    <li>
+                        <strong>Acceso Aleatorio (o Directo):</strong>
+                        <p>Permite posicionar un puntero de lectura/escritura en cualquier byte especifico del fichero (mediante métodos como <code>seek()</code>) y operar en esa ubicación directamente[cite: 7].</p>
+                        <p><em>Ejemplo en Java:</em> La clase <code>RandomAccessFile</code>, muy utilizada en motores de bases de datos para indexar y localizar registros ágilmente[cite: 7].</p>
+                    </li>
+                </ul>
+
+                <h2>4. Metadatos (Metadata)</h2>
+                <p>
+                    Los metadatos son la <strong>información que describe las características de un fichero o de su contenido</strong>, pero que no forma parte del contenido propiamente dicho[cite: 7]. Suelen almacenarse en la cabecera del archivo[cite: 7].
+                </p>
+                <p>
+                    <em>Ejemplo:</em> En un correo electrónico, los metadatos incluyen la hora de envío, la dirección IP de origen y las direcciones del remitente/destinatario[cite: 7]. En el sistema de archivos de Java (clase <code>File</code>), corresponden a propiedades como el nombre, la ruta absoluta/relativa, los permisos de lectura/escritura o el tamaño en bytes[cite: 1, 2, 3, 4, 7].
+                </p>
+
+                <h2>5. Recuentos y Referencias Útiles</h2>
+                <p>
+                    Para la manipulación básica de rutas y archivos en el sistema operativo, Java proporciona la clase <code>java.io.File</code>, cuyo constructor reserva espacio de memoria y cuenta con tres firmas de sobrecarga comunes[cite: 7].
+                </p>
+                <p>
+                    🔗 <strong>Recurso de apoyo recomendado:</strong> 
+                    <a href="https://www.w3schools.com/java/java_files.asp" target="_blank" rel="noopener noreferrer">
+                        W3Schools - Java Files
+                    </a>[cite: 7]
+                </p>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés[cite: 6, 7]</p>
+    </footer>
+
+    <!-- Scripts compartidos -->
+    <script src="../../js/components.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

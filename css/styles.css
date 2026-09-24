@@ -1,0 +1,355 @@
+/* ==========================================================================
+   CSS GLOBAL Y CONFIGURACIÓN BASE - ACCESO A DATOS (2º DAM)
+   ========================================================================== */
+
+:root {
+  /* Paleta de colores principales */
+  --bg-color: #0f172a;           /* Fondo principal oscuro (Slate 900) */
+  --surface-color: #1e293b;      /* Tarjetas y superficies (Slate 800) */
+  --surface-hover: #334155;      /* Superficies interactivas (Slate 700) */
+  --border-color: #334155;       /* Bordes sutiles */
+  --accent-color: #38bdf8;       /* Azul brillante tipo VSCode / React (Sky 400) */
+  --accent-hover: #0284c7;       /* Azul interacción */
+  
+  /* Colores de texto */
+  --text-main: #f8fafc;          /* Texto principal blanco/gris (Slate 50) */
+  --text-muted: #94a3b8;         /* Texto secundario (Slate 400) */
+  --text-keyword: #c678dd;       /* Púrpura sintaxis */
+  
+  /* Layout y Dimensiones */
+  --navbar-height: 64px;
+  --max-width: 1200px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --transition-fast: 0.2s ease;
+}
+
+/* Reset y estilos base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+/* ==========================================================================
+   NAVBAR COMPONENTE (Inyectado por components.js)
+   ========================================================================== */
+
+.navbar {
+  background-color: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+  height: var(--navbar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.nav-brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-brand a {
+  color: var(--text-main);
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav-links a {
+  color: var(--text-muted);
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--text-main);
+  background-color: var(--surface-hover);
+}
+
+/* --- Menú Desplegable (Dropdown) --- */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown .dropbtn {
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--surface-color);
+  min-width: 270px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  z-index: 1000;
+  padding: 0.5rem 0;
+  margin-top: 0.25rem;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  color: var(--text-muted);
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  display: block;
+  border-radius: 0;
+}
+
+.dropdown-content a:hover {
+  background-color: var(--surface-hover);
+  color: var(--accent-color);
+}
+
+.dropdown-header {
+  padding: 0.4rem 1rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: var(--border-color);
+  margin: 0.4rem 0;
+}
+
+/* ==========================================================================
+   LAYOUT PRINCIPAL Y CONTENEDORES
+   ========================================================================== */
+
+.main-layout {
+  display: flex;
+  flex: 1;
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  gap: 2rem;
+}
+
+/* Sidebar para la navegación dentro del tema */
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  height: fit-content;
+  position: sticky;
+  top: calc(var(--navbar-height) + 1.5rem);
+}
+
+.sidebar h3 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar a {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  font-size: 0.925rem;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  background-color: var(--surface-hover);
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+/* Área de contenido de apuntes y tareas */
+.content-container {
+  flex: 1;
+  min-width: 0; /* Previene desbordamiento con bloques de código */
+}
+
+.content-container h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: var(--text-main);
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.content-container h2 {
+  font-size: 1.5rem;
+  margin: 1.5rem 0 1rem 0;
+  color: var(--accent-color);
+}
+
+.content-container p {
+  margin-bottom: 1rem;
+  color: #cbd5e1;
+}
+
+.content-container ul, 
+.content-container ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+  color: #cbd5e1;
+}
+
+.content-container li {
+  margin-bottom: 0.5rem;
+}
+
+/* ==========================================================================
+   TARJETAS Y COMPONENTES
+   ========================================================================== */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.card {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-color);
+}
+
+.card h3 {
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Footer */
+.footer {
+  background-color: var(--surface-color);
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-top: auto;
+}
+
+/* ==========================================================================
+   DISEÑO RESPONSIVO (MEDIA QUERIES)
+   ========================================================================== */
+
+/* Dispositivos medianos (tablets) */
+@media (max-width: 868px) {
+  .main-layout {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .sidebar {
+    width: 100%;
+    position: static;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Dispositivos pequeños (móviles) */
+@media (max-width: 576px) {
+  .navbar {
+    padding: 0 1rem;
+  }
+
+  .nav-brand {
+    font-size: 1rem;
+  }
+
+  .nav-links {
+    gap: 0.75rem;
+  }
+
+  .nav-links a {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .content-container h1 {
+    font-size: 1.6rem;
+  }
+
+  .content-container h2 {
+    font-size: 1.25rem;
+  }
+}

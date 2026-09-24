@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 7: Lectura Carácter a Carácter con FileReader - Acceso a Datos</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/vscode-theme.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar dinámico -->
+        <div id="sidebar-container"></div>
+
+        <!-- Contenido principal -->
+        <main class="content-container">
+            <h1>Tarea 7: Lectura de Ficheros Carácter a Carácter con FileReader</h1>
+
+            <!-- SECCIÓN 1: Explicación detallada -->
+            <section class="tarea-section">
+                <h2>Explicación del Ejercicio</h2>
+                <p>
+                    En esta tarea se analiza la lectura básica de archivos mediante flujos de caracteres en Java utilizando directamente la clase <code>FileReader</code>[cite: 8]. El programa localiza su propio código fuente (<code>Clase6.java</code>), verifica su presencia y procesa el contenido lectura a lectura, carácter por carácter[cite: 8].
+                </p>
+
+                <h3>Conceptos y métodos clave:</h3>
+                <ul>
+                    <li>
+                        <strong>Comprobación de existencia (<code>exists()</code>):</strong> Se instancia el objeto <code>File</code> y se valida la existencia previa del archivo en disco antes de inicializar el flujo de lectura[cite: 8].
+                    </li>
+                    <li>
+                        <strong>Flujo de entrada de caracteres (<code>FileReader</code>):</strong> Permite abrir un flujo directo de lectura sobre el archivo objetivo[cite: 8].
+                    </li>
+                    <li>
+                        <strong>Lectura individual (<code>fr.read()</code>):</strong> El método <code>read()</code> devuelve el código entero del carácter leído en un rango de 0 a 65535, o el valor <code>-1</code> cuando alcanza el final del fichero (EOF)[cite: 8].
+                    </li>
+                    <li>
+                        <strong>Casteo explícito (<code>(char) caracter</code>):</strong> Dado que <code>read()</code> retorna un <code>int</code>, se convierte explícitamente a tipo <code>char</code> para reconstruir y mostrar el texto por consola[cite: 8].
+                    </li>
+                    <li>
+                        <strong>Gestión automática de recursos (<code>try-with-resources</code>):</strong> Garantiza que el recurso del <code>FileReader</code> se cierre correctamente al finalizar el bloque de ejecución o ante una excepción de entrada/salida (<code>IOException</code>)[cite: 8].
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SECCIÓN 2: Código e impresión en terminal -->
+            <section class="tarea-section">
+                <h2>Código Fuente y Salida</h2>
+
+                <!-- Bloque de código estilo VSCode -->
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">Clase6.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">package</span> ClaseFile;
+
+<span class="token keyword">import</span> java.io.File;
+<span class="token keyword">import</span> java.io.FileReader;
+<span class="token keyword">import</span> java.io.IOException;
+
+<span class="token comment">/**
+ * @author Eva Gallardo Romero
+ * @date 23 de sep de 2026
+ * Programa en Java que muestra por consola el contenido
+ * de su propio código fuente leyendo el archivo carácter a carácter.
+ * Para ello localiza el archivo .java correspondiente, comprueba su
+ * existencia y posteriormente procesa el fichero utilizando un
+ * FileReader para obtener cada carácter individualmente.
+ */</span>
+
+<span class="token keyword">public class</span> <span class="token class-name">Clase6</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) {
+
+        String nombreArchivo = <span class="string">"Clase6.java"</span>;
+        File archivo = <span class="token keyword">new</span> File(<span class="string">"./src/ClaseFile/"</span> + nombreArchivo);
+
+        <span class="token keyword">if</span> (!archivo.exists()) {
+            System.out.println(<span class="string">"El archivo no existe: "</span> + archivo.getAbsolutePath());
+            <span class="token keyword">return</span>;
+        }
+
+        System.out.println(<span class="string">"Mostrando el contenido de: "</span> + nombreArchivo + <span class="string">"\n"</span>);
+
+        <span class="token keyword">try</span> (FileReader fr = <span class="token keyword">new</span> FileReader(archivo)) {
+
+            <span class="token keyword">int</span> caracter;
+
+            <span class="token keyword">for</span> (caracter = fr.read(); caracter != -1; caracter = fr.read()) {
+                System.out.print((<span class="token keyword">char</span>) caracter);
+            }
+
+        } <span class="token keyword">catch</span> (IOException e) {
+            System.out.println(<span class="string">"Error al leer el archivo: "</span> + e.getMessage());
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Resultado por terminal -->
+                <h3>Resultado Mostrado por Terminal</h3>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola</div>
+Mostrando el contenido de: Clase6.java
+
+package ClaseFile;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+/**
+ * @author Eva Gallardo Romero
+ * @date 23 de sep de 2026
+ * Programa en Java que muestra por consola el contenido
+ * de su propio código fuente leyendo el archivo carácter a carácter.
+ * Para ello localiza el archivo .java correspondiente, comprueba su
+ * existencia y posteriormente procesa el fichero utilizando un
+ * FileReader para obtener cada carácter individualmente.
+ */
+
+public class Clase6 {
+
+    public static void main(String[] args) {
+
+        String nombreArchivo = "Clase6.java";
+        File archivo = new File("./src/ClaseFile/" + nombreArchivo);
+
+        if (!archivo.exists()) {
+            System.out.println("El archivo no existe: " + archivo.getAbsolutePath());
+            return;
+        }
+
+        System.out.println("Mostrando el contenido de: " + nombreArchivo + "\n");
+
+        try (FileReader fr = new FileReader(archivo)) {
+
+            int caracter;
+
+            for (caracter = fr.read(); caracter != -1; caracter = fr.read()) {
+                System.out.print((char) caracter);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+        }
+    }
+}
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales -->
+    <script src="/js/components.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 2: Listado Parametrizado - Acceso a Datos</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/vscode-theme.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar dinámico -->
+        <div id="sidebar-container"></div>
+
+        <!-- Contenido principal -->
+        <main class="content-container">
+            <h1>Tarea 2: Listado Parametrizado por Argumentos</h1>
+
+            <!-- SECCIÓN 1: Explicación detallada -->
+            <section class="tarea-section">
+                <h2>Explicación del Ejercicio</h2>
+                <p>
+                    En esta segunda tarea se amplía la funcionalidad del listado de directorios mediante el paso de argumentos por línea de comandos (<code>args</code>)[cite: 11]. Esto permite consultar dinámicamente cualquier ruta especificada al ejecutar el programa[cite: 11].
+                </p>
+
+                <h3>Conceptos y métodos clave:</h3>
+                <ul>
+                    <li>
+                        <strong>Control de parámetros de entrada:</strong> Se valida si el array <code>args</code> contiene elementos (<code>args.length == 0</code>) para prevenir excepciones en tiempo de ejecución al intentar acceder a rutas no definidas[cite: 11].
+                    </li>
+                    <li>
+                        <strong>Comprobación de existencia (<code>exists()</code>):</strong> Antes de procesar el contenido, se verifica mediante <code>directorio.exists()</code> si la ruta introducida existe en el sistema de archivos[cite: 11].
+                    </li>
+                    <li>
+                        <strong>Gestión de contenido:</strong> Si la ruta es válida y existe, se obtiene el array mediante <code>listFiles()</code> y se muestra el listado por consola; en caso contrario, se notifica el error correspondiente[cite: 11].
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SECCIÓN 2: Código e impresión en terminal -->
+            <section class="tarea-section">
+                <h2>Código Fuente y Salida</h2>
+
+                <!-- Bloque de código estilo VSCode -->
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">Clase1.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">package</span> ClaseFile;
+
+<span class="token keyword">import</span> java.io.File;
+
+<span class="token comment">/**
+ * @author Eva Gallardo Romero
+ * @date 17 de sep de 2026
+ * Muestra todo el contenido de un directorio determinado
+ */</span>
+
+<span class="token keyword">public class</span> <span class="token class-name">Clase1</span> {
+	
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) {
+		
+        <span class="token comment">// compruebo que se ha introducido una ruta </span>
+        <span class="token keyword">if</span> (args.length == <span class="token number">0</span>) {
+            System.out.println(<span class="string">"Error: Debes proporcionar la ruta del directorio como argumento."</span>);
+            <span class="token keyword">return</span>;
+        }
+		
+        <span class="token comment">// objeto File que representa el directorio actual</span>
+        File directorio = <span class="token keyword">new</span> File(args[<span class="token number">0</span>]);
+		
+        <span class="token comment">// obtengo la lista de elementos que hay en el directorio</span>
+        File[] contenido = directorio.listFiles();
+        
+        <span class="token comment">// recorro el contenido que he obtenido del directorio y lo printeo</span>
+        <span class="token keyword">if</span> (directorio.exists()) {
+            <span class="token comment">// recorro el contenido que he obtenido del directorio y lo printeo</span>
+            <span class="token keyword">if</span> (contenido != <span class="token keyword">null</span>) {
+                System.out.println(<span class="string">"Este es el contenido existente en Ficheros"</span>);
+                <span class="token keyword">for</span> (<span class="token keyword">int</span> i = <span class="token number">0</span>; i &lt; contenido.length; i++) {
+                    System.out.println(contenido[i]);
+                }
+            } <span class="token keyword">else</span> {
+                System.out.println(<span class="string">"No hay contenido en el directorio"</span>);
+            }
+        } <span class="token keyword">else</span> {
+            System.out.println(<span class="string">"El directorio introducido no existe"</span>);
+        }
+
+    }
+
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Resultados por terminal -->
+                <h3>Resultados Mostrados por Terminal</h3>
+
+                <p><strong>Caso 1: Ejecución sin argumentos</strong> (<code>java ClaseFile.Clase1</code>)</p>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola - Error de Parámetros</div>
+Error: Debes proporcionar la ruta del directorio como argumento.
+                </div>
+
+                <p style="margin-top: 1rem;"><strong>Caso 2: Directorio no existente</strong> (<code>java ClaseFile.Clase1 "C:/RutaInexistente"</code>)</p>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola - Ruta Inválida</div>
+El directorio introducido no existe
+                </div>
+
+                <p style="margin-top: 1rem;"><strong>Caso 3: Ejecución correcta</strong> (<code>java ClaseFile.Clase1 "src/ClaseFile"</code>)</p>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola - Listado de Ruta</div>
+Este es el contenido existente en Ficheros
+src\ClaseFile\Clase0.java
+src\ClaseFile\Clase1.java
+src\ClaseFile\Clase2.java
+src\ClaseFile\Clase3.java
+src\ClaseFile\Clase4.java
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales -->
+    <script src="../../js/components.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

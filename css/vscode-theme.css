@@ -1,0 +1,155 @@
+/* ==========================================================================
+   TEMA VISUAL TIPO VSCODE Y TERMINAL DE COMANDOS
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. VENTANA CONTENEDORA DE CÓDIGO (VSCode Look & Feel)
+   -------------------------------------------------------------------------- */
+.vscode-window {
+  background-color: #1e1e1e; /* Fondo oscuro característico de VSCode Dark+ */
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  margin: 1.5rem 0;
+  font-family: 'Consolas', 'Fira Code', 'Courier New', monospace;
+}
+
+/* Cabecera de la ventana con botones de control y título */
+.vscode-header {
+  background-color: #252526;
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #2d2d2d;
+  user-select: none;
+}
+
+.vscode-buttons {
+  display: flex;
+  gap: 6px;
+  margin-right: 12px;
+}
+
+.vscode-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.vscode-dot.red { background-color: #ff5f56; }
+.vscode-dot.yellow { background-color: #ffbd2e; }
+.vscode-dot.green { background-color: #27c93f; }
+
+.vscode-title {
+  color: #858585;
+  font-size: 0.85rem;
+  font-family: system-ui, -apple-system, sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Área de contenido del código */
+.vscode-body {
+  padding: 1.25rem;
+  overflow-x: auto;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #d4d4d4;
+}
+
+.vscode-body pre {
+  margin: 0;
+  font-family: inherit;
+}
+
+.vscode-body code {
+  font-family: inherit;
+  white-space: pre;
+}
+
+/* --------------------------------------------------------------------------
+   2. RESALTADO DE SINTAXIS JAVA (VSCode Dark+ Color Palette)
+   -------------------------------------------------------------------------- */
+.token.keyword {
+  color: #569cd6; /* Palabras clave: package, import, class, public, static, void... */
+  font-weight: bold;
+}
+
+.token.class-name {
+  color: #4ec9b0; /* Nombres de clases e interfaces: File, Exception, String... */
+}
+
+.token.string {
+  color: #ce9178; /* Cadenas de texto entre comillas */
+}
+
+.token.number {
+  color: #b5cea8; /* Valores numéricos */
+}
+
+.token.comment {
+  color: #6a9955; /* Comentarios // y /* ... */
+  font-style: italic;
+}
+
+.token.method {
+  color: #dcdcaa; /* Nombres de métodos y funciones: main(), print(), exists()... */
+}
+
+.token.operator {
+  color: #d4d4d4; /* Operadores: =, ==, !, +, - */
+}
+
+/* --------------------------------------------------------------------------
+   3. TERMINAL DE SALIDA (Output Terminal)
+   -------------------------------------------------------------------------- */
+.terminal-window {
+  background-color: #0c0c0c;
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--accent-color);
+  padding: 1rem 1.25rem;
+  margin-top: 1.25rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+  font-family: 'Consolas', 'Fira Code', 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: #cccccc;
+  line-height: 1.4;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.terminal-header {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.terminal-header::before {
+  content: '>';
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+/* --------------------------------------------------------------------------
+   4. ADAPTATIVIDAD RESPONSIVA PARA DISPOSITIVOS MÓVILES
+   -------------------------------------------------------------------------- */
+@media (max-width: 576px) {
+  .vscode-body,
+  .terminal-window {
+    font-size: 0.825rem;
+    padding: 0.85rem;
+  }
+
+  .vscode-header {
+    padding: 0.5rem;
+  }
+}

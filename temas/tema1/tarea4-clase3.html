@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 4: Metadatos de un Directorio - Acceso a Datos</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/vscode-theme.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar dinámico -->
+        <div id="sidebar-container"></div>
+
+        <!-- Contenido principal -->
+        <main class="content-container">
+            <h1>Tarea 4: Recorrido e Inspección de Metadatos de un Directorio</h1>
+
+            <!-- SECCIÓN 1: Explicación detallada -->
+            <section class="tarea-section">
+                <h2>Explicación del Ejercicio</h2>
+                <p>
+                    Esta tarea combina la inspección individual de propiedades con el recorrido completo de un directorio[cite: 13]. Primero se muestra la información de la carpeta contenedora y posteriormente se itera sobre sus elementos para extraer sus metadatos[cite: 13].
+                </p>
+
+                <h3>Conceptos y métodos clave:</h3>
+                <ul>
+                    <li>
+                        <strong>Metadatos del directorio raíz:</strong> Se extraen las propiedades del directorio actual (<code>"."</code>) como el nombre, rutas relativa y absoluta, permisos de lectura/escritura (<code>canRead()</code>, <code>canWrite()</code>), tamaño en bytes y verificaciones de tipo (<code>isFile()</code>, <code>isDirectory()</code>)[cite: 13].
+                    </li>
+                    <li>
+                        <strong>Bucle de recorrido de elementos:</strong> Mediante <code>carpeta.listFiles()</code> se obtiene la lista de elementos contenidos y se recorre con un bucle <code>for</code>[cite: 13].
+                    </li>
+                    <li>
+                        <strong>Metadatos de subelementos:</strong> En cada iteración se muestra de forma individualizada la metainformación de cada archivo o subcarpeta encontrada[cite: 13].
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SECCIÓN 2: Código e impresión en terminal -->
+            <section class="tarea-section">
+                <h2>Código Fuente y Salida</h2>
+
+                <!-- Bloque de código estilo VSCode -->
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">Clase3.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">package</span> ClaseFile;
+
+<span class="token keyword">import</span> java.io.File;
+
+<span class="token comment">/**
+ * @author Eva Gallardo Romero
+ * @date 16 de sep de 2026
+ * Programa para mostrar la siguiente información de una carpeta: 
+ * - Nombre 
+ * - Ruta (relativa y absoluta) 
+ * - Si existe posibilidad de leer o escribir 
+ * - Tamaño
+ * - Si es un directorio o un fichero 
+ * - Nombre del directorio padre 
+ * es decir la metadata 
+ */</span>
+
+<span class="token keyword">public class</span> <span class="token class-name">Clase3</span> {
+	
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) { 
+        
+        <span class="token comment">// objeto File que representa el directorio actual</span>
+        File carpeta = <span class="token keyword">new</span> File(<span class="string">"."</span>); 
+        
+        System.out.println(<span class="string">"------- Información sobre la carpeta --------"</span>);
+        System.out.println(<span class="string">" · Nombre: "</span> + carpeta.getName());
+        System.out.println(<span class="string">" · Ruta relativa: "</span> + carpeta.getPath());
+        System.out.println(<span class="string">" · Ruta absoluta: "</span> + carpeta.getAbsolutePath());
+        System.out.println(<span class="string">" · Posibilidad de leer: "</span> + carpeta.canRead());
+        System.out.println(<span class="string">" · Posibilidad de escribir: "</span> + carpeta.canWrite());
+        System.out.println(<span class="string">" · Tamaño: "</span> + carpeta.length() + <span class="string">" bytes"</span>);
+        System.out.println(<span class="string">" · Es un fichero: "</span> + carpeta.isFile());
+        System.out.println(<span class="string">" · Es un directorio: "</span> + carpeta.isDirectory());
+        System.out.println(<span class="string">" · Directorio padre: "</span> + carpeta.getAbsoluteFile().getParentFile().getName());
+
+        System.out.println();
+        
+        <span class="token comment">// obtengo la lista de elementos que hay en el directorio</span>
+        File[] contenidos = carpeta.listFiles();
+        
+        <span class="token comment">// recorro el contenido que he obtenido del directorio y lo printeo</span>
+        <span class="token keyword">for</span> (<span class="token keyword">int</span> i = <span class="token number">0</span>; i &lt; contenidos.length; i++) {
+            
+            File elemento = contenidos[i];
+            
+            System.out.println(<span class="string">"------- Información sobre el elemento --------"</span>);
+            System.out.println(<span class="string">" · Nombre: "</span> + elemento.getName());
+            System.out.println(<span class="string">" · Ruta relativa: "</span> + elemento.getPath());
+            System.out.println(<span class="string">" · Ruta absoluta: "</span> + elemento.getAbsolutePath());
+            System.out.println(<span class="string">" · Posibilidad de leer: "</span> + elemento.canRead());
+            System.out.println(<span class="string">" · Posibilidad de escribir: "</span> + elemento.canWrite());
+            System.out.println(<span class="string">" · Tamaño: "</span> + elemento.length() + <span class="string">" bytes"</span>);
+            System.out.println(<span class="string">" · Es un fichero: "</span> + elemento.isFile());
+            System.out.println(<span class="string">" · Es un directorio: "</span> + elemento.isDirectory());
+            <span class="token comment">//Saco la ruta absoluta en forma de objeto File, busco el padre del fichero y extraigo el nombre</span>
+            System.out.println(<span class="string">" · Directorio padre: "</span> + elemento.getAbsoluteFile().getParentFile().getName());
+
+            System.out.println(); <span class="token comment">// Línea en blanco para separar cada elemento</span>
+            
+        }
+            
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Resultado por terminal -->
+                <h3>Resultado Mostrado por Terminal</h3>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola</div>
+------- Información sobre la carpeta --------
+ · Nombre: .
+ · Ruta relativa: .
+ · Ruta absoluta: C:\PROYECTOS\AccesoDatos\.
+ · Posibilidad de leer: true
+ · Posibilidad de escribir: true
+ · Tamaño: 4096 bytes
+ · Es un fichero: false
+ · Es un directorio: true
+ · Directorio padre: AccesoDatos
+
+------- Información sobre el elemento --------
+ · Nombre: src
+ · Ruta relativa: .\src
+ · Ruta absoluta: C:\PROYECTOS\AccesoDatos\src
+ · Posibilidad de leer: true
+ · Posibilidad de escribir: true
+ · Tamaño: 0 bytes
+ · Es un fichero: false
+ · Es un directorio: true
+ · Directorio padre: AccesoDatos
+
+------- Información sobre el elemento --------
+ · Nombre: file.txt
+ · Ruta relativa: .\file.txt
+ · Ruta absoluta: C:\PROYECTOS\AccesoDatos\file.txt
+ · Posibilidad de leer: true
+ · Posibilidad de escribir: true
+ · Tamaño: 120 bytes
+ · Es un fichero: true
+ · Es un directorio: false
+ · Directorio padre: AccesoDatos
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales -->
+    <script src="../../js/components.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>
