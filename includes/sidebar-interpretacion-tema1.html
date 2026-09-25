@@ -1,0 +1,36 @@
+<!-- ==========================================================================
+   MENÚ LATERAL - INTERPRETACIÓN DE CÓDIGO (TEMA 1)
+   A diferencia del sidebar de Tema 1 (que enlaza a ficheros distintos),
+   este sidebar navega por anclas (#id) dentro de esta misma página.
+
+   Los códigos se organizan por PÁGINA DEL LIBRO (no por "código 1, 2..."),
+   así se puede localizar cada uno fácilmente comparándolo con el apunte físico.
+
+   Este mismo patrón (includes/sidebar-interpretacion-temaN.html) se repetirá
+   para cada tema futuro: sidebar-interpretacion-tema2.html, etc.
+
+   Inyectado dinámicamente mediante js/components.js
+   ========================================================================== -->
+<aside class="sidebar">
+  <h3>🧩 Interpretación de Código</h3>
+  <ul class="sidebar-anchor-list">
+    <li><a href="#pagina-2">Página 2: Formas de declarar File</a></li>
+    <li><a href="#pagina-3">Página 3: VerDir</a></li>
+    <li><a href="#pagina-4">Página 4: VerInf</a></li>
+    <li><a href="#pagina-5">Página 5: CrearDir</a></li>
+    <li><a href="#pagina-12">Página 12: LeerFichTexto</a></li>
+    <li><a href="#pagina-13">Página 13: EscribirFichTexto</a></li>
+    <li><a href="#pagina-14">Página 14: LeerFichTextoBuf</a></li>
+    <li><a href="#pagina-14-15">Páginas 14-15: EscribirFichTextoBuf</a></li>
+    <li><a href="#pagina-15">Página 15: PrintWriter</a></li>
+    <li><a href="#pagina-16">Página 16: EscribirFichBytes</a></li>
+    <li><a href="#pagina-17">Página 17: EscribirFichData</a></li>
+    <li><a href="#pagina-18">Página 18: LeerFichData</a></li>
+    <!--
+      Para añadir una nueva página:
+      1. Duplica el <li> de arriba y cambia el href="#pagina-N" y el texto.
+      2. En temas/tema1/interpretacion-codigos.html duplica un <section class="interpret-block" id="pagina-N">
+         y rellena su contenido, colocándolo en el orden de página correcto.
+    -->
+  </ul>
+</aside>

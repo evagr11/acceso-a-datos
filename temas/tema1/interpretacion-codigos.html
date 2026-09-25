@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1 · Interpretación de Código - Acceso a Datos</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/vscode-theme.css">
+    <link rel="stylesheet" href="../../css/interpretacion.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar dinámico: carga includes/sidebar-interpretacion-tema1.html.
+             A diferencia del sidebar de Tema 1, sus enlaces son anclas (#pagina-N)
+             que se mueven dentro de ESTA MISMA página, no a ficheros distintos. -->
+        <div id="sidebar-container" data-sidebar="interpretacion-tema1"></div>
+
+        <!-- Contenido principal: todos los códigos interpretados viven aquí,
+             uno debajo de otro, cada uno en su propia <section id="pagina-N"> -->
+        <main class="content-container">
+            <p style="margin-bottom: 0.5rem;">
+                <a href="apuntes.html">← Volver a Tema 1</a>
+            </p>
+            <h1>Tema 1 · Interpretación de Código</h1>
+            <p style="color:#cbd5e1; margin-bottom: 2rem; max-width: 70ch;">
+                Explicación línea a línea de fragmentos de código Java de Tema 1, pensada para
+                repasar qué hace cada instrucción. Usa el menú lateral para saltar directamente
+                a cada código.
+            </p>
+
+            <!-- ==================================================================
+                 PÁGINA 2 DEL LIBRO: Formas de declarar un fichero (File)
+                 ================================================================== -->
+            <section class="interpret-block" id="pagina-2">
+                <span class="interpret-badge">Página 2 · java.io</span>
+                <h2>Página 2: Formas de declarar un fichero</h2>
+                <p class="interpret-intro">
+                    No es un programa completo, sino varios ejemplos sueltos que muestran las
+                    distintas formas de crear un objeto <code>File</code>: con la ruta completa en
+                    un único <code>String</code>, o separando el directorio del nombre de fichero.
+                </p>
+
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">Ejemplos · declaración de File</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token comment">//Windows</span>
+<span class="token class-name">File</span> fichero1 = <span class="token keyword">new</span> <span class="token class-name">File</span>( <span class="token string">"C:\\EJERCICIOS\\UNI1\\ejemplo1.txt"</span>);
+<span class="token comment">//Linux</span>
+<span class="token class-name">File</span> fichero1 = <span class="token keyword">new</span> <span class="token class-name">File</span>( <span class="token string">"/home/ejercicios/uni1/ejemplo1.txt"</span>);
+
+String directorio= <span class="token string">"C:/EJERCICIOS/UNI1"</span>;
+<span class="token class-name">File</span> fichero2 = <span class="token keyword">new</span> <span class="token class-name">File</span>(directorio, <span class="token string">"ejemplo2.txt"</span>);
+
+<span class="token class-name">File</span> direc = <span class="token keyword">new</span> <span class="token class-name">File</span>(directorio);</code></pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+                <ol class="interpret-steps">
+                    <li class="interpret-step">
+                        <span class="step-num">1</span>
+                        <div>
+                            <code class="step-code">File fichero1 = new File("C:\\EJERCICIOS\\UNI1\\ejemplo1.txt");</code>
+                            <p class="step-desc">Primer constructor: la ruta completa (directorio + fichero) en un único <code>String</code>. En Windows el separador es <code>\</code>, y hay que escribirlo doble (<code>\\</code>) porque la barra invertida es un carácter especial en Java.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">2</span>
+                        <div>
+                            <code class="step-code">File fichero1 = new File("/home/ejercicios/uni1/ejemplo1.txt");</code>
+                            <p class="step-desc">La misma idea, pero en Linux, donde el separador de rutas es <code>/</code> y no hace falta escaparlo.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">3</span>
+                        <div>
+                            <code class="step-code">String directorio= "C:/EJERCICIOS/UNI1";</code>
+                            <p class="step-desc">Se guarda solo la ruta del directorio en una variable de texto aparte, para reutilizarla.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">4</span>
+                        <div>
+                            <code class="step-code">File fichero2 = new File(directorio, "ejemplo2.txt");</code>
+                            <p class="step-desc">Segundo constructor: se pasan dos <code>String</code> por separado, el directorio y el nombre del fichero; <code>File</code> se encarga de unirlos correctamente.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">5</span>
+                        <div>
+                            <code class="step-code">File direc = new File(directorio);</code>
+                            <p class="step-desc">Un objeto <code>File</code> no tiene por qué apuntar a un fichero: aquí apunta a un directorio, usando ese mismo <code>File</code> como base para el siguiente ejemplo (Página 3).</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <div class="interpret-summary">
+                    <strong>En resumen:</strong> <code>File</code> tiene varios constructores para
+                    representar la misma ruta de distintas formas (todo junto, o directorio y
+                    nombre por separado), y puede representar tanto ficheros como directorios.
+                </div>
+            </section>
+
+            <!-- ==================================================================
+                 PÁGINA 3 DEL LIBRO: VerDir
+                 ================================================================== -->
+            <section class="interpret-block" id="pagina-3">
+                <span class="interpret-badge">Página 3 · java.io</span>
+                <h2>Página 3: VerDir</h2>
+                <p class="interpret-intro">
+                    Antes del programa, la Página 3 muestra un tercer constructor de
+                    <code>File</code>: <code>File fichero3 = new File(direc, "ejemplo3.txt");</code>
+                    (un <code>File</code> de directorio + un nombre de fichero). Después, el programa
+                    <strong>VerDir</strong> lista los ficheros del directorio actual y, para cada uno,
+                    comprueba si es un fichero o un directorio.
+                </p>
+
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">VerDir.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">import</span> java.io.*;
+
+<span class="token keyword">public class</span> <span class="token class-name">VerDir</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) {
+        String dir = <span class="token string">"."</span>;
+        <span class="token class-name">File</span> f = <span class="token keyword">new</span> <span class="token class-name">File</span>(dir);
+        String[] archivos = f.<span class="token method">list</span>();
+        System.out.<span class="token method">printf</span>(<span class="token string">"Ficheros en el directorio actual: %d %n"</span>,
+                            archivos.length);
+        <span class="token keyword">for</span> (<span class="token keyword">int</span> i = 0; i &lt; archivos.length; i++) {
+            <span class="token class-name">File</span> f2 = <span class="token keyword">new</span> <span class="token class-name">File</span>(f, archivos[i]);
+            System.out.<span class="token method">printf</span>(<span class="token string">"Nombre: %s, es fichero?: %b, es directorio?: %b %n"</span>, archivos[i], f2.<span class="token method">isFile</span>(),f2.<span class="token method">isDirectory</span>());
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+                <ol class="interpret-steps">
+                    <li class="interpret-step">
+                        <span class="step-num">1</span>
+                        <div>
+                            <code class="step-code">String dir = ".";</code>
+                            <p class="step-desc">El punto <code>"."</code> es un atajo que representa el directorio actual (desde donde se ejecuta el programa).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">2</span>
+                        <div>
+                            <code class="step-code">File f = new File(dir);</code>
+                            <p class="step-desc">Se crea un <code>File</code> que apunta a ese directorio actual.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">3</span>
+                        <div>
+                            <code class="step-code">String[] archivos = f.list();</code>
+                            <p class="step-desc"><code>list()</code> devuelve un array de <code>String</code> con los nombres de todo lo que hay dentro de ese directorio (ficheros y subdirectorios).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">4</span>
+                        <div>
+                            <code class="step-code">System.out.printf("Ficheros en el directorio actual: %d %n", archivos.length);</code>
+                            <p class="step-desc">Se imprime cuántos elementos se han encontrado, usando <code>printf</code> con <code>%d</code> (número entero) y <code>%n</code> (salto de línea).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">5</span>
+                        <div>
+                            <code class="step-code">for (int i = 0; i &lt; archivos.length; i++) {</code>
+                            <p class="step-desc">Se recorre cada nombre devuelto por <code>list()</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">6</span>
+                        <div>
+                            <code class="step-code">File f2 = new File(f, archivos[i]);</code>
+                            <p class="step-desc">Se crea un nuevo <code>File</code> combinando el directorio <code>f</code> con cada nombre, para poder consultar sus propiedades individualmente (mismo constructor visto en la Página 3, directorio + nombre).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">7</span>
+                        <div>
+                            <code class="step-code">System.out.printf("Nombre: %s, es fichero?: %b, es directorio?: %b %n", ...);</code>
+                            <p class="step-desc">Se imprime el nombre junto con el resultado de <code>isFile()</code> e <code>isDirectory()</code>, usando <code>%s</code> para texto y <code>%b</code> para booleanos.</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <h3 style="margin-top: 2rem; font-size: 1.05rem; color: var(--text-main);">Resultado Mostrado por Terminal <span style="font-weight:400; color:var(--text-muted); text-transform:none; letter-spacing:0;">(impreso en la Página 4)</span></h3>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola</div>
+Ficheros en el directorio actual: 3
+Nombre: VerDir.class, es fichero?: true, es directorio?: false
+Nombre: VerDir.java, es fichero?: true, es directorio?: false
+Nombre: VerInf.java, es fichero?: true, es directorio?: false
+                </div>
+
+                <div class="interpret-summary">
+                    <strong>En resumen:</strong> el programa usa <code>list()</code> para obtener los
+                    nombres del directorio actual y, por cada uno, crea un <code>File</code> aparte
+                    para poder preguntarle si es un fichero o un directorio.
+                </div>
+            </section>
+
+            <!-- ==================================================================
+                 PÁGINA 4 DEL LIBRO: VerInf
+                 ================================================================== -->
+            <section class="interpret-block" id="pagina-4">
+                <span class="interpret-badge">Página 4 · java.io</span>
+                <h2>Página 4: VerInf</h2>
+                <p class="interpret-intro">
+                    Antes del programa, la Página 4 muestra dos variantes rápidas del ejemplo
+                    <code>VerDir</code>: apuntar a otro directorio fijo
+                    (<code>File f = new File("d:\\db");</code>) o a uno indicado por el usuario al
+                    ejecutar el programa (<code>String dir=args[0];</code>). Después, el programa
+                    <strong>VerInf</strong> muestra información detallada de un fichero concreto
+                    usando varios métodos de <code>File</code>.
+                </p>
+
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">VerInf.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">import</span> java.io.*;
+
+<span class="token keyword">public class</span> <span class="token class-name">VerInf</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) {
+        System.out.<span class="token method">println</span>(<span class="token string">"INFORMACIÓN SOBRE EL FICHERO:"</span>);
+        <span class="token class-name">File</span> f = <span class="token keyword">new</span> <span class="token class-name">File</span>(<span class="token string">"D:\\ADAT\\UNI1\\VerInf.java"</span>);
+        <span class="token keyword">if</span>(f.<span class="token method">exists</span>()){
+            System.out.<span class="token method">println</span>(<span class="token string">"Nombre del fichero : "</span>+f.<span class="token method">getName</span>());
+            System.out.<span class="token method">println</span>(<span class="token string">"Ruta                : "</span>+f.<span class="token method">getPath</span>());
+            System.out.<span class="token method">println</span>(<span class="token string">"Ruta absoluta       : "</span>+f.<span class="token method">getAbsolutePath</span>());
+            System.out.<span class="token method">println</span>(<span class="token string">"Se puede leer       : "</span>+f.<span class="token method">canRead</span>());
+            System.out.<span class="token method">println</span>(<span class="token string">"Se puede escribir   : "</span>+f.<span class="token method">canWrite</span>());
+            System.out.<span class="token method">println</span>(<span class="token string">"Tamaño              : "</span>+f.<span class="token method">length</span>());
+            System.out.<span class="token method">println</span>(<span class="token string">"Es un directorio    : "</span>+f.<span class="token method">isDirectory</span>());
+            System.out.<span class="token method">println</span>(<span class="token string">"Es un fichero       : "</span>+f.<span class="token method">isFile</span>());
+            System.out.<span class="token method">println</span>(<span class="token string">"Nombre del directorio padre: "</span>+f.<span class="token method">getParent</span>());
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+                <ol class="interpret-steps">
+                    <li class="interpret-step">
+                        <span class="step-num">1</span>
+                        <div>
+                            <code class="step-code">System.out.println("INFORMACIÓN SOBRE EL FICHERO:");</code>
+                            <p class="step-desc">Se imprime una cabecera para el listado que viene a continuación.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">2</span>
+                        <div>
+                            <code class="step-code">File f = new File("D:\\ADAT\\UNI1\\VerInf.java");</code>
+                            <p class="step-desc">Se apunta a un fichero concreto mediante su ruta absoluta completa en Windows.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">3</span>
+                        <div>
+                            <code class="step-code">if(f.exists()){</code>
+                            <p class="step-desc">Antes de preguntar por sus propiedades, se comprueba que el fichero realmente existe; si no, no tendría sentido pedirle información.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">4</span>
+                        <div>
+                            <code class="step-code">f.getName()</code>
+                            <p class="step-desc">Devuelve solo el nombre del fichero, sin la ruta: <code>VerInf.java</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">5</span>
+                        <div>
+                            <code class="step-code">f.getPath()</code>
+                            <p class="step-desc">Devuelve la ruta tal y como se usó para construir el <code>File</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">6</span>
+                        <div>
+                            <code class="step-code">f.getAbsolutePath()</code>
+                            <p class="step-desc">Devuelve la ruta absoluta completa en el sistema de ficheros.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">7</span>
+                        <div>
+                            <code class="step-code">f.canRead() / f.canWrite()</code>
+                            <p class="step-desc">Indican si el fichero se puede leer y si se puede escribir, respectivamente (permisos).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">8</span>
+                        <div>
+                            <code class="step-code">f.length()</code>
+                            <p class="step-desc">Devuelve el tamaño del fichero, en bytes.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">9</span>
+                        <div>
+                            <code class="step-code">f.isDirectory() / f.isFile()</code>
+                            <p class="step-desc">Indican si lo que representa el objeto <code>File</code> es un directorio o un fichero normal.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">10</span>
+                        <div>
+                            <code class="step-code">f.getParent()</code>
+                            <p class="step-desc">Devuelve el nombre del directorio que contiene a este fichero (su "padre").</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <h3 style="margin-top: 2rem; font-size: 1.05rem; color: var(--text-main);">Resultado Mostrado por Terminal <span style="font-weight:400; color:var(--text-muted); text-transform:none; letter-spacing:0;">(continúa en la Página 5)</span></h3>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola</div>
+INFORMACIÓN SOBRE EL FICHERO:
+Nombre del fichero : VerInf.java
+Ruta                : D:\ADAT\UNI1\VerInf.java
+Ruta absoluta       : D:\ADAT\UNI1\VerInf.java
+Se puede leer       : true
+Se puede escribir   : true
+Tamaño              : 824
+Es un directorio    : false
+Es un fichero       : true
+Nombre del directorio padre: D:\ADAT\UNI1
+                </div>
+
+                <div class="interpret-summary">
+                    <strong>En resumen:</strong> el programa comprueba primero que el fichero existe
+                    y después vuelca por pantalla todas sus propiedades usando los métodos de
+                    consulta que ofrece la clase <code>File</code>.
+                </div>
+            </section>
+
+            <!-- ==================================================================
+                 PÁGINA 5 DEL LIBRO: CrearDir
+                 ================================================================== -->
+            <section class="interpret-block" id="pagina-5">
+                <span class="interpret-badge">Página 5 · java.io</span>
+                <h2>Página 5: CrearDir</h2>
+                <p class="interpret-intro">
+                    El programa <strong>CrearDir</strong> crea un directorio nuevo, crea dos ficheros
+                    vacíos dentro de él, renombra uno de esos ficheros y crea un tercer fichero
+                    usando una ruta de texto directamente. Después se muestra cómo borrar un
+                    fichero con <code>delete()</code>.
+                </p>
+
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">CrearDir.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">import</span> java.io.*;
+
+<span class="token keyword">public class</span> <span class="token class-name">CrearDir</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) {
+        <span class="token class-name">File</span> d = <span class="token keyword">new</span> <span class="token class-name">File</span>(<span class="token string">"NUEVODIR"</span>);
+        <span class="token class-name">File</span> f1 = <span class="token keyword">new</span> <span class="token class-name">File</span>(d,<span class="token string">"FICHERO1.TXT"</span>);
+        <span class="token class-name">File</span> f2 = <span class="token keyword">new</span> <span class="token class-name">File</span>(d,<span class="token string">"FICHERO2.TXT"</span>);
+
+        d.<span class="token method">mkdir</span>();
+
+        <span class="token keyword">try</span> {
+            <span class="token keyword">if</span> (f1.<span class="token method">createNewFile</span>())
+                System.out.<span class="token method">println</span>(<span class="token string">"FICHERO1 creado correctamente..."</span>);
+            <span class="token keyword">else</span>
+                System.out.<span class="token method">println</span>(<span class="token string">"No se ha podido crear FICHERO1..."</span>);
+
+            <span class="token keyword">if</span> (f2.<span class="token method">createNewFile</span>())
+                System.out.<span class="token method">println</span>(<span class="token string">"FICHERO2 creado correctamente..."</span>);
+            <span class="token keyword">else</span>
+                System.out.<span class="token method">println</span>(<span class="token string">"No se ha podido crear FICHERO2..."</span>);
+        } <span class="token keyword">catch</span> (<span class="token class-name">IOException</span> ioe) {ioe.<span class="token method">printStackTrace</span>();}
+
+        f1.<span class="token method">renameTo</span>(<span class="token keyword">new</span> <span class="token class-name">File</span>(d,<span class="token string">"FICHERO1NUEVO"</span>));
+
+        <span class="token keyword">try</span> {
+            <span class="token class-name">File</span> f3 = <span class="token keyword">new</span> <span class="token class-name">File</span>(<span class="token string">"NUEVODIR/FICHERO3.TXT"</span>);
+            f3.<span class="token method">createNewFile</span>();
+        } <span class="token keyword">catch</span> (<span class="token class-name">IOException</span> ioe) {ioe.<span class="token method">printStackTrace</span>();}
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+                <ol class="interpret-steps">
+                    <li class="interpret-step">
+                        <span class="step-num">1</span>
+                        <div>
+                            <code class="step-code">File d = new File("NUEVODIR");</code>
+                            <p class="step-desc">Se declara un <code>File</code> que representará el directorio que se va a crear.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">2</span>
+                        <div>
+                            <code class="step-code">File f1 = new File(d,"FICHERO1.TXT"); / File f2 = new File(d,"FICHERO2.TXT");</code>
+                            <p class="step-desc">Se declaran dos ficheros dentro de ese directorio, usando el constructor <code>File(File, String)</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">3</span>
+                        <div>
+                            <code class="step-code">d.mkdir();</code>
+                            <p class="step-desc">Se crea físicamente el directorio <code>NUEVODIR</code> en disco. Hasta este punto, <code>d</code> solo era un objeto en memoria.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">4</span>
+                        <div>
+                            <code class="step-code">if (f1.createNewFile()) ... else ...</code>
+                            <p class="step-desc"><code>createNewFile()</code> crea el fichero vacío y devuelve <code>true</code> si lo ha creado, o <code>false</code> si ya existía; se avisa por pantalla del resultado. Se repite lo mismo para <code>f2</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">5</span>
+                        <div>
+                            <code class="step-code">} catch (IOException ioe) {ioe.printStackTrace();}</code>
+                            <p class="step-desc"><code>createNewFile()</code> puede lanzar <code>IOException</code>, por eso va dentro de un <code>try-catch</code>; si algo falla, se imprime la traza del error.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">6</span>
+                        <div>
+                            <code class="step-code">f1.renameTo(new File(d,"FICHERO1NUEVO"));</code>
+                            <p class="step-desc">Se renombra <code>FICHERO1.TXT</code> a <code>FICHERO1NUEVO</code>, indicando el nuevo nombre como otro objeto <code>File</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">7</span>
+                        <div>
+                            <code class="step-code">File f3 = new File("NUEVODIR/FICHERO3.TXT");</code>
+                            <p class="step-desc">Esta vez se apunta al nuevo fichero con una única ruta de texto (en vez de <code>File</code>+<code>String</code>), mezclando <code>/</code> como separador dentro de <code>NUEVODIR</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">8</span>
+                        <div>
+                            <code class="step-code">f3.createNewFile();</code>
+                            <p class="step-desc">Se crea el tercer fichero, vacío, dentro de <code>NUEVODIR</code>.</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <p class="interpret-intro" style="margin-top: 1.5rem;">
+                    A continuación, el libro muestra cómo borrar el fichero <code>f2</code> con
+                    <code>delete()</code> (no se puede borrar <code>NUEVODIR</code> directamente
+                    mientras contenga ficheros):
+                </p>
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">borrar fichero</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">if</span>(f2.<span class="token method">delete</span>())
+    System.out.<span class="token method">println</span>(<span class="token string">"Fichero borrado..."</span>);
+<span class="token keyword">else</span>
+    System.out.<span class="token method">println</span>(<span class="token string">"No se ha podido borrar el fichero..."</span>);</code></pre>
+                    </div>
+                </div>
+
+                <div class="interpret-summary">
+                    <strong>En resumen:</strong> <code>mkdir()</code> crea directorios,
+                    <code>createNewFile()</code> crea ficheros vacíos, <code>renameTo()</code>
+                    renombra y <code>delete()</code> borra; para borrar un directorio primero hay
+                    que borrar (o mover) todo lo que contiene.
+                </div>
+            </section>
+
+            <!-- ==================================================================
+                 PÁGINA 12 DEL LIBRO: LeerFichTexto
+                 ================================================================== -->
+            <section class="interpret-block" id="pagina-12">
+                <span class="interpret-badge">Página 12 · java.io</span>
+                <h2>Página 12: LeerFichTexto</h2>
+                <p class="interpret-intro">
+                    El programa <strong>LeerFichTexto</strong> lee, carácter a carácter, el propio
+                    fichero fuente <code>LeerFichTexto.java</code> usando <code>FileReader</code>
+                    (flujo de caracteres, en vez de bytes) y muestra cada carácter por pantalla.
+                </p>
+
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">LeerFichTexto.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">import</span> java.io.*;
+
+<span class="token keyword">public class</span> <span class="token class-name">LeerFichTexto</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) <span class="token keyword">throws</span> <span class="token class-name">IOException</span> {
+        <span class="token comment">//declarar fichero</span>
+        <span class="token class-name">File</span> fichero =
+            <span class="token keyword">new</span> <span class="token class-name">File</span>(<span class="token string">"C:\\EJERCICIOS\\UNI1\\LeerFichTexto.java"</span>);
+        <span class="token comment">//crear el flujo de entrada hacia el fichero</span>
+        <span class="token class-name">FileReader</span> fic = <span class="token keyword">new</span> <span class="token class-name">FileReader</span>(fichero);
+        <span class="token keyword">int</span> i;
+        <span class="token keyword">while</span> ((i = fic.<span class="token method">read</span>()) != -1)
+            System.out.<span class="token method">println</span>((char) i);
+        fic.<span class="token method">close</span>();
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+                <ol class="interpret-steps">
+                    <li class="interpret-step">
+                        <span class="step-num">1</span>
+                        <div>
+                            <code class="step-code">public static void main(String[] args) throws IOException {</code>
+                            <p class="step-desc">Como este programa no usa <code>try-catch</code>, delega el manejo de la excepción hacia fuera con <code>throws IOException</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">2</span>
+                        <div>
+                            <code class="step-code">File fichero = new File("C:\\EJERCICIOS\\UNI1\\LeerFichTexto.java");</code>
+                            <p class="step-desc">Se apunta al propio fichero fuente del programa (ruta absoluta en Windows).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">3</span>
+                        <div>
+                            <code class="step-code">FileReader fic = new FileReader(fichero);</code>
+                            <p class="step-desc">Se crea el flujo de entrada de <strong>caracteres</strong> hacia el fichero (a diferencia de <code>FileInputStream</code>, que trabaja con bytes).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">4</span>
+                        <div>
+                            <code class="step-code">int i;</code>
+                            <p class="step-desc">Variable donde se guardará cada carácter leído (como número entero).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">5</span>
+                        <div>
+                            <code class="step-code">while ((i = fic.read()) != -1)</code>
+                            <p class="step-desc"><code>read()</code> lee un carácter y lo devuelve como <code>int</code>; el bucle continúa mientras el valor devuelto sea distinto de <code>-1</code> (fin de fichero).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">6</span>
+                        <div>
+                            <code class="step-code">System.out.println((char) i);</code>
+                            <p class="step-desc">Se convierte <code>i</code> a <code>char</code> mediante un <em>cast</em> (<code>(char) i</code>) para mostrarlo como el carácter que realmente es, no como su valor numérico.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">7</span>
+                        <div>
+                            <code class="step-code">fic.close();</code>
+                            <p class="step-desc">Se cierra el flujo de lectura.</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <p class="interpret-intro" style="margin-top: 1.5rem;">
+                    El libro añade que, para leer de golpe bloques de 20 caracteres en vez de uno a
+                    uno, se puede usar la variante de <code>read()</code> que recibe un array:
+                </p>
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">lectura por bloques</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code>char b[]= <span class="token keyword">new</span> char[20];
+<span class="token keyword">while</span> ((i = fic.<span class="token method">read</span>(b)) != -1) System.out.<span class="token method">println</span>(b);</code></pre>
+                    </div>
+                </div>
+                <p class="step-desc" style="margin-top: -0.5rem;">
+                    <code>read(b)</code> rellena el array <code>b</code> con hasta 20 caracteres de
+                    una vez y devuelve cuántos ha leído realmente (o <code>-1</code> al llegar al
+                    final); es más eficiente que leer carácter a carácter.
+                </p>
+
+                <div class="interpret-summary">
+                    <strong>En resumen:</strong> <code>FileReader</code> permite leer un fichero de
+                    texto carácter a carácter (o por bloques), haciendo <em>cast</em> a
+                    <code>char</code> para interpretarlo como texto y no como números.
+                </div>
+            </section>
+
+            <!-- ==================================================================
+                 PÁGINA 13 DEL LIBRO: EscribirFichTexto
+                 ================================================================== -->
+            <section class="interpret-block" id="pagina-13">
+                <span class="interpret-badge">Página 13 · java.io</span>
+                <h2>Página 13: EscribirFichTexto</h2>
+                <p class="interpret-intro">
+                    El programa <strong>EscribirFichTexto</strong> escribe, carácter a carácter, el
+                    contenido de un <code>String</code> en un fichero de texto usando
+                    <code>FileWriter</code>, y añade un <code>*</code> al final con
+                    <code>append()</code>.
+                </p>
+
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">EscribirFichTexto.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">import</span> java.io.*;
+
+<span class="token keyword">public class</span> <span class="token class-name">EscribirFichTexto</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) <span class="token keyword">throws</span> <span class="token class-name">IOException</span> {
+        <span class="token class-name">File</span> fichero = <span class="token keyword">new</span>
+            <span class="token class-name">File</span>(<span class="token string">"C:\\EJERCICIOS\\UNI1\\FichTexto.txt"</span>);
+        <span class="token class-name">FileWriter</span> fic = <span class="token keyword">new</span> <span class="token class-name">FileWriter</span>(fichero);
+
+        String cadena =<span class="token string">"Esto es una prueba con FileWriter"</span>;
+        char[] cad = cadena.<span class="token method">toCharArray</span>();
+        <span class="token keyword">for</span>(<span class="token keyword">int</span> i=0; i&lt;cad.length; i++)
+            fic.<span class="token method">write</span>(cad[i]);
+
+        fic.<span class="token method">append</span>(<span class="token string">'*'</span>);
+        fic.<span class="token method">close</span>();
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+                <ol class="interpret-steps">
+                    <li class="interpret-step">
+                        <span class="step-num">1</span>
+                        <div>
+                            <code class="step-code">File fichero = new File("C:\\EJERCICIOS\\UNI1\\FichTexto.txt");</code>
+                            <p class="step-desc">Se apunta al fichero de texto que se va a crear/sobrescribir.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">2</span>
+                        <div>
+                            <code class="step-code">FileWriter fic = new FileWriter(fichero);</code>
+                            <p class="step-desc">Se crea el flujo de salida de caracteres; si el fichero ya existía, su contenido anterior se borra (por defecto <em>no</em> se añade al final).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">3</span>
+                        <div>
+                            <code class="step-code">String cadena ="Esto es una prueba con FileWriter";</code>
+                            <p class="step-desc">Se declara el texto que se quiere escribir en el fichero.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">4</span>
+                        <div>
+                            <code class="step-code">char[] cad = cadena.toCharArray();</code>
+                            <p class="step-desc">Se convierte el <code>String</code> en un array de <code>char</code>, para poder recorrerlo y escribirlo carácter a carácter.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">5</span>
+                        <div>
+                            <code class="step-code">for(int i=0; i&lt;cad.length; i++) fic.write(cad[i]);</code>
+                            <p class="step-desc">Se recorre el array y se escribe cada carácter, uno a uno, con <code>write(int)</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">6</span>
+                        <div>
+                            <code class="step-code">fic.append('*');</code>
+                            <p class="step-desc"><code>append()</code> añade un carácter (o texto) al final de lo ya escrito, sin sobrescribir nada.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">7</span>
+                        <div>
+                            <code class="step-code">fic.close();</code>
+                            <p class="step-desc">Se cierra el flujo, asegurando que todo lo escrito queda guardado en el fichero.</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <p class="interpret-intro" style="margin-top: 1.5rem;">
+                    El libro añade que, en vez de escribir carácter a carácter, se puede escribir un
+                    array entero de golpe con <code>fic.write(cad)</code>, y muestra un ejemplo
+                    escribiendo varias cadenas seguidas desde un array de <code>String</code>
+                    (continúa en la Página 14):
+                </p>
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">escritura de un array de Strings</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code>String prov[] =
+    {<span class="token string">"Albacete"</span>,<span class="token string">"Avila"</span>,<span class="token string">"Badajoz"</span>,<span class="token string">"Cáceres"</span>,<span class="token string">"Huelva"</span>,<span class="token string">"Jaén"</span>,
+     <span class="token string">"Madrid"</span>,<span class="token string">"Segovia"</span>,<span class="token string">"Soria"</span>,<span class="token string">"Toledo"</span>,<span class="token string">"Valladolid"</span>,<span class="token string">"Zamora"</span>};
+
+<span class="token keyword">for</span>(<span class="token keyword">int</span> i=0; i&lt;prov.length; i++) fic.<span class="token method">write</span>(prov[i]);</code></pre>
+                    </div>
+                </div>
+                <p class="step-desc" style="margin-top: -0.5rem;">
+                    Aquí <code>write(String)</code> escribe cada provincia completa de una vez; como
+                    no se añade ningún salto de línea entre una y otra, quedarán todas pegadas
+                    seguidas en el fichero.
+                </p>
+
+                <div class="interpret-summary">
+                    <strong>En resumen:</strong> <code>FileWriter</code> permite escribir texto
+                    carácter a carácter, un array de caracteres de golpe, o directamente un
+                    <code>String</code> completo con <code>write(String)</code>; <code>append()</code>
+                    añade contenido sin borrar lo anterior.
+                </div>
+            </section>
+
+            <!-- ==================================================================
+                 PÁGINA 14 DEL LIBRO: LeerFichTextoBuf
+                 ================================================================== -->
+            <section class="interpret-block" id="pagina-14">
+                <span class="interpret-badge">Página 14 · java.io</span>
+                <h2>Página 14: LeerFichTextoBuf</h2>
+                <p class="interpret-intro">
+                    Antes del programa, el libro muestra que <code>FileWriter fic = new
+                    FileWriter(fichero, true);</code> permite <strong>añadir</strong> al final de un
+                    fichero en vez de borrar su contenido (segundo parámetro <code>true</code>), y que
+                    <code>BufferedReader</code> se construye envolviendo un <code>FileReader</code>.
+                    El programa <strong>LeerFichTextoBuf</strong> usa esa combinación para leer un
+                    fichero <strong>línea a línea</strong> (en vez de carácter a carácter).
+                </p>
+
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">LeerFichTextoBuf.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">import</span> java.io.*;
+
+<span class="token keyword">public class</span> <span class="token class-name">LeerFichTextoBuf</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) {
+        <span class="token keyword">try</span>{
+            <span class="token class-name">BufferedReader</span> fichero = <span class="token keyword">new</span> <span class="token class-name">BufferedReader</span>(
+                            <span class="token keyword">new</span> <span class="token class-name">FileReader</span>(<span class="token string">"LeerFichTexto.java"</span>));
+            String linea;
+            <span class="token keyword">while</span>((linea = fichero.<span class="token method">readLine</span>()) !=<span class="token keyword">null</span>)
+                System.out.<span class="token method">println</span>(linea);
+
+            fichero.<span class="token method">close</span>();
+        }
+        <span class="token keyword">catch</span> (<span class="token class-name">FileNotFoundException</span> fn ){
+            System.out.<span class="token method">println</span>(<span class="token string">"No se encuentra el fichero"</span>);}
+        <span class="token keyword">catch</span> (<span class="token class-name">IOException</span> io) {
+            System.out.<span class="token method">println</span>(<span class="token string">"Error de E/S "</span>);}
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+                <ol class="interpret-steps">
+                    <li class="interpret-step">
+                        <span class="step-num">1</span>
+                        <div>
+                            <code class="step-code">try{</code>
+                            <p class="step-desc">Aquí todo el trabajo con ficheros se agrupa dentro de un <code>try-catch</code>, en vez de usar <code>throws IOException</code> en <code>main</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">2</span>
+                        <div>
+                            <code class="step-code">BufferedReader fichero = new BufferedReader(new FileReader("LeerFichTexto.java"));</code>
+                            <p class="step-desc">Se envuelve un <code>FileReader</code> con un <code>BufferedReader</code>, que añade un búfer de lectura eficiente y, sobre todo, el método <code>readLine()</code> (leer líneas completas), algo que <code>FileReader</code> no tiene por sí solo.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">3</span>
+                        <div>
+                            <code class="step-code">String linea;</code>
+                            <p class="step-desc">Variable donde se guardará cada línea leída.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">4</span>
+                        <div>
+                            <code class="step-code">while((linea = fichero.readLine()) !=null)</code>
+                            <p class="step-desc"><code>readLine()</code> lee una línea completa y la devuelve, o devuelve <code>null</code> al llegar al final del fichero; el bucle continúa mientras haya líneas.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">5</span>
+                        <div>
+                            <code class="step-code">System.out.println(linea);</code>
+                            <p class="step-desc">Se imprime la línea leída tal cual, sin necesidad de <em>cast</em> (ya es un <code>String</code>, no un número como con <code>read()</code>).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">6</span>
+                        <div>
+                            <code class="step-code">fichero.close();</code>
+                            <p class="step-desc">Se cierra el flujo dentro del propio bloque <code>try</code>, tras terminar de leer.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">7</span>
+                        <div>
+                            <code class="step-code">catch (FileNotFoundException fn ){ ... } catch (IOException io) { ... }</code>
+                            <p class="step-desc">Se capturan por separado dos posibles errores: que el fichero no exista (<code>FileNotFoundException</code>), o cualquier otro error de entrada/salida (<code>IOException</code>), mostrando un mensaje distinto para cada caso.</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <div class="interpret-summary">
+                    <strong>En resumen:</strong> <code>BufferedReader</code> envuelve a
+                    <code>FileReader</code> para poder leer el fichero línea a línea con
+                    <code>readLine()</code>, en vez de carácter a carácter; el fin de fichero se
+                    detecta aquí con <code>null</code>, no con <code>-1</code>.
+                </div>
+            </section>
+
+            <!-- ==================================================================
+                 PÁGINAS 14-15 DEL LIBRO: EscribirFichTextoBuf
+                 (el programa empieza en la página 14 y termina en la 15)
+                 ================================================================== -->
+            <section class="interpret-block" id="pagina-14-15">
+                <span class="interpret-badge">Páginas 14-15 · java.io</span>
+                <h2>Páginas 14-15: EscribirFichTextoBuf</h2>
+                <p class="interpret-intro">
+                    Antes del programa, el libro muestra que <code>BufferedWriter</code> se
+                    construye envolviendo un <code>FileWriter</code>, igual que pasaba con
+                    <code>BufferedReader</code>. El programa <strong>EscribirFichTextoBuf</strong>
+                    escribe 10 líneas de texto en un fichero, saltando de línea después de cada una
+                    con <code>newLine()</code>.
+                </p>
+
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">EscribirFichTextoBuf.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">import</span> java.io.*;
+
+<span class="token keyword">public class</span> <span class="token class-name">EscribirFichTextoBuf</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) {
+        <span class="token keyword">try</span>{
+            <span class="token class-name">BufferedWriter</span> fichero = <span class="token keyword">new</span> <span class="token class-name">BufferedWriter</span>
+                        (<span class="token keyword">new</span> <span class="token class-name">FileWriter</span>(<span class="token string">"FichTexto.txt"</span>));
+
+            <span class="token keyword">for</span> (<span class="token keyword">int</span> i=1; i&lt;11; i++){
+                fichero.<span class="token method">write</span>(<span class="token string">"Fila numero: "</span>+i);
+                fichero.<span class="token method">newLine</span>();
+            }
+            fichero.<span class="token method">close</span>();
+        }
+        <span class="token keyword">catch</span> (<span class="token class-name">FileNotFoundException</span> fn ){
+                System.out.<span class="token method">println</span>(<span class="token string">"No se encuentra el fichero"</span>);}
+        <span class="token keyword">catch</span> (<span class="token class-name">IOException</span> io) {
+                System.out.<span class="token method">println</span>(<span class="token string">"Error de E/S "</span>);}
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+                <ol class="interpret-steps">
+                    <li class="interpret-step">
+                        <span class="step-num">1</span>
+                        <div>
+                            <code class="step-code">BufferedWriter fichero = new BufferedWriter(new FileWriter("FichTexto.txt"));</code>
+                            <p class="step-desc">Se envuelve un <code>FileWriter</code> con un <code>BufferedWriter</code>, que añade un búfer para escribir caracteres de forma eficiente y aporta el método <code>newLine()</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">2</span>
+                        <div>
+                            <code class="step-code">for (int i=1; i&lt;11; i++){</code>
+                            <p class="step-desc">Bucle que recorre los números del 1 al 10 (10 vueltas en total).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">3</span>
+                        <div>
+                            <code class="step-code">fichero.write("Fila numero: "+i);</code>
+                            <p class="step-desc">Se escribe el texto <code>"Fila numero: "</code> concatenado con el número de la vuelta actual.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">4</span>
+                        <div>
+                            <code class="step-code">fichero.newLine();</code>
+                            <p class="step-desc">Se escribe un salto de línea, para que la siguiente fila quede en una línea nueva.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">5</span>
+                        <div>
+                            <code class="step-code">fichero.close();</code>
+                            <p class="step-desc">Se cierra el flujo una vez escritas las 10 líneas.</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <div class="interpret-summary">
+                    <strong>En resumen:</strong> <code>BufferedWriter</code> añade a
+                    <code>FileWriter</code> un búfer eficiente y el método <code>newLine()</code>
+                    para no tener que escribir el salto de línea a mano.
+                </div>
+            </section>
+
+            <!-- ==================================================================
+                 PÁGINA 15 DEL LIBRO: Reescritura con PrintWriter
+                 ================================================================== -->
+            <section class="interpret-block" id="pagina-15">
+                <span class="interpret-badge">Página 15 · java.io</span>
+                <h2>Página 15: Reescritura con PrintWriter</h2>
+                <p class="interpret-intro">
+                    El libro presenta <code>PrintWriter</code> (también deriva de <code>Writer</code>)
+                    como alternativa más cómoda: tiene los métodos <code>print()</code> y
+                    <code>println()</code>, igual que <code>System.out</code>, y
+                    <code>println()</code> añade el salto de línea automáticamente. Se construye
+                    envolviendo un <code>FileWriter</code>. Con esto, el ejemplo de
+                    <code>EscribirFichTextoBuf</code> se puede reescribir así, mucho más corto:
+                </p>
+
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">reescritura con PrintWriter</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token class-name">PrintWriter</span> fichero = <span class="token keyword">new</span> <span class="token class-name">PrintWriter</span>
+                (<span class="token keyword">new</span> <span class="token class-name">FileWriter</span>(<span class="token string">"FichTexto.txt"</span>));
+<span class="token keyword">for</span>(<span class="token keyword">int</span> i=1; i&lt;11; i++)
+        fichero.<span class="token method">println</span>(<span class="token string">"Fila numero: "</span>+i);
+fichero.<span class="token method">close</span>();</code></pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+                <ol class="interpret-steps">
+                    <li class="interpret-step">
+                        <span class="step-num">1</span>
+                        <div>
+                            <code class="step-code">PrintWriter fichero = new PrintWriter(new FileWriter("FichTexto.txt"));</code>
+                            <p class="step-desc">Se envuelve un <code>FileWriter</code> con un <code>PrintWriter</code>, que aporta los métodos <code>print()</code> y <code>println()</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">2</span>
+                        <div>
+                            <code class="step-code">for(int i=1; i&lt;11; i++)</code>
+                            <p class="step-desc">Mismo bucle de antes: del 1 al 10.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">3</span>
+                        <div>
+                            <code class="step-code">fichero.println("Fila numero: "+i);</code>
+                            <p class="step-desc">Se escribe la línea y se salta de línea en la misma instrucción; ya no hace falta llamar a <code>newLine()</code> por separado como con <code>BufferedWriter</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">4</span>
+                        <div>
+                            <code class="step-code">fichero.close();</code>
+                            <p class="step-desc">Se cierra el flujo, igual que en los ejemplos anteriores.</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <div class="interpret-summary">
+                    <strong>En resumen:</strong> <code>PrintWriter</code> hace lo mismo que
+                    <code>BufferedWriter</code> + <code>newLine()</code>, pero en menos código,
+                    reutilizando los métodos <code>print()</code>/<code>println()</code> que ya se
+                    conocen de <code>System.out</code>.
+                </div>
+            </section>
+
+            <!-- ==================================================================
+                 PÁGINA 16 DEL LIBRO: EscribirFichBytes
+                 Para añadir una nueva página: duplica esta <section> completa,
+                 cambia el id="pagina-N" y añade su enlace correspondiente en
+                 includes/sidebar-interpretacion-tema1.html
+                 ================================================================== -->
+            <section class="interpret-block" id="pagina-16">
+                <span class="interpret-badge">Página 16 · java.io</span>
+                <h2>Página 16: EscribirFichBytes</h2>
+                <p class="interpret-intro">
+                    Este programa escribe los números del 1 al 99 en un fichero byte a byte
+                    usando <code>FileOutputStream</code>, y a continuación vuelve a leer ese
+                    mismo fichero con <code>FileInputStream</code>, mostrando cada valor leído
+                    por consola.
+                </p>
+
+                <!-- Bloque de código estilo VSCode -->
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">EscribirFichBytes.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">import</span> java.io.*;
+
+<span class="token keyword">public class</span> <span class="token class-name">EscribirFichBytes</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) <span class="token keyword">throws</span> <span class="token class-name">IOException</span> {
+
+        <span class="token class-name">File</span> fichero = <span class="token keyword">new</span> <span class="token class-name">File</span>(<span class="token string">"c:\\..."</span>);
+
+        <span class="token class-name">FileOutputStream</span> fileout = <span class="token keyword">new</span> <span class="token class-name">FileOutputStream</span>(fichero);
+
+        <span class="token class-name">FileInputStream</span> filein = <span class="token keyword">new</span> <span class="token class-name">FileInputStream</span>(fichero);
+
+        <span class="token keyword">int</span> i;
+
+        <span class="token keyword">for</span> (i = 1; i &lt; 100; i++) {
+            fileout.<span class="token method">write</span>(i);
+        }
+
+        fileout.<span class="token method">close</span>();
+
+        <span class="token keyword">while</span> ((i = filein.<span class="token method">read</span>()) != -1) {
+            System.out.<span class="token method">println</span>(i);
+        }
+
+        filein.<span class="token method">close</span>();
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+                <ol class="interpret-steps">
+                    <li class="interpret-step">
+                        <span class="step-num">1</span>
+                        <div>
+                            <code class="step-code">import java.io.*;</code>
+                            <p class="step-desc">Se importan todos los paquetes de <code>java.io</code>, donde están las clases para trabajar con ficheros y flujos de entrada/salida (<code>File</code>, <code>FileOutputStream</code>, <code>FileInputStream</code>...).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">2</span>
+                        <div>
+                            <code class="step-code">public class EscribirFichBytes {</code>
+                            <p class="step-desc">Se declara una clase pública llamada <code>EscribirFichBytes</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">3</span>
+                        <div>
+                            <code class="step-code">public static void main(String[] args) throws IOException {</code>
+                            <p class="step-desc">Se declara el método <code>main</code>: es estático, no devuelve nada (<code>void</code>) y recibe como argumento un array de <code>String</code> llamado <code>args</code>. Además, puede lanzar una excepción de tipo <code>IOException</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">4</span>
+                        <div>
+                            <code class="step-code">File fichero = new File("c:\...");</code>
+                            <p class="step-desc">Se crea una variable <code>fichero</code> de tipo <code>File</code>, indicando como argumento la ruta del archivo.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">5</span>
+                        <div>
+                            <code class="step-code">FileOutputStream fileout = new FileOutputStream(fichero);</code>
+                            <p class="step-desc">Se crea la variable <code>fileout</code> de tipo <code>FileOutputStream</code>, asignándole un nuevo objeto que recibe <code>fichero</code> como argumento: este flujo permitirá escribir bytes en el archivo.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">6</span>
+                        <div>
+                            <code class="step-code">FileInputStream filein = new FileInputStream(fichero);</code>
+                            <p class="step-desc">Se crea la variable <code>filein</code> de tipo <code>FileInputStream</code>, asignándole un nuevo objeto que recibe <code>fichero</code> como argumento: este flujo permitirá leer bytes del archivo.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">7</span>
+                        <div>
+                            <code class="step-code">int i;</code>
+                            <p class="step-desc">Se declara una variable entera llamada <code>i</code>, que se reutilizará más abajo como contador y como valor leído.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">8</span>
+                        <div>
+                            <code class="step-code">for (i = 1; i &lt; 100; i++) {</code>
+                            <p class="step-desc">Se inicia un bucle <code>for</code> en el que <code>i</code> empieza en 1 y se incrementa de 1 en 1 mientras sea menor que 100 (es decir, recorre del 1 al 99).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">9</span>
+                        <div>
+                            <code class="step-code">fileout.write(i);</code>
+                            <p class="step-desc">En cada vuelta del bucle se escribe el valor de <code>i</code> dentro del flujo de salida <code>fileout</code>, es decir, se guarda ese byte en el fichero.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">10</span>
+                        <div>
+                            <code class="step-code">fileout.close();</code>
+                            <p class="step-desc">Se cierra el flujo de salida <code>fileout</code> una vez terminado el bucle, liberando el recurso y asegurando que todo lo escrito quede guardado en el fichero.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">11</span>
+                        <div>
+                            <code class="step-code">while ((i = filein.read()) != -1) {</code>
+                            <p class="step-desc">Se inicia un bucle <code>while</code> en el que a <code>i</code> se le asigna lo que devuelve <code>filein.read()</code> (el siguiente byte leído). El bucle continúa mientras ese valor sea distinto de <code>-1</code>, que es lo que devuelve <code>read()</code> al llegar al final del fichero.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">12</span>
+                        <div>
+                            <code class="step-code">System.out.println(i);</code>
+                            <p class="step-desc">Se muestra por pantalla el valor almacenado en <code>i</code>, es decir, cada byte leído del fichero.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">13</span>
+                        <div>
+                            <code class="step-code">filein.close();</code>
+                            <p class="step-desc">Se cierra el flujo de entrada <code>filein</code>, liberando el recurso una vez terminada la lectura.</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <div class="interpret-summary">
+                    <strong>En resumen:</strong> el programa escribe los bytes del 1 al 99 en un fichero
+                    y luego los vuelve a leer y a imprimir por consola, mostrando así cómo se combinan
+                    <code>FileOutputStream</code> y <code>FileInputStream</code> para escribir y leer
+                    datos byte a byte en Java.
+                </div>
+            </section>
+
+            <!-- ==================================================================
+                 PÁGINA 17 DEL LIBRO: EscribirFichData
+                 ================================================================== -->
+            <section class="interpret-block" id="pagina-17">
+                <span class="interpret-badge">Página 17 · java.io</span>
+                <h2>Página 17: EscribirFichData</h2>
+                <p class="interpret-intro">
+                    Aquí en vez de <code>FileOutputStream</code> a secas (que solo escribe bytes
+                    sueltos), se envuelve ese flujo con un <code>DataOutputStream</code>, que añade
+                    métodos como <code>writeUTF()</code> y <code>writeInt()</code> para escribir
+                    directamente tipos de datos primitivos (cadenas, enteros...) en el fichero
+                    binario <code>FichData.dat</code>.
+                </p>
+
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">EscribirFichData.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">import</span> java.io.*;
+
+<span class="token keyword">public class</span> <span class="token class-name">EscribirFichData</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) <span class="token keyword">throws</span> <span class="token class-name">IOException</span> {
+
+        <span class="token class-name">File</span> fichero = <span class="token keyword">new</span> <span class="token class-name">File</span>(<span class="token string">"FichData.dat"</span>);
+        <span class="token class-name">FileOutputStream</span> fileout = <span class="token keyword">new</span> <span class="token class-name">FileOutputStream</span>(fichero);
+        <span class="token class-name">DataOutputStream</span> dataOS = <span class="token keyword">new</span> <span class="token class-name">DataOutputStream</span>(fileout);
+
+        String nombres[] =
+                    {<span class="token string">"Ana"</span>,<span class="token string">"Luis Miguel"</span>,<span class="token string">"Alicia"</span>,<span class="token string">"Pedro"</span>,<span class="token string">"Manuel"</span>,
+                     <span class="token string">"Andrés"</span>, <span class="token string">"Julio"</span>,<span class="token string">"Antonio"</span>,<span class="token string">"María Jesús"</span>};
+
+        <span class="token keyword">int</span> edades[] = {14,15,13,15,16,12,16,14,13};
+
+        <span class="token keyword">for</span> (<span class="token keyword">int</span> i=0; i&lt;edades.length; i++){
+            dataOS.<span class="token method">writeUTF</span>(nombres[i]);
+            dataOS.<span class="token method">writeInt</span>(edades[i]);
+        }
+        dataOS.<span class="token method">close</span>();
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+                <ol class="interpret-steps">
+                    <li class="interpret-step">
+                        <span class="step-num">1</span>
+                        <div>
+                            <code class="step-code">import java.io.*;</code>
+                            <p class="step-desc">Se importan todos los paquetes de <code>java.io</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">2</span>
+                        <div>
+                            <code class="step-code">public class EscribirFichData {</code>
+                            <p class="step-desc">Se declara una clase pública llamada <code>EscribirFichData</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">3</span>
+                        <div>
+                            <code class="step-code">public static void main(String[] args) throws IOException {</code>
+                            <p class="step-desc">Se declara el método <code>main</code>, estático, sin retorno y que puede lanzar <code>IOException</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">4</span>
+                        <div>
+                            <code class="step-code">File fichero = new File("FichData.dat");</code>
+                            <p class="step-desc">Se crea el objeto <code>File</code> que apunta al fichero <code>FichData.dat</code> (ruta relativa).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">5</span>
+                        <div>
+                            <code class="step-code">FileOutputStream fileout = new FileOutputStream(fichero);</code>
+                            <p class="step-desc">Se crea un flujo de salida de bytes <code>fileout</code> enlazado al fichero.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">6</span>
+                        <div>
+                            <code class="step-code">DataOutputStream dataOS = new DataOutputStream(fileout);</code>
+                            <p class="step-desc">Se envuelve <code>fileout</code> con un <code>DataOutputStream</code>, que permite escribir tipos de datos primitivos (no solo bytes sueltos) mediante métodos como <code>writeUTF()</code> y <code>writeInt()</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">7</span>
+                        <div>
+                            <code class="step-code">String nombres[] = {"Ana", "Luis Miguel", ...};</code>
+                            <p class="step-desc">Se declara y se rellena un array de <code>String</code> con los nombres de las personas.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">8</span>
+                        <div>
+                            <code class="step-code">int edades[] = {14,15,13,15,16,12,16,14,13};</code>
+                            <p class="step-desc">Se declara y se rellena un array de <code>int</code> con las edades, en el mismo orden que el array de nombres (posición a posición forman parejas).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">9</span>
+                        <div>
+                            <code class="step-code">for (int i=0; i&lt;edades.length; i++){</code>
+                            <p class="step-desc">Se inicia un bucle <code>for</code> que recorre todas las posiciones del array <code>edades</code> (y, por tanto, también las del array <code>nombres</code>, que tiene la misma longitud).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">10</span>
+                        <div>
+                            <code class="step-code">dataOS.writeUTF(nombres[i]);</code>
+                            <p class="step-desc">Se escribe en el fichero el nombre de la posición <code>i</code>, codificado como texto UTF.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">11</span>
+                        <div>
+                            <code class="step-code">dataOS.writeInt(edades[i]);</code>
+                            <p class="step-desc">Justo después, se escribe la edad de la posición <code>i</code> como número entero. Nombre y edad quedan guardados seguidos, en parejas.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">12</span>
+                        <div>
+                            <code class="step-code">dataOS.close();</code>
+                            <p class="step-desc">Se cierra el flujo <code>dataOS</code>, lo que fuerza a que todo lo escrito quede realmente guardado en <code>FichData.dat</code>.</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <div class="interpret-summary">
+                    <strong>En resumen:</strong> el programa recorre dos arrays en paralelo (nombres y
+                    edades) y va guardando cada pareja en el fichero <code>FichData.dat</code> usando
+                    <code>DataOutputStream</code>, que sabe escribir tipos primitivos directamente
+                    (a diferencia de <code>FileOutputStream</code>, que solo trabaja con bytes sueltos).
+                    Es imprescindible recordar el <strong>orden</strong> en que se escribe cada dato,
+                    porque habrá que leerlo exactamente en ese mismo orden (ver Página 18).
+                </div>
+            </section>
+
+            <!-- ==================================================================
+                 PÁGINA 18 DEL LIBRO: LeerFichData
+                 ================================================================== -->
+            <section class="interpret-block" id="pagina-18">
+                <span class="interpret-badge">Página 18 · java.io</span>
+                <h2>Página 18: LeerFichData</h2>
+                <p class="interpret-intro">
+                    Este programa lee de vuelta el fichero <code>FichData.dat</code> generado en la
+                    Página 17, usando <code>DataInputStream</code> para recuperar los datos con
+                    <code>readUTF()</code> y <code>readInt()</code>, respetando el mismo orden en el
+                    que se escribieron: primero el nombre y luego la edad.
+                </p>
+
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">LeerFichData.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">import</span> java.io.*;
+
+<span class="token keyword">public class</span> <span class="token class-name">LeerFichData</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) <span class="token keyword">throws</span> <span class="token class-name">IOException</span> {
+        <span class="token class-name">File</span> fichero = <span class="token keyword">new</span> <span class="token class-name">File</span>(<span class="token string">"FichData.dat"</span>);
+        <span class="token class-name">FileInputStream</span> filein = <span class="token keyword">new</span> <span class="token class-name">FileInputStream</span>(fichero);
+        <span class="token class-name">DataInputStream</span> dataIS = <span class="token keyword">new</span> <span class="token class-name">DataInputStream</span>(filein);
+        String n;
+        <span class="token keyword">int</span> e;
+
+        <span class="token keyword">try</span> {
+         <span class="token keyword">while</span> (<span class="token keyword">true</span>) {
+             n = dataIS.<span class="token method">readUTF</span>();
+             e = dataIS.<span class="token method">readInt</span>();
+             System.out.<span class="token method">println</span>(<span class="token string">"Nombre: "</span> + n + <span class="token string">", edad: "</span> + e);
+         }
+         }<span class="token keyword">catch</span> (<span class="token class-name">EOFException</span> eo) {}
+
+        dataIS.<span class="token method">close</span>();
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+                <ol class="interpret-steps">
+                    <li class="interpret-step">
+                        <span class="step-num">1</span>
+                        <div>
+                            <code class="step-code">import java.io.*;</code>
+                            <p class="step-desc">Se importan todos los paquetes de <code>java.io</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">2</span>
+                        <div>
+                            <code class="step-code">public class LeerFichData {</code>
+                            <p class="step-desc">Se declara una clase pública llamada <code>LeerFichData</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">3</span>
+                        <div>
+                            <code class="step-code">public static void main(String[] args) throws IOException {</code>
+                            <p class="step-desc">Se declara el método <code>main</code>, estático, sin retorno y que puede lanzar <code>IOException</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">4</span>
+                        <div>
+                            <code class="step-code">File fichero = new File("FichData.dat");</code>
+                            <p class="step-desc">Se apunta al mismo fichero que se generó en la Página 17.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">5</span>
+                        <div>
+                            <code class="step-code">FileInputStream filein = new FileInputStream(fichero);</code>
+                            <p class="step-desc">Se crea un flujo de entrada de bytes <code>filein</code> enlazado al fichero.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">6</span>
+                        <div>
+                            <code class="step-code">DataInputStream dataIS = new DataInputStream(filein);</code>
+                            <p class="step-desc">Se envuelve <code>filein</code> con un <code>DataInputStream</code>, que permite leer tipos primitivos con métodos como <code>readUTF()</code> y <code>readInt()</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">7</span>
+                        <div>
+                            <code class="step-code">String n; int e;</code>
+                            <p class="step-desc">Se declaran las variables <code>n</code> y <code>e</code>, que irán guardando, en cada vuelta del bucle, el nombre y la edad leídos.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">8</span>
+                        <div>
+                            <code class="step-code">try {</code>
+                            <p class="step-desc">Se abre un bloque <code>try</code> porque no se sabe de antemano cuántos registros hay: se leerá hasta que salte una excepción al llegar al final del fichero.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">9</span>
+                        <div>
+                            <code class="step-code">while (true) {</code>
+                            <p class="step-desc">Bucle infinito: seguirá leyendo registros hasta que lo interrumpa la excepción de fin de fichero.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">10</span>
+                        <div>
+                            <code class="step-code">n = dataIS.readUTF();</code>
+                            <p class="step-desc">Se lee el siguiente dato del fichero como texto UTF y se guarda en <code>n</code> (el nombre).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">11</span>
+                        <div>
+                            <code class="step-code">e = dataIS.readInt();</code>
+                            <p class="step-desc">A continuación se lee el siguiente dato como número entero y se guarda en <code>e</code> (la edad). Debe leerse justo después del nombre, porque así se escribió.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">12</span>
+                        <div>
+                            <code class="step-code">System.out.println("Nombre: " + n + ", edad: " + e);</code>
+                            <p class="step-desc">Se muestra por pantalla la pareja nombre-edad que se acaba de leer.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">13</span>
+                        <div>
+                            <code class="step-code">} catch (EOFException eo) {}</code>
+                            <p class="step-desc">Cuando ya no quedan más datos, <code>readUTF()</code>/<code>readInt()</code> lanzan <code>EOFException</code> (fin de fichero); se captura con un bloque vacío, que simplemente corta el bucle sin mostrar ningún error.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">14</span>
+                        <div>
+                            <code class="step-code">dataIS.close();</code>
+                            <p class="step-desc">Se cierra el flujo de entrada una vez terminada la lectura.</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <h3 style="margin-top: 2rem; font-size: 1.05rem; color: var(--text-main);">Resultado Mostrado por Terminal</h3>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola</div>
+Nombre: Ana, edad: 14
+Nombre: Luis Miguel, edad: 15
+Nombre: Alicia, edad: 13
+Nombre: Pedro, edad: 15
+Nombre: Manuel, edad: 16
+Nombre: Andrés, edad: 12
+Nombre: Julio, edad: 16
+Nombre: Antonio, edad: 14
+Nombre: María Jesús, edad: 13
+                </div>
+
+                <div class="interpret-summary">
+                    <strong>En resumen:</strong> el programa lee el fichero binario que generó la
+                    Página 17 en parejas nombre-edad, respetando el orden de escritura, y usa una
+                    excepción (<code>EOFException</code>) como forma "normal" de detectar que se ha
+                    llegado al final del fichero, ya que <code>DataInputStream</code> no tiene un
+                    equivalente directo al <code>-1</code> de <code>read()</code> para tipos compuestos.
+                </div>
+            </section>
+
+            <!-- Para la próxima página: copia el <section class="interpret-block" id="pagina-18">...</section>
+                 de arriba, cámbiale el id a "pagina-N" y actualiza su contenido. No olvides añadir
+                 el enlace correspondiente en includes/sidebar-interpretacion-tema1.html -->
+
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales -->
+    <script src="../../js/components.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

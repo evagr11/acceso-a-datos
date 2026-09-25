@@ -6,6 +6,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   initCodeCopyButtons();
   initSmoothScroll();
+  initScrollSpy();
+});
+
+// El sidebar se inyecta de forma asíncrona (fetch) desde components.js,
+// así que el scrollspy también se inicializa cuando ese sidebar ya está en el DOM.
+document.addEventListener('sidebar:loaded', () => {
+  initScrollSpy();
 });
 
 /**
@@ -62,6 +69,55 @@ function initCodeCopyButtons() {
 
     header.appendChild(copyBtn);
   });
+}
+
+/**
+ * Resalta en el sidebar el enlace de la sección que está actualmente visible en pantalla.
+ * Pensado para páginas de una sola página (como Interpretación de Código), donde el
+ * sidebar enlaza a anclas (#id) dentro del propio documento en vez de a otros ficheros.
+ */
+function initScrollSpy() {
+  const sidebarLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+  if (!sidebarLinks.length) return;
+
+  // Evitamos crear observadores duplicados si esta función se llama varias veces
+  // (p.ej. una vez en DOMContentLoaded y otra al terminarse de inyectar el sidebar).
+  if (initScrollSpy._initialized) return;
+  initScrollSpy._initialized = true;
+
+  const sections = [];
+  sidebarLinks.forEach(link => {
+    const id = link.getAttribute('href');
+    const section = document.querySelector(id);
+    if (section) sections.push({ id, link, section });
+  });
+
+  if (!sections.length) return;
+
+  function setActive(id) {
+    sidebarLinks.forEach(link => link.classList.remove('active'));
+    const match = sections.find(s => s.id === id);
+    if (match) match.link.classList.add('active');
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    // Nos quedamos con la sección visible más cercana a la parte superior del viewport.
+    const visible = entries
+      .filter(entry => entry.isIntersecting)
+      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+    if (visible.length > 0) {
+      setActive('#' + visible[0].target.id);
+    }
+  }, {
+    rootMargin: '-96px 0px -70% 0px', // Ajustado a la altura del navbar
+    threshold: 0
+  });
+
+  sections.forEach(({ section }) => observer.observe(section));
+
+  // Activamos el primero por defecto al cargar.
+  setActive(sections[0].id);
 }
 
 /**

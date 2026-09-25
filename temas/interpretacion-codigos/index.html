@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interpretación de Código - Acceso a Datos</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/vscode-theme.css">
+    <link rel="stylesheet" href="../../css/interpretacion.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar dinámico: carga includes/sidebar-interpretacion.html.
+             A diferencia del sidebar de Tema 1, sus enlaces son anclas (#codigo-N)
+             que se mueven dentro de ESTA MISMA página, no a ficheros distintos. -->
+        <div id="sidebar-container" data-sidebar="interpretacion"></div>
+
+        <!-- Contenido principal: todos los códigos interpretados viven aquí,
+             uno debajo de otro, cada uno en su propia <section id="codigo-N"> -->
+        <main class="content-container">
+            <h1>Interpretación de Código</h1>
+            <p style="color:#cbd5e1; margin-bottom: 2rem; max-width: 70ch;">
+                Explicación línea a línea de fragmentos de código Java del módulo, pensada para
+                repasar qué hace cada instrucción. Usa el menú lateral para saltar directamente
+                a cada código.
+            </p>
+
+            <!-- ==================================================================
+                 CÓDIGO 1: EscribirFichBytes
+                 Para añadir un nuevo código: duplica esta <section> completa,
+                 cambia el id="codigo-N" y añade su enlace correspondiente en
+                 includes/sidebar-interpretacion.html
+                 ================================================================== -->
+            <section class="interpret-block" id="codigo-1">
+                <span class="interpret-badge">Java · java.io</span>
+                <h2>Código 1: EscribirFichBytes</h2>
+                <p class="interpret-intro">
+                    Este programa escribe los números del 1 al 99 en un fichero byte a byte
+                    usando <code>FileOutputStream</code>, y a continuación vuelve a leer ese
+                    mismo fichero con <code>FileInputStream</code>, mostrando cada valor leído
+                    por consola.
+                </p>
+
+                <!-- Bloque de código estilo VSCode -->
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">EscribirFichBytes.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">import</span> java.io.*;
+
+<span class="token keyword">public class</span> <span class="token class-name">EscribirFichBytes</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) <span class="token keyword">throws</span> <span class="token class-name">IOException</span> {
+
+        <span class="token class-name">File</span> fichero = <span class="token keyword">new</span> <span class="token class-name">File</span>(<span class="token string">"c:\\..."</span>);
+
+        <span class="token class-name">FileOutputStream</span> fileout = <span class="token keyword">new</span> <span class="token class-name">FileOutputStream</span>(fichero);
+
+        <span class="token class-name">FileInputStream</span> filein = <span class="token keyword">new</span> <span class="token class-name">FileInputStream</span>(fichero);
+
+        <span class="token keyword">int</span> i;
+
+        <span class="token keyword">for</span> (i = 1; i &lt; 100; i++) {
+            fileout.<span class="token method">write</span>(i);
+        }
+
+        fileout.<span class="token method">close</span>();
+
+        <span class="token keyword">while</span> ((i = filein.<span class="token method">read</span>()) != -1) {
+            System.out.<span class="token method">println</span>(i);
+        }
+
+        filein.<span class="token method">close</span>();
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+                <ol class="interpret-steps">
+                    <li class="interpret-step">
+                        <span class="step-num">1</span>
+                        <div>
+                            <code class="step-code">import java.io.*;</code>
+                            <p class="step-desc">Se importan todos los paquetes de <code>java.io</code>, donde están las clases para trabajar con ficheros y flujos de entrada/salida (<code>File</code>, <code>FileOutputStream</code>, <code>FileInputStream</code>...).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">2</span>
+                        <div>
+                            <code class="step-code">public class EscribirFichBytes {</code>
+                            <p class="step-desc">Se declara una clase pública llamada <code>EscribirFichBytes</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">3</span>
+                        <div>
+                            <code class="step-code">public static void main(String[] args) throws IOException {</code>
+                            <p class="step-desc">Se declara el método <code>main</code>: es estático, no devuelve nada (<code>void</code>) y recibe como argumento un array de <code>String</code> llamado <code>args</code>. Además, puede lanzar una excepción de tipo <code>IOException</code>.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">4</span>
+                        <div>
+                            <code class="step-code">File fichero = new File("c:\...");</code>
+                            <p class="step-desc">Se crea una variable <code>fichero</code> de tipo <code>File</code>, indicando como argumento la ruta del archivo.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">5</span>
+                        <div>
+                            <code class="step-code">FileOutputStream fileout = new FileOutputStream(fichero);</code>
+                            <p class="step-desc">Se crea la variable <code>fileout</code> de tipo <code>FileOutputStream</code>, asignándole un nuevo objeto que recibe <code>fichero</code> como argumento: este flujo permitirá escribir bytes en el archivo.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">6</span>
+                        <div>
+                            <code class="step-code">FileInputStream filein = new FileInputStream(fichero);</code>
+                            <p class="step-desc">Se crea la variable <code>filein</code> de tipo <code>FileInputStream</code>, asignándole un nuevo objeto que recibe <code>fichero</code> como argumento: este flujo permitirá leer bytes del archivo.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">7</span>
+                        <div>
+                            <code class="step-code">int i;</code>
+                            <p class="step-desc">Se declara una variable entera llamada <code>i</code>, que se reutilizará más abajo como contador y como valor leído.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">8</span>
+                        <div>
+                            <code class="step-code">for (i = 1; i &lt; 100; i++) {</code>
+                            <p class="step-desc">Se inicia un bucle <code>for</code> en el que <code>i</code> empieza en 1 y se incrementa de 1 en 1 mientras sea menor que 100 (es decir, recorre del 1 al 99).</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">9</span>
+                        <div>
+                            <code class="step-code">fileout.write(i);</code>
+                            <p class="step-desc">En cada vuelta del bucle se escribe el valor de <code>i</code> dentro del flujo de salida <code>fileout</code>, es decir, se guarda ese byte en el fichero.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">10</span>
+                        <div>
+                            <code class="step-code">fileout.close();</code>
+                            <p class="step-desc">Se cierra el flujo de salida <code>fileout</code> una vez terminado el bucle, liberando el recurso y asegurando que todo lo escrito quede guardado en el fichero.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">11</span>
+                        <div>
+                            <code class="step-code">while ((i = filein.read()) != -1) {</code>
+                            <p class="step-desc">Se inicia un bucle <code>while</code> en el que a <code>i</code> se le asigna lo que devuelve <code>filein.read()</code> (el siguiente byte leído). El bucle continúa mientras ese valor sea distinto de <code>-1</code>, que es lo que devuelve <code>read()</code> al llegar al final del fichero.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">12</span>
+                        <div>
+                            <code class="step-code">System.out.println(i);</code>
+                            <p class="step-desc">Se muestra por pantalla el valor almacenado en <code>i</code>, es decir, cada byte leído del fichero.</p>
+                        </div>
+                    </li>
+                    <li class="interpret-step">
+                        <span class="step-num">13</span>
+                        <div>
+                            <code class="step-code">filein.close();</code>
+                            <p class="step-desc">Se cierra el flujo de entrada <code>filein</code>, liberando el recurso una vez terminada la lectura.</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <div class="interpret-summary">
+                    <strong>En resumen:</strong> el programa escribe los bytes del 1 al 99 en un fichero
+                    y luego los vuelve a leer y a imprimir por consola, mostrando así cómo se combinan
+                    <code>FileOutputStream</code> y <code>FileInputStream</code> para escribir y leer
+                    datos byte a byte en Java.
+                </div>
+            </section>
+
+            <!-- Para el próximo código: copia el <section class="interpret-block" id="codigo-1">...</section>
+                 de arriba, cámbiale el id a "codigo-2" y actualiza su contenido. No olvides añadir
+                 el enlace correspondiente en includes/sidebar-interpretacion.html -->
+
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales -->
+    <script src="../../js/components.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

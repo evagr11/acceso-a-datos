@@ -25,16 +25,24 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch(err => console.error("Error en Navbar:", err));
     }
 
-    // 2. Cargar el Sidebar desde includes/sidebar-tema1.html (si existe el contenedor)
+    // 2. Cargar el Sidebar correspondiente (si existe el contenedor).
+    //    El atributo data-sidebar indica qué fichero de includes/ cargar.
+    //    Si no se especifica, se usa "tema1" por compatibilidad con páginas existentes.
     const sidebarContainer = document.getElementById("sidebar-container");
     if (sidebarContainer) {
-        fetch(`${basePath}includes/sidebar-tema1.html`)
+        const sidebarName = sidebarContainer.dataset.sidebar || "tema1";
+        const sidebarFile = `includes/sidebar-${sidebarName}.html`;
+
+        fetch(`${basePath}${sidebarFile}`)
             .then(res => {
-                if (!res.ok) throw new Error(`Error al cargar sidebar-tema1.html (Status: ${res.status})`);
+                if (!res.ok) throw new Error(`Error al cargar ${sidebarFile} (Status: ${res.status})`);
                 return res.text();
             })
             .then(html => {
                 sidebarContainer.innerHTML = fixLinks(html);
+                // Avisamos de que el sidebar ya está listo, por si otro script
+                // (p.ej. el scrollspy de main.js) necesita reaccionar a esto.
+                document.dispatchEvent(new CustomEvent("sidebar:loaded", { detail: { sidebarName } }));
             })
             .catch(err => console.error("Error en Sidebar:", err));
     }
