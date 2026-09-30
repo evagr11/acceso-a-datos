@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diccionario de Excepciones - Acceso a Datos</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/vscode-theme.css">
+    <link rel="stylesheet" href="../../css/excepciones.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar dinámico: carga includes/sidebar-excepciones.html (enlaces por ancla) -->
+        <div id="sidebar-container" data-sidebar="excepciones"></div>
+
+        <!-- Contenido principal -->
+        <main class="content-container">
+            <h1>Diccionario de Excepciones</h1>
+            <p style="color:#cbd5e1; margin-bottom: 2rem; max-width: 70ch;">
+                Todas las excepciones que aparecen en las tareas y en los códigos interpretados,
+                con su significado en castellano, cuándo saltan y en qué páginas se usan.
+            </p>
+
+            <!-- SECCIÓN 1: Tabla del diccionario -->
+            <section class="tarea-section">
+                <h2>Excepciones</h2>
+                <p>
+                    <strong>Checked</strong>: Java obliga a capturarlas (<code>try-catch</code>) o declararlas (<code>throws</code>).
+                    <strong>Unchecked</strong>: no es obligatorio.
+                </p>
+
+                <div class="exc-table-wrap">
+                <table class="exc-table">
+                    <thead>
+                        <tr>
+                            <th>Excepción</th>
+                            <th>Significado</th>
+                            <th>Cuándo salta</th>
+                            <th>Dónde aparece</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr id="exception">
+                        <td><code class="exc-name">Exception</code><span class="exc-kind exc-checked">Checked</span></td>
+                        <td class="exc-es">Excepción genérica</td>
+                        <td>Es la clase padre de casi todas las excepciones que se pueden capturar. Al hacer <code>catch (Exception e)</code> se atrapa cualquier error, sin distinguir cuál ha sido.</td>
+                        <td class="exc-where"><a class="exc-chip" href="../tema1/tarea3-clase2.html">Tarea 3</a></td>
+                    </tr>
+                    <tr id="ioexception">
+                        <td><code class="exc-name">IOException</code><span class="exc-kind exc-checked">Checked</span></td>
+                        <td class="exc-es">Error de entrada/salida</td>
+                        <td>Falla cualquier operación de lectura o escritura: ruta que no existe, disco no accesible, permisos, fichero cerrado... Es obligatorio capturarla con <code>try-catch</code> o declararla con <code>throws</code>.</td>
+                        <td class="exc-where"><a class="exc-chip" href="../tema1/tarea3-clase2.html">Tarea 3</a> <a class="exc-chip" href="../tema1/tarea5-clase4.html">Tarea 5</a> <a class="exc-chip" href="../tema1/tarea6-clase5.html">Tarea 6</a> <a class="exc-chip" href="../tema1/tarea7-clase6.html">Tarea 7</a> <a class="exc-chip" href="../tema1/tarea8-clase7.html">Tarea 8</a> <a class="exc-chip" href="../tema1/tarea9-clase8.html">Tarea 9</a> <a class="exc-chip" href="../tema1/tarea10-clase9.html">Tarea 10</a> <a class="exc-chip" href="../tema1/tarea11-clase10.html">Tarea 11</a> <a class="exc-chip" href="../tema1/tarea12-clase11.html">Tarea 12</a> <a class="exc-chip" href="../tema1/tarea13-clase12.html">Tarea 13</a> <a class="exc-chip" href="../tema1/tarea14-clase13.html">Tarea 14</a> <a class="exc-chip" href="../tema1/tarea15-clase14.html">Tarea 15</a> <a class="exc-chip" href="../tema1/tarea16-clase15.html">Tarea 16</a> <a class="exc-chip" href="../tema1/tarea17-clase16.html">Tarea 17</a> <a class="exc-chip" href="../tema1/tarea18-clase17.html">Tarea 18</a> <a class="exc-chip" href="../tema1/tarea19-clase18.html">Tarea 19</a> <a class="exc-chip exc-chip-int" href="../tema1/interpretacion-codigos.html">Interpretación</a></td>
+                    </tr>
+                    <tr id="filenotfoundexception">
+                        <td><code class="exc-name">FileNotFoundException</code><span class="exc-kind exc-checked">Checked</span></td>
+                        <td class="exc-es">Fichero no encontrado</td>
+                        <td>Es hija de <code>IOException</code>. Salta al abrir un flujo (<code>FileReader</code>, <code>FileInputStream</code>...) sobre un fichero que no existe o que no se puede abrir. Si se captura junto a <code>IOException</code>, va primero.</td>
+                        <td class="exc-where"><a class="exc-chip exc-chip-int" href="../tema1/interpretacion-codigos.html">Interpretación</a> <span class="exc-note">(págs. 14 y 14-15)</span></td>
+                    </tr>
+                    <tr id="eofexception">
+                        <td><code class="exc-name">EOFException</code><span class="exc-kind exc-checked">Checked</span></td>
+                        <td class="exc-es">Fin de fichero alcanzado</td>
+                        <td>Es hija de <code>IOException</code>. Salta al intentar leer más datos de los que quedan con <code>readUTF()</code>, <code>readInt()</code>, <code>readObject()</code>... En nuestros códigos se usa para saber cuándo terminar el bucle de lectura. Ojo: <code>read()</code> de <code>FileReader</code> no la lanza, devuelve <code>-1</code>.</td>
+                        <td class="exc-where"><a class="exc-chip" href="../tema1/tarea13-clase12.html">Tarea 13</a> <a class="exc-chip" href="../tema1/tarea15-clase14.html">Tarea 15</a> <a class="exc-chip" href="../tema1/tarea16-clase15.html">Tarea 16</a> <a class="exc-chip exc-chip-int" href="../tema1/interpretacion-codigos.html">Interpretación</a></td>
+                    </tr>
+                    <tr id="classnotfoundexception">
+                        <td><code class="exc-name">ClassNotFoundException</code><span class="exc-kind exc-checked">Checked</span></td>
+                        <td class="exc-es">Clase no encontrada</td>
+                        <td>Salta en <code>readObject()</code> cuando Java no encuentra la clase del objeto que se está leyendo (por ejemplo, <code>Alumno</code>). No es hija de <code>IOException</code>, por eso se captura con multicatch: <code>IOException | ClassNotFoundException</code>.</td>
+                        <td class="exc-where"><a class="exc-chip" href="../tema1/tarea15-clase14.html">Tarea 15</a> <a class="exc-chip" href="../tema1/tarea16-clase15.html">Tarea 16</a> <a class="exc-chip exc-chip-int" href="../tema1/interpretacion-codigos.html">Interpretación</a></td>
+                    </tr>
+                    <tr id="streamcorruptedexception">
+                        <td><code class="exc-name">StreamCorruptedException</code><span class="exc-kind exc-checked">Checked</span></td>
+                        <td class="exc-es">Flujo de objetos corrupto</td>
+                        <td>Es hija de <code>IOException</code>. Salta al leer objetos si la cabecera del fichero no es la esperada; ocurre al añadir objetos con un <code>ObjectOutputStream</code> normal, que escribe una segunda cabecera. Es el problema que resuelve <code>MiObjectOutputStream</code>.</td>
+                        <td class="exc-where"><a class="exc-chip" href="../tema1/tarea16-clase15.html">Tarea 16</a> <span class="exc-note">(problema que resuelve)</span> <a class="exc-chip exc-chip-int" href="../tema1/interpretacion-codigos.html">Interpretación</a></td>
+                    </tr>
+                    <tr id="securityexception">
+                        <td><code class="exc-name">SecurityException</code><span class="exc-kind exc-unchecked">Unchecked</span></td>
+                        <td class="exc-es">Excepción de seguridad</td>
+                        <td>Salta cuando un gestor de seguridad o los permisos del sistema no permiten la operación. Al ser <code>RuntimeException</code>, declararla en el <code>throws</code> es opcional, como en el constructor protegido de <code>MiObjectOutputStream</code>.</td>
+                        <td class="exc-where"><a class="exc-chip" href="../tema1/tarea16-clase15.html">Tarea 16</a> <a class="exc-chip exc-chip-int" href="../tema1/interpretacion-codigos.html">Interpretación</a></td>
+                    </tr>
+                    <tr id="nullpointerexception">
+                        <td><code class="exc-name">NullPointerException</code><span class="exc-kind exc-unchecked">Unchecked</span></td>
+                        <td class="exc-es">Puntero nulo</td>
+                        <td>Salta al usar un objeto que vale <code>null</code>. Por ejemplo, <code>listFiles()</code> devuelve <code>null</code> si la ruta no existe o no es un directorio; por eso se comprueba <code>contenido != null</code> antes de recorrerlo.</td>
+                        <td class="exc-where"><a class="exc-chip" href="../tema1/tarea1-clase0.html">Tarea 1</a> <span class="exc-note">(se evita con la comprobación)</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 2: Jerarquía -->
+            <section class="tarea-section">
+                <h2>Jerarquía</h2>
+                <p>Así se relacionan entre sí. Una excepción hija se puede capturar con el <code>catch</code> de cualquiera de sus padres.</p>
+                <div class="terminal-window">
+                    <div class="terminal-header">Árbol de herencia</div>
+Throwable
+ └─ Exception
+     ├─ IOException
+     │   ├─ FileNotFoundException
+     │   ├─ EOFException
+     │   └─ StreamCorruptedException
+     ├─ ClassNotFoundException
+     └─ RuntimeException
+         ├─ NullPointerException
+         └─ SecurityException
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales -->
+    <script src="../../js/components.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>
