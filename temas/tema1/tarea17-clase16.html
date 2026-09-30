@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 17: Fichero aleatorio: escritura - Acceso a Datos</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/vscode-theme.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar dinámico -->
+        <div id="sidebar-container"></div>
+
+        <!-- Contenido principal -->
+        <main class="content-container">
+            <h1>Tarea 17: Ficheros de Acceso Aleatorio: Escritura con RandomAccessFile</h1>
+
+            <!-- SECCIÓN 1: Explicación detallada -->
+            <section class="tarea-section">
+                <h2>Explicación del Ejercicio</h2>
+                <p>
+                    En esta tarea se crea un fichero de acceso aleatorio con registros de tamaño fijo mediante <code>RandomAccessFile</code>. Al ser todos los registros del mismo tamaño, se podrá calcular la posición exacta de cualquiera de ellos sin recorrer el fichero entero.
+                </p>
+
+                <h3>Conceptos y métodos clave:</h3>
+                <ul>
+                    <li>
+                        <strong>Modo de apertura (<code>RandomAccessFile</code>):</strong> El segundo parámetro <code>"rw"</code> abre el fichero para lectura y escritura.
+                    </li>
+                    <li>
+                        <strong>Estructura del registro:</strong> Cada registro ocupa 36 bytes: <code>int</code> id (4) + apellido de 10 caracteres (20) + <code>int</code> departamento (4) + <code>double</code> salario (8).
+                    </li>
+                    <li>
+                        <strong>Apellido de longitud fija (<code>StringBuffer.setLength(10)</code>):</strong> Recorta o rellena el apellido con caracteres nulos hasta los 10 caracteres, y <code>writeChars()</code> lo escribe con 2 bytes por carácter.
+                    </li>
+                    <li>
+                        <strong>Identificador:</strong> Se calcula como <code>i + 1</code>, la posición del empleado en la lista.
+                    </li>
+                    <li>
+                        <strong>Tamaño total (<code>length()</code>):</strong> 7 empleados × 36 bytes = 252 bytes.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SECCIÓN 2: Código e impresión en terminal -->
+            <section class="tarea-section">
+                <h2>Código Fuente y Salida</h2>
+
+                <!-- Bloque de código estilo VSCode -->
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">Clase16.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">package</span> ClaseFile;
+
+<span class="token keyword">import</span> java.io.File;
+<span class="token keyword">import</span> java.io.IOException;
+<span class="token keyword">import</span> java.io.RandomAccessFile;
+
+<span class="token comment">/**
+ * @author Eva Gallardo Romero
+ * @date 29 de sep de 2026
+ * Crear el fichero de acceso aleatorio "empleados.dat" con RandomAccessFile.
+ * Cada registro ocupa 36 bytes y contiene:
+ * - Identificador (int) .............. 4 bytes
+ * - Apellido (10 caracteres) ......... 20 bytes
+ * - Departamento (int) ............... 4 bytes
+ * - Salario (double) ................. 8 bytes
+ */</span>
+<span class="token keyword">public class</span> <span class="token class-name">Clase16</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) {
+
+        <span class="token comment">// objeto File del fichero aleatorio</span>
+        File fichero = <span class="token keyword">new</span> File(<span class="token string">"empleados.dat"</span>);
+
+        <span class="token comment">// datos de los empleados que voy a guardar</span>
+        String[] apellidos = {<span class="token string">"MARTIN"</span>, <span class="token string">"PEREZ"</span>, <span class="token string">"SANCHEZ"</span>, <span class="token string">"DIAZ"</span>, <span class="token string">"ROMERO"</span>, <span class="token string">"NAVARRO"</span>, <span class="token string">"IGLESIAS"</span>};
+        <span class="token keyword">int</span>[] departamentos = {<span class="token number">10</span>, <span class="token number">20</span>, <span class="token number">10</span>, <span class="token number">30</span>, <span class="token number">20</span>, <span class="token number">30</span>, <span class="token number">10</span>};
+        <span class="token keyword">double</span>[] salarios = {<span class="token number">1250.50</span>, <span class="token number">1800.0</span>, <span class="token number">1500.75</span>, <span class="token number">2100.0</span>, <span class="token number">1950.25</span>, <span class="token number">1400.0</span>, <span class="token number">2300.90</span>};
+
+        <span class="token comment">// abro el fichero en modo lectura y escritura</span>
+        <span class="token keyword">try</span> (RandomAccessFile file = <span class="token keyword">new</span> RandomAccessFile(fichero, <span class="token string">"rw"</span>)) {
+
+            <span class="token keyword">for</span> (<span class="token keyword">int</span> i = <span class="token number">0</span>; i &lt; apellidos.length; i++) {
+
+                <span class="token comment">// el identificador es la posición del empleado más uno</span>
+                file.writeInt(i + <span class="token number">1</span>);
+
+                <span class="token comment">// el apellido debe ocupar siempre 10 caracteres</span>
+                StringBuffer buffer = <span class="token keyword">new</span> StringBuffer(apellidos[i]);
+                buffer.setLength(<span class="token number">10</span>);
+                file.writeChars(buffer.toString());
+
+                file.writeInt(departamentos[i]);
+                file.writeDouble(salarios[i]);
+
+                System.out.println(<span class="token string">"Registro "</span> + (i + <span class="token number">1</span>) + <span class="token string">" escrito: "</span> + apellidos[i]);
+            }
+
+            System.out.println(<span class="token string">"Tamaño del fichero: "</span> + file.length() + <span class="token string">" bytes"</span>);
+
+        } <span class="token keyword">catch</span> (IOException e) {
+            System.out.println(<span class="token string">"Error de E/S: "</span> + e.getMessage());
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Resultado por terminal -->
+                <h3>Resultado Mostrado por Terminal</h3>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola</div>
+Registro 1 escrito: MARTIN
+Registro 2 escrito: PEREZ
+Registro 3 escrito: SANCHEZ
+Registro 4 escrito: DIAZ
+Registro 5 escrito: ROMERO
+Registro 6 escrito: NAVARRO
+Registro 7 escrito: IGLESIAS
+Tamaño del fichero: 252 bytes
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales -->
+    <script src="../../js/components.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

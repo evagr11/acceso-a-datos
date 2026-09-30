@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 10: Escritura con PrintWriter - Acceso a Datos</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/vscode-theme.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar dinámico -->
+        <div id="sidebar-container"></div>
+
+        <!-- Contenido principal -->
+        <main class="content-container">
+            <h1>Tarea 10: Escritura de Ficheros de Texto con PrintWriter</h1>
+
+            <!-- SECCIÓN 1: Explicación detallada -->
+            <section class="tarea-section">
+                <h2>Explicación del Ejercicio</h2>
+                <p>
+                    En esta tarea se reescribe el ejercicio anterior con <code>PrintWriter</code>, que permite escribir en un fichero con los mismos métodos que se usan para la consola (<code>println</code> y <code>printf</code>). Después se lee el fichero con <code>BufferedReader</code> para comprobar su contenido.
+                </p>
+
+                <h3>Conceptos y métodos clave:</h3>
+                <ul>
+                    <li>
+                        <strong>Escritura formateada (<code>PrintWriter</code>):</strong> Se crea a partir de un <code>FileWriter</code> y ofrece <code>println()</code> y <code>printf()</code>, sin necesidad de llamar a <code>newLine()</code>.
+                    </li>
+                    <li>
+                        <strong>Cadenas de formato (<code>printf</code>):</strong> <code>%d</code> sustituye un entero y <code>%n</code> inserta el salto de línea del sistema operativo.
+                    </li>
+                    <li>
+                        <strong>Gestión de errores:</strong> Los métodos de <code>PrintWriter</code> no lanzan <code>IOException</code>. La excepción que se captura proviene de la creación del <code>FileWriter</code>.
+                    </li>
+                    <li>
+                        <strong>Comprobación del resultado:</strong> El fichero se vuelve a abrir con <code>BufferedReader</code> y se recorre con <code>readLine()</code> hasta que devuelve <code>null</code>, como en la Tarea 6.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SECCIÓN 2: Código e impresión en terminal -->
+            <section class="tarea-section">
+                <h2>Código Fuente y Salida</h2>
+
+                <!-- Bloque de código estilo VSCode -->
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">Clase9.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">package</span> ClaseFile;
+
+<span class="token keyword">import</span> java.io.BufferedReader;
+<span class="token keyword">import</span> java.io.File;
+<span class="token keyword">import</span> java.io.FileReader;
+<span class="token keyword">import</span> java.io.FileWriter;
+<span class="token keyword">import</span> java.io.IOException;
+<span class="token keyword">import</span> java.io.PrintWriter;
+
+<span class="token comment">/**
+ * @author Eva Gallardo Romero
+ * @date 25 de sep de 2026
+ * Reescribir el ejercicio anterior utilizando PrintWriter.
+ * Se guarda la tabla del 9 en el fichero "tabla9.txt" con println y printf
+ * y después se lee el fichero para comprobar que se ha escrito bien.
+ */</span>
+<span class="token keyword">public class</span> <span class="token class-name">Clase9</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) {
+
+        <span class="token comment">// objeto File del fichero que voy a escribir</span>
+        File fichero = <span class="token keyword">new</span> File(<span class="token string">"tabla9.txt"</span>);
+
+        <span class="token comment">// PrintWriter permite usar println y printf igual que System.out</span>
+        <span class="token keyword">try</span> (PrintWriter pw = <span class="token keyword">new</span> PrintWriter(<span class="token keyword">new</span> FileWriter(fichero))) {
+
+            <span class="token comment">// escribo un título con println</span>
+            pw.println(<span class="token string">"TABLA DEL 9"</span>);
+
+            <span class="token comment">// escribo cada fila con printf</span>
+            <span class="token keyword">for</span> (<span class="token keyword">int</span> i = <span class="token number">1</span>; i &lt;= <span class="token number">10</span>; i++) {
+                pw.printf(<span class="token string">"9 x %d = %d%n"</span>, i, <span class="token number">9</span> * i);
+            }
+
+        } <span class="token keyword">catch</span> (IOException e) {
+            System.out.println(<span class="token string">"Error de E/S: "</span> + e.getMessage());
+            <span class="token keyword">return</span>;
+        }
+
+        <span class="token comment">// leo el fichero línea a línea para comprobar el resultado</span>
+        System.out.println(<span class="token string">"Contenido de "</span> + fichero.getName() + <span class="token string">":"</span>);
+        <span class="token keyword">try</span> (BufferedReader br = <span class="token keyword">new</span> BufferedReader(<span class="token keyword">new</span> FileReader(fichero))) {
+
+            String linea;
+            <span class="token keyword">while</span> ((linea = br.readLine()) != <span class="token keyword">null</span>) {
+                System.out.println(linea);
+            }
+
+        } <span class="token keyword">catch</span> (IOException e) {
+            System.out.println(<span class="token string">"Error al leer el fichero: "</span> + e.getMessage());
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Resultado por terminal -->
+                <h3>Resultado Mostrado por Terminal</h3>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola</div>
+Contenido de tabla9.txt:
+TABLA DEL 9
+9 x 1 = 9
+9 x 2 = 18
+9 x 3 = 27
+9 x 4 = 36
+9 x 5 = 45
+9 x 6 = 54
+9 x 7 = 63
+9 x 8 = 72
+9 x 9 = 81
+9 x 10 = 90
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales -->
+    <script src="../../js/components.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

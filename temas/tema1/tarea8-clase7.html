@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 8: Escritura con FileWriter - Acceso a Datos</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/vscode-theme.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar dinámico -->
+        <div id="sidebar-container"></div>
+
+        <!-- Contenido principal -->
+        <main class="content-container">
+            <h1>Tarea 8: Escritura de Ficheros de Texto con FileWriter</h1>
+
+            <!-- SECCIÓN 1: Explicación detallada -->
+            <section class="tarea-section">
+                <h2>Explicación del Ejercicio</h2>
+                <p>
+                    En esta tarea se escribe información en un fichero de texto utilizando un flujo de caracteres <code>FileWriter</code>. El programa guarda una frase carácter a carácter, después las ciudades de un array de <code>String</code> y termina añadiendo un asterisco al final del fichero.
+                </p>
+
+                <h3>Conceptos y métodos clave:</h3>
+                <ul>
+                    <li>
+                        <strong>Creación del flujo (<code>FileWriter</code>):</strong> Se instancia un <code>FileWriter</code> a partir del objeto <code>File</code>. Si el fichero no existe se crea, y si ya existe su contenido se sobrescribe (para añadir al final habría que pasar <code>true</code> como segundo parámetro).
+                    </li>
+                    <li>
+                        <strong>Escritura carácter a carácter (<code>write(char)</code>):</strong> La frase se convierte en un array de <code>char</code> con <code>toCharArray()</code> y se recorre con un bucle <code>for</code>, escribiendo cada letra individualmente.
+                    </li>
+                    <li>
+                        <strong>Escritura de cadenas completas (<code>write(String)</code>):</strong> Cada ciudad del array se escribe de una sola vez, añadiendo un espacio detrás para separarlas.
+                    </li>
+                    <li>
+                        <strong>Añadir un carácter (<code>append(char)</code>):</strong> Añade el asterisco final al flujo de salida.
+                    </li>
+                    <li>
+                        <strong>Gestión automática de recursos (<code>try-with-resources</code>):</strong> Cierra el <code>FileWriter</code> al terminar el bloque, lo que además garantiza que todo lo escrito se vuelque al disco.
+                    </li>
+                    <li>
+                        <strong>Tamaño del fichero (<code>length()</code>):</strong> El resultado son 74 bytes, dos más que los 72 caracteres escritos, porque las vocales con tilde (<code>é</code> y <code>á</code>) ocupan 2 bytes cada una en UTF-8.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SECCIÓN 2: Código e impresión en terminal -->
+            <section class="tarea-section">
+                <h2>Código Fuente y Salida</h2>
+
+                <!-- Bloque de código estilo VSCode -->
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">Clase7.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">package</span> ClaseFile;
+
+<span class="token keyword">import</span> java.io.File;
+<span class="token keyword">import</span> java.io.FileWriter;
+<span class="token keyword">import</span> java.io.IOException;
+
+<span class="token comment">/**
+ * @author Eva Gallardo Romero
+ * @date 24 de sep de 2026
+ * Escribir en un fichero de texto "ciudades.txt" utilizando FileWriter:
+ * - Primero una frase escrita carácter a carácter
+ * - Después las ciudades de un array de Strings
+ * - Finalmente añadir un asterisco al final con append
+ * Al terminar mostrar el tamaño del fichero creado
+ */</span>
+<span class="token keyword">public class</span> <span class="token class-name">Clase7</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) {
+
+        <span class="token comment">// objeto File del fichero que voy a escribir</span>
+        File fichero = <span class="token keyword">new</span> File(<span class="token string">"ciudades.txt"</span>);
+
+        <span class="token comment">// frase y array de ciudades que quiero guardar</span>
+        String frase = <span class="token string">"Ciudades de Extremadura: "</span>;
+        String[] ciudades = {<span class="token string">"Mérida"</span>, <span class="token string">"Badajoz"</span>, <span class="token string">"Cáceres"</span>, <span class="token string">"Plasencia"</span>, <span class="token string">"Almendralejo"</span>};
+
+        <span class="token keyword">try</span> (FileWriter fw = <span class="token keyword">new</span> FileWriter(fichero)) {
+
+            <span class="token comment">// paso la frase a array de char y la escribo carácter a carácter</span>
+            <span class="token keyword">char</span>[] letras = frase.toCharArray();
+            <span class="token keyword">for</span> (<span class="token keyword">int</span> i = <span class="token number">0</span>; i &lt; letras.length; i++) {
+                fw.write(letras[i]);
+            }
+
+            <span class="token comment">// escribo cada ciudad completa dejando un espacio detrás</span>
+            <span class="token keyword">for</span> (<span class="token keyword">int</span> i = <span class="token number">0</span>; i &lt; ciudades.length; i++) {
+                fw.write(ciudades[i] + <span class="token string">" "</span>);
+            }
+
+            <span class="token comment">// añado un asterisco para marcar el final</span>
+            fw.append('*');
+
+            System.out.println(<span class="token string">"Se ha escrito correctamente el fichero "</span> + fichero.getName());
+
+        } <span class="token keyword">catch</span> (IOException e) {
+            System.out.println(<span class="token string">"Error al escribir el fichero: "</span> + e.getMessage());
+        }
+
+        <span class="token comment">// compruebo el tamaño que ha ocupado el fichero</span>
+        System.out.println(<span class="token string">"Tamaño del fichero: "</span> + fichero.length() + <span class="token string">" bytes"</span>);
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Resultado por terminal -->
+                <h3>Resultado Mostrado por Terminal</h3>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola</div>
+Se ha escrito correctamente el fichero ciudades.txt
+Tamaño del fichero: 74 bytes
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales -->
+    <script src="../../js/components.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 14: Escritura de objetos - Acceso a Datos</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/vscode-theme.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar dinámico -->
+        <div id="sidebar-container"></div>
+
+        <!-- Contenido principal -->
+        <main class="content-container">
+            <h1>Tarea 14: Escritura de Objetos con ObjectOutputStream</h1>
+
+            <!-- SECCIÓN 1: Explicación detallada -->
+            <section class="tarea-section">
+                <h2>Explicación del Ejercicio</h2>
+                <p>
+                    En esta tarea se guardan objetos completos en un fichero, en lugar de datos sueltos. Para ello se crea la clase <code>Alumno</code> y se escriben cinco de sus instancias en <code>alumnos.dat</code> con <code>ObjectOutputStream</code>.
+                </p>
+
+                <h3>Conceptos y métodos clave:</h3>
+                <ul>
+                    <li>
+                        <strong>Interfaz <code>Serializable</code>:</strong> La clase <code>Alumno</code> debe implementarla para que sus objetos puedan convertirse en una secuencia de bytes. Es una interfaz marcadora: no obliga a implementar ningún método.
+                    </li>
+                    <li>
+                        <strong>Escritura de objetos (<code>writeObject()</code>):</strong> Guarda el objeto completo con todos sus atributos, sin tener que escribirlos uno a uno.
+                    </li>
+                    <li>
+                        <strong>Flujo de objetos (<code>ObjectOutputStream</code>):</strong> Envuelve a un <code>FileOutputStream</code>. Al crearse escribe una cabecera al principio del fichero (esto será importante en la Tarea 16).
+                    </li>
+                    <li>
+                        <strong>Getters:</strong> Los métodos <code>getNombre()</code>, <code>getEdad()</code> y <code>getNota()</code> de <code>Alumno</code> permiten acceder a los atributos privados desde otra clase.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SECCIÓN 2: Código e impresión en terminal -->
+            <section class="tarea-section">
+                <h2>Código Fuente y Salida</h2>
+
+                <!-- Bloque de código estilo VSCode -->
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">Alumno.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">package</span> ClaseFile;
+
+<span class="token keyword">import</span> java.io.Serializable;
+
+<span class="token comment">/**
+ * @author Eva Gallardo Romero
+ * @date 29 de sep de 2026
+ * Clase Alumno con los datos de un alumno.
+ * Implementa Serializable para poder guardar sus objetos en un fichero.
+ */</span>
+<span class="token keyword">public class</span> <span class="token class-name">Alumno</span> <span class="token keyword">implements</span> Serializable {
+
+    <span class="token keyword">private</span> String nombre;
+    <span class="token keyword">private int</span> edad;
+    <span class="token keyword">private double</span> nota;
+
+    <span class="token keyword">public</span> Alumno(String nombre, <span class="token keyword">int</span> edad, <span class="token keyword">double</span> nota) {
+        <span class="token keyword">this</span>.nombre = nombre;
+        <span class="token keyword">this</span>.edad = edad;
+        <span class="token keyword">this</span>.nota = nota;
+    }
+
+    <span class="token keyword">public</span> String getNombre() {
+        <span class="token keyword">return</span> nombre;
+    }
+
+    <span class="token keyword">public int</span> getEdad() {
+        <span class="token keyword">return</span> edad;
+    }
+
+    <span class="token keyword">public double</span> getNota() {
+        <span class="token keyword">return</span> nota;
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Bloque de código estilo VSCode -->
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">Clase13.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">package</span> ClaseFile;
+
+<span class="token keyword">import</span> java.io.File;
+<span class="token keyword">import</span> java.io.FileOutputStream;
+<span class="token keyword">import</span> java.io.IOException;
+<span class="token keyword">import</span> java.io.ObjectOutputStream;
+
+<span class="token comment">/**
+ * @author Eva Gallardo Romero
+ * @date 29 de sep de 2026
+ * Guardar en el fichero "alumnos.dat" varios objetos de la clase Alumno
+ * utilizando ObjectOutputStream. Para ello la clase Alumno tiene que
+ * implementar la interfaz Serializable.
+ */</span>
+<span class="token keyword">public class</span> <span class="token class-name">Clase13</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) {
+
+        <span class="token comment">// objeto File del fichero de objetos</span>
+        File fichero = <span class="token keyword">new</span> File(<span class="token string">"alumnos.dat"</span>);
+
+        <span class="token comment">// arrays con los datos de los alumnos</span>
+        String[] nombres = {<span class="token string">"Lucía"</span>, <span class="token string">"Carlos"</span>, <span class="token string">"Marta"</span>, <span class="token string">"Javier"</span>, <span class="token string">"Elena"</span>};
+        <span class="token keyword">int</span>[] edades = {<span class="token number">20</span>, <span class="token number">22</span>, <span class="token number">21</span>, <span class="token number">23</span>, <span class="token number">20</span>};
+        <span class="token keyword">double</span>[] notas = {<span class="token number">8.5</span>, <span class="token number">6.0</span>, <span class="token number">9.25</span>, <span class="token number">7.5</span>, <span class="token number">5.75</span>};
+
+        <span class="token keyword">try</span> (ObjectOutputStream oos = <span class="token keyword">new</span> ObjectOutputStream(<span class="token keyword">new</span> FileOutputStream(fichero))) {
+
+            <span class="token keyword">for</span> (<span class="token keyword">int</span> i = <span class="token number">0</span>; i &lt; nombres.length; i++) {
+
+                <span class="token comment">// creo el objeto y lo escribo en el fichero</span>
+                Alumno alumno = <span class="token keyword">new</span> Alumno(nombres[i], edades[i], notas[i]);
+                oos.writeObject(alumno);
+
+                System.out.println(<span class="token string">"Guardado el alumno: "</span> + alumno.getNombre());
+            }
+
+        } <span class="token keyword">catch</span> (IOException e) {
+            System.out.println(<span class="token string">"Error al escribir los objetos: "</span> + e.getMessage());
+        }
+
+        System.out.println(<span class="token string">"Alumnos guardados en "</span> + fichero.getName());
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Resultado por terminal -->
+                <h3>Resultado Mostrado por Terminal</h3>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola</div>
+Guardado el alumno: Lucía
+Guardado el alumno: Carlos
+Guardado el alumno: Marta
+Guardado el alumno: Javier
+Guardado el alumno: Elena
+Alumnos guardados en alumnos.dat
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales -->
+    <script src="../../js/components.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

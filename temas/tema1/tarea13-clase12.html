@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 13: Lectura con DataInputStream - Acceso a Datos</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/vscode-theme.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar dinámico -->
+        <div id="sidebar-container"></div>
+
+        <!-- Contenido principal -->
+        <main class="content-container">
+            <h1>Tarea 13: Lectura de Datos Primitivos con DataInputStream</h1>
+
+            <!-- SECCIÓN 1: Explicación detallada -->
+            <section class="tarea-section">
+                <h2>Explicación del Ejercicio</h2>
+                <p>
+                    En esta tarea se lee el fichero <code>modulos.dat</code> generado en la tarea anterior con <code>DataInputStream</code>. Como el fichero binario no contiene ninguna información sobre su estructura, los datos deben leerse exactamente en el mismo orden y con los mismos tipos con los que se escribieron.
+                </p>
+
+                <h3>Conceptos y métodos clave:</h3>
+                <ul>
+                    <li>
+                        <strong>Validación previa (<code>exists()</code>):</strong> Se comprueba que el fichero existe antes de abrirlo, evitando una excepción si aún no se ha ejecutado la tarea anterior.
+                    </li>
+                    <li>
+                        <strong>Flujo de datos (<code>DataInputStream</code>):</strong> Envuelve a un <code>FileInputStream</code> y ofrece <code>readUTF()</code>, <code>readInt()</code> y <code>readDouble()</code>, que son los métodos inversos a los de escritura.
+                    </li>
+                    <li>
+                        <strong>Detección del final (<code>EOFException</code>):</strong> No se sabe cuántos registros hay, así que se lee dentro de un bucle <code>while (true)</code> que termina cuando salta esta excepción. Al tratarse de la condición normal de fin de fichero, el <code>catch</code> se deja vacío.
+                    </li>
+                    <li>
+                        <strong>Contador de registros:</strong> Se incrementa en cada vuelta del bucle y se muestra al final.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SECCIÓN 2: Código e impresión en terminal -->
+            <section class="tarea-section">
+                <h2>Código Fuente y Salida</h2>
+
+                <!-- Bloque de código estilo VSCode -->
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">Clase12.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">package</span> ClaseFile;
+
+<span class="token keyword">import</span> java.io.DataInputStream;
+<span class="token keyword">import</span> java.io.EOFException;
+<span class="token keyword">import</span> java.io.File;
+<span class="token keyword">import</span> java.io.FileInputStream;
+<span class="token keyword">import</span> java.io.IOException;
+
+<span class="token comment">/**
+ * @author Eva Gallardo Romero
+ * @date 28 de sep de 2026
+ * Leer el fichero "modulos.dat" creado en el ejercicio anterior con
+ * DataInputStream, mostrando los datos de cada módulo. Los datos se deben
+ * leer en el mismo orden en el que se escribieron (UTF, int, double).
+ */</span>
+<span class="token keyword">public class</span> <span class="token class-name">Clase12</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) {
+
+        <span class="token comment">// objeto File del fichero de datos</span>
+        File fichero = <span class="token keyword">new</span> File(<span class="token string">"modulos.dat"</span>);
+
+        <span class="token comment">// compruebo que el fichero existe antes de leerlo</span>
+        <span class="token keyword">if</span> (!fichero.exists()) {
+            System.out.println(<span class="token string">"El fichero no existe: "</span> + fichero.getName());
+            <span class="token keyword">return</span>;
+        }
+
+        <span class="token keyword">int</span> contador = <span class="token number">0</span>;
+
+        <span class="token keyword">try</span> (DataInputStream dis = <span class="token keyword">new</span> DataInputStream(<span class="token keyword">new</span> FileInputStream(fichero))) {
+
+            <span class="token comment">// no sé cuántos registros hay, así que leo hasta que salte EOFException</span>
+            <span class="token keyword">try</span> {
+                <span class="token keyword">while</span> (<span class="token keyword">true</span>) {
+                    String nombre = dis.readUTF();
+                    <span class="token keyword">int</span> horas = dis.readInt();
+                    <span class="token keyword">double</span> nota = dis.readDouble();
+
+                    System.out.println(<span class="token string">"Módulo: "</span> + nombre + <span class="token string">", horas: "</span> + horas + <span class="token string">", nota: "</span> + nota);
+                    contador++;
+                }
+            } <span class="token keyword">catch</span> (EOFException eof) {
+                <span class="token comment">// fin del fichero, no hago nada</span>
+            }
+
+        } <span class="token keyword">catch</span> (IOException e) {
+            System.out.println(<span class="token string">"Error al leer: "</span> + e.getMessage());
+        }
+
+        System.out.println(<span class="token string">"Total de módulos leídos: "</span> + contador);
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Resultado por terminal -->
+                <h3>Resultado Mostrado por Terminal</h3>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola</div>
+Módulo: Acceso a Datos, horas: 6, nota: 8.5
+Módulo: Desarrollo de Interfaces, horas: 6, nota: 7.25
+Módulo: Programación de Servicios y Procesos, horas: 3, nota: 9.0
+Módulo: Sistemas de Gestión Empresarial, horas: 5, nota: 6.75
+Módulo: Programación Multimedia, horas: 5, nota: 8.0
+Total de módulos leídos: 5
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales -->
+    <script src="../../js/components.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

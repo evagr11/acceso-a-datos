@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 9: Escritura con BufferedWriter - Acceso a Datos</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/vscode-theme.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar dinámico -->
+        <div id="sidebar-container"></div>
+
+        <!-- Contenido principal -->
+        <main class="content-container">
+            <h1>Tarea 9: Escritura de Ficheros de Texto con BufferedWriter</h1>
+
+            <!-- SECCIÓN 1: Explicación detallada -->
+            <section class="tarea-section">
+                <h2>Explicación del Ejercicio</h2>
+                <p>
+                    En esta tarea se escribe la tabla de multiplicar del 7 en un fichero de texto, una operación por línea, mediante la clase <code>BufferedWriter</code>. Esta clase añade un buffer intermedio al <code>FileWriter</code> y evita acceder al disco en cada escritura.
+                </p>
+
+                <h3>Conceptos y métodos clave:</h3>
+                <ul>
+                    <li>
+                        <strong>Buffer de escritura (<code>BufferedWriter</code>):</strong> Envuelve al <code>FileWriter</code>: los datos se acumulan en memoria y se escriben en bloque, lo que resulta más eficiente que escribir carácter a carácter.
+                    </li>
+                    <li>
+                        <strong>Salto de línea (<code>newLine()</code>):</strong> Inserta el separador de línea propio del sistema operativo (<code>\r\n</code> en Windows), por lo que es preferible a escribir <code>"\n"</code> a mano.
+                    </li>
+                    <li>
+                        <strong>Recorrido con <code>for</code>:</strong> Un bucle de 1 a 10 construye cada fila concatenando el factor y el resultado (<code>7 * i</code>).
+                    </li>
+                    <li>
+                        <strong>Gestión automática de recursos (<code>try-with-resources</code>):</strong> Al cerrar el flujo se vacía el buffer, de modo que ninguna línea se pierde.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SECCIÓN 2: Código e impresión en terminal -->
+            <section class="tarea-section">
+                <h2>Código Fuente y Salida</h2>
+
+                <!-- Bloque de código estilo VSCode -->
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">Clase8.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">package</span> ClaseFile;
+
+<span class="token keyword">import</span> java.io.BufferedWriter;
+<span class="token keyword">import</span> java.io.File;
+<span class="token keyword">import</span> java.io.FileWriter;
+<span class="token keyword">import</span> java.io.IOException;
+
+<span class="token comment">/**
+ * @author Eva Gallardo Romero
+ * @date 24 de sep de 2026
+ * Escribir en el fichero "tabla7.txt" la tabla de multiplicar del 7
+ * utilizando BufferedWriter. Cada operación debe ir en una línea
+ * distinta, por lo que hay que usar el método newLine().
+ */</span>
+<span class="token keyword">public class</span> <span class="token class-name">Clase8</span> {
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) {
+
+        <span class="token comment">// objeto File del fichero que voy a escribir</span>
+        File fichero = <span class="token keyword">new</span> File(<span class="token string">"tabla7.txt"</span>);
+
+        <span class="token comment">// el BufferedWriter envuelve al FileWriter para escribir con buffer</span>
+        <span class="token keyword">try</span> (BufferedWriter bw = <span class="token keyword">new</span> BufferedWriter(<span class="token keyword">new</span> FileWriter(fichero))) {
+
+            <span class="token comment">// escribo las 10 filas de la tabla, una por línea</span>
+            <span class="token keyword">for</span> (<span class="token keyword">int</span> i = <span class="token number">1</span>; i &lt;= <span class="token number">10</span>; i++) {
+                bw.write(<span class="token string">"7 x "</span> + i + <span class="token string">" = "</span> + (<span class="token number">7</span> * i));
+                bw.newLine();
+            }
+
+            System.out.println(<span class="token string">"Se ha escrito la tabla del 7 en "</span> + fichero.getName());
+
+        } <span class="token keyword">catch</span> (IOException e) {
+            System.out.println(<span class="token string">"Error de E/S: "</span> + e.getMessage());
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Resultado por terminal -->
+                <h3>Resultado Mostrado por Terminal</h3>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola</div>
+Se ha escrito la tabla del 7 en tabla7.txt
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales -->
+    <script src="../../js/components.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 19: Fichero aleatorio: consultar, añadir, insertar y modificar - Acceso a Datos</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/vscode-theme.css">
+</head>
+<body>
+    <!-- Navbar dinámico -->
+    <div id="navbar-container"></div>
+
+    <div class="main-layout">
+        <!-- Sidebar dinámico -->
+        <div id="sidebar-container"></div>
+
+        <!-- Contenido principal -->
+        <main class="content-container">
+            <h1>Tarea 19: Acceso Aleatorio: Consultar, Añadir, Insertar y Modificar Registros</h1>
+
+            <!-- SECCIÓN 1: Explicación detallada -->
+            <section class="tarea-section">
+                <h2>Explicación del Ejercicio</h2>
+                <p>
+                    Esta tarea aprovecha la principal ventaja del acceso aleatorio: llegar directamente a cualquier registro calculando su posición a partir del identificador, sin leer los anteriores. Trabaja sobre el fichero <code>empleados.dat</code> de la Tarea 17 y se divide en métodos estáticos para no repetir código.
+                </p>
+
+                <h3>Conceptos y métodos clave:</h3>
+                <ul>
+                    <li>
+                        <strong>Constante <code>TAM</code>:</strong> Guarda el tamaño del registro (36 bytes) para usarlo en todos los cálculos de posición.
+                    </li>
+                    <li>
+                        <strong>Consultar:</strong> La posición del registro es <code>(id - 1) * TAM</code>. Si es mayor o igual que <code>file.length()</code>, el empleado no existe (caso del id 15).
+                    </li>
+                    <li>
+                        <strong>Añadir:</strong> La posición de escritura es el propio <code>file.length()</code>, es decir, justo detrás del último registro.
+                    </li>
+                    <li>
+                        <strong>Insertar:</strong> Se escribe en <code>(id - 1) * TAM</code>. Con el id 10 la posición queda más allá del final, así que el fichero crece y el registro 9 queda como un hueco lleno de ceros, que <code>leerRegistro()</code> ignora por tener id 0.
+                    </li>
+                    <li>
+                        <strong>Modificar:</strong> Para cambiar solo el departamento y el salario se suma <code>4 + 20</code> a la posición, saltando el id (4 bytes) y el apellido (20 bytes), y se escriben únicamente esos dos campos.
+                    </li>
+                    <li>
+                        <strong>Listado final:</strong> Se recorre todo el fichero de 36 en 36 bytes mostrando el resultado de todas las operaciones.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SECCIÓN 2: Código e impresión en terminal -->
+            <section class="tarea-section">
+                <h2>Código Fuente y Salida</h2>
+
+                <!-- Bloque de código estilo VSCode -->
+                <div class="vscode-window">
+                    <div class="vscode-header">
+                        <div class="vscode-buttons">
+                            <span class="vscode-dot red"></span>
+                            <span class="vscode-dot yellow"></span>
+                            <span class="vscode-dot green"></span>
+                        </div>
+                        <span class="vscode-title">Clase18.java</span>
+                    </div>
+                    <div class="vscode-body">
+<pre><code><span class="token keyword">package</span> ClaseFile;
+
+<span class="token keyword">import</span> java.io.File;
+<span class="token keyword">import</span> java.io.IOException;
+<span class="token keyword">import</span> java.io.RandomAccessFile;
+
+<span class="token comment">/**
+ * @author Eva Gallardo Romero
+ * @date 30 de sep de 2026
+ * Sobre el fichero "empleados.dat" (registros de 36 bytes) realizar:
+ * - Consultar un empleado por su identificador
+ * - Añadir un empleado al final del fichero
+ * - Insertar un empleado en la posición que le corresponde por su id
+ * - Modificar el departamento y el salario de un empleado
+ * Al final se muestra el contenido completo del fichero.
+ */</span>
+<span class="token keyword">public class</span> <span class="token class-name">Clase18</span> {
+
+    <span class="token comment">// tamaño en bytes de cada registro</span>
+    <span class="token keyword">static final int</span> TAM = <span class="token number">36</span>;
+
+    <span class="token keyword">public static void</span> <span class="token method">main</span>(String[] args) {
+
+        File fichero = <span class="token keyword">new</span> File(<span class="token string">"empleados.dat"</span>);
+
+        <span class="token keyword">if</span> (!fichero.exists()) {
+            System.out.println(<span class="token string">"El fichero no existe: "</span> + fichero.getName());
+            <span class="token keyword">return</span>;
+        }
+
+        <span class="token keyword">try</span> (RandomAccessFile file = <span class="token keyword">new</span> RandomAccessFile(fichero, <span class="token string">"rw"</span>)) {
+
+            <span class="token comment">// consulto un empleado que existe y otro que no</span>
+            consultar(file, <span class="token number">5</span>);
+            consultar(file, <span class="token number">15</span>);
+
+            <span class="token comment">// añado un empleado al final: su posición es el tamaño del fichero</span>
+            System.out.println(<span class="token string">"\nAñado el empleado 8 al final del fichero"</span>);
+            escribir(file, file.length(), <span class="token number">8</span>, <span class="token string">"CASTILLO"</span>, <span class="token number">20</span>, <span class="token number">1675.40</span>);
+
+            <span class="token comment">// inserto un empleado con id 10: su posición es (id - 1) * 36</span>
+            System.out.println(<span class="token string">"Inserto el empleado 10 en su posición"</span>);
+            escribir(file, (<span class="token number">10</span> - <span class="token number">1</span>) * TAM, <span class="token number">10</span>, <span class="token string">"GONZALEZ"</span>, <span class="token number">10</span>, <span class="token number">1230.87</span>);
+
+            <span class="token comment">// modifico el departamento y salario del empleado 4</span>
+            System.out.println(<span class="token string">"Modifico el departamento y el salario del empleado 4\n"</span>);
+            modificar(file, <span class="token number">4</span>, <span class="token number">40</span>, <span class="token number">4000.87</span>);
+
+            <span class="token comment">// muestro todo el contenido del fichero</span>
+            listar(file);
+
+        } <span class="token keyword">catch</span> (IOException e) {
+            System.out.println(<span class="token string">"Error de E/S: "</span> + e.getMessage());
+        }
+    }
+
+    <span class="token comment">// consulta un empleado calculando su posición con el identificador</span>
+    <span class="token keyword">static void</span> <span class="token method">consultar</span>(RandomAccessFile file, <span class="token keyword">int</span> id) <span class="token keyword">throws</span> IOException {
+
+        <span class="token keyword">long</span> posicion = (id - <span class="token number">1</span>) * TAM;
+
+        <span class="token keyword">if</span> (posicion &gt;= file.length()) {
+            System.out.printf(<span class="token string">"ID: %d, NO EXISTE EMPLEADO %n"</span>, id);
+        } <span class="token keyword">else</span> {
+            file.seek(posicion);
+            leerRegistro(file);
+        }
+    }
+
+    <span class="token comment">// escribe un registro completo a partir de una posición</span>
+    <span class="token keyword">static void</span> <span class="token method">escribir</span>(RandomAccessFile file, <span class="token keyword">long</span> posicion, <span class="token keyword">int</span> id, String apellido, <span class="token keyword">int</span> dep, <span class="token keyword">double</span> salario)
+            <span class="token keyword">throws</span> IOException {
+
+        file.seek(posicion);
+        file.writeInt(id);
+
+        StringBuffer buffer = <span class="token keyword">new</span> StringBuffer(apellido);
+        buffer.setLength(<span class="token number">10</span>);
+        file.writeChars(buffer.toString());
+
+        file.writeInt(dep);
+        file.writeDouble(salario);
+    }
+
+    <span class="token comment">// modifica solo dep y salario: salto id (4 bytes) y apellido (20 bytes)</span>
+    <span class="token keyword">static void</span> <span class="token method">modificar</span>(RandomAccessFile file, <span class="token keyword">int</span> id, <span class="token keyword">int</span> dep, <span class="token keyword">double</span> salario) <span class="token keyword">throws</span> IOException {
+
+        <span class="token keyword">long</span> posicion = (id - <span class="token number">1</span>) * TAM + <span class="token number">4</span> + <span class="token number">20</span>;
+
+        file.seek(posicion);
+        file.writeInt(dep);
+        file.writeDouble(salario);
+    }
+
+    <span class="token comment">// lee el registro que hay en la posición actual y lo muestra</span>
+    <span class="token keyword">static void</span> <span class="token method">leerRegistro</span>(RandomAccessFile file) <span class="token keyword">throws</span> IOException {
+
+        <span class="token keyword">char</span>[] apellido = <span class="token keyword">new char</span>[<span class="token number">10</span>];
+
+        <span class="token keyword">int</span> id = file.readInt();
+        <span class="token keyword">for</span> (<span class="token keyword">int</span> i = <span class="token number">0</span>; i &lt; apellido.length; i++) {
+            apellido[i] = file.readChar();
+        }
+        <span class="token keyword">int</span> dep = file.readInt();
+        <span class="token keyword">double</span> salario = file.readDouble();
+
+        <span class="token keyword">if</span> (id &gt; <span class="token number">0</span>) {
+            System.out.printf(<span class="token string">"ID: %d, Apellido: %s, Departamento: %d, Salario: %.2f %n"</span>,
+                    id, <span class="token keyword">new</span> String(apellido).trim(), dep, salario);
+        }
+    }
+
+    <span class="token comment">// recorre el fichero completo registro a registro</span>
+    <span class="token keyword">static void</span> <span class="token method">listar</span>(RandomAccessFile file) <span class="token keyword">throws</span> IOException {
+
+        System.out.println(<span class="token string">"Contenido final del fichero:"</span>);
+
+        <span class="token keyword">for</span> (<span class="token keyword">long</span> posicion = <span class="token number">0</span>; posicion &lt; file.length(); posicion = posicion + TAM) {
+            file.seek(posicion);
+            leerRegistro(file);
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Resultado por terminal -->
+                <h3>Resultado Mostrado por Terminal</h3>
+                <div class="terminal-window">
+                    <div class="terminal-header">Salida de Consola</div>
+ID: 5, Apellido: ROMERO, Departamento: 20, Salario: 1950.25 
+ID: 15, NO EXISTE EMPLEADO 
+
+Añado el empleado 8 al final del fichero
+Inserto el empleado 10 en su posición
+Modifico el departamento y el salario del empleado 4
+
+Contenido final del fichero:
+ID: 1, Apellido: MARTIN, Departamento: 10, Salario: 1250.50 
+ID: 2, Apellido: PEREZ, Departamento: 20, Salario: 1800.00 
+ID: 3, Apellido: SANCHEZ, Departamento: 10, Salario: 1500.75 
+ID: 4, Apellido: DIAZ, Departamento: 40, Salario: 4000.87 
+ID: 5, Apellido: ROMERO, Departamento: 20, Salario: 1950.25 
+ID: 6, Apellido: NAVARRO, Departamento: 30, Salario: 1400.00 
+ID: 7, Apellido: IGLESIAS, Departamento: 10, Salario: 2300.90 
+ID: 8, Apellido: CASTILLO, Departamento: 20, Salario: 1675.40 
+ID: 10, Apellido: GONZALEZ, Departamento: 10, Salario: 1230.87 
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Acceso a Datos 2º DAM - IES Donoso Cortés</p>
+    </footer>
+
+    <!-- Cargadores de componentes y scripts globales -->
+    <script src="../../js/components.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>
