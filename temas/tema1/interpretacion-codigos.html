@@ -1535,6 +1535,286 @@ Nombre: María Jesús, edad: 13
                  de arriba, cámbiale el id a "pagina-N" y actualiza su contenido. No olvides añadir
                  el enlace correspondiente en includes/sidebar-interpretacion-tema1.html -->
 
+<!-- ===== PEGAR ESTE BLOQUE justo antes de </main> (después de la sección pagina-15) ===== -->
+
+<!-- PÁGINAS 19-20: Persona y EscribirFichObject -->
+<section class="interpret-block" id="pagina-19">
+<span class="interpret-badge">Páginas 19-20 · java.io</span>
+<h2>Páginas 19-20: Persona y EscribirFichObject</h2>
+<p class="interpret-intro">La serialización convierte un objeto en una secuencia de bytes que luego se puede restaurar. La clase debe implementar <code>Serializable</code>. Se escribe con <code>ObjectOutputStream</code> (sobre un <code>FileOutputStream</code>) y <code>writeObject()</code>.</p>
+<div class="vscode-window"><div class="vscode-header"><div class="vscode-buttons"><span class="vscode-dot red"></span><span class="vscode-dot yellow"></span><span class="vscode-dot green"></span></div><span class="vscode-title">Persona.java + EscribirFichObject.java</span></div>
+<div class="vscode-body"><pre><code>import java.io.Serializable;
+public class Persona implements Serializable {
+    private String nombre;
+    private int edad;
+    public Persona(String nombre, int edad) { this.nombre = nombre; this.edad = edad; }
+    public Persona() { this.nombre = null; }
+    // set/get de nombre y edad ...
+}
+
+import java.io.*;
+public class EscribirFichObject {
+  public static void main(String[] args) throws IOException {
+    Persona persona;
+    File fichero = new File("FichPersona.dat");
+    FileOutputStream fileout = new FileOutputStream(fichero);
+    ObjectOutputStream dataOS = new ObjectOutputStream(fileout);
+    String nombres[] = {"Ana","Luis Miguel","Alicia","Pedro","Manuel","Andrés","Julio","Antonio","María Jesús"};
+    int edades[] = {14,15,13,15,16,12,16,14,13};
+    for (int i=0; i&lt;edades.length; i++) {
+      persona = new Persona(nombres[i], edades[i]);
+      dataOS.writeObject(persona);
+    }
+    dataOS.close();
+  }
+}</code></pre></div></div>
+<h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+<ol class="interpret-steps">
+<li class="interpret-step"><span class="step-num">1</span><div><code class="step-code">public class Persona implements Serializable</code><p class="step-desc">Implementar <code>Serializable</code> (interfaz sin métodos) es lo que permite guardar objetos de esta clase en un fichero binario. Tiene dos atributos privados, dos constructores y sus <em>get/set</em>.</p></div></li>
+<li class="interpret-step"><span class="step-num">2</span><div><code class="step-code">FileOutputStream fileout = new FileOutputStream(fichero);</code><p class="step-desc">Flujo de bytes hacia el fichero en disco.</p></div></li>
+<li class="interpret-step"><span class="step-num">3</span><div><code class="step-code">ObjectOutputStream dataOS = new ObjectOutputStream(fileout);</code><p class="step-desc">Flujo que procesa objetos y los vuelca sobre el <code>FileOutputStream</code>. Se puede abreviar anidando: <code>new ObjectOutputStream(new FileOutputStream(fichero))</code>.</p></div></li>
+<li class="interpret-step"><span class="step-num">4</span><div><code class="step-code">String nombres[] / int edades[]</code><p class="step-desc">Dos arrays paralelos con los datos: la posición <code>i</code> de cada uno corresponde a la misma persona.</p></div></li>
+<li class="interpret-step"><span class="step-num">5</span><div><code class="step-code">persona = new Persona(nombres[i], edades[i]);</code><p class="step-desc">En cada vuelta se crea una <code>Persona</code> con los datos de esa posición.</p></div></li>
+<li class="interpret-step"><span class="step-num">6</span><div><code class="step-code">dataOS.writeObject(persona);</code><p class="step-desc">Escribe el objeto completo en el fichero.</p></div></li>
+<li class="interpret-step"><span class="step-num">7</span><div><code class="step-code">dataOS.close();</code><p class="step-desc">Cierra el flujo de salida.</p></div></li>
+</ol>
+<div class="interpret-summary"><strong>En resumen:</strong> para guardar objetos hace falta una clase <code>Serializable</code>, un <code>ObjectOutputStream</code> y <code>writeObject()</code>.</div>
+</section>
+
+<!-- PÁGINAS 20-21: LeerFichObject -->
+<section class="interpret-block" id="pagina-20">
+<span class="interpret-badge">Páginas 20-21 · java.io</span>
+<h2>Páginas 20-21: LeerFichObject</h2>
+<p class="interpret-intro">Lee los objetos <code>Persona</code> con <code>ObjectInputStream</code> y <code>readObject()</code>. Como no se sabe cuántos objetos hay, se lee en un <code>while(true)</code> hasta que salta <code>EOFException</code>.</p>
+<div class="vscode-window"><div class="vscode-header"><div class="vscode-buttons"><span class="vscode-dot red"></span><span class="vscode-dot yellow"></span><span class="vscode-dot green"></span></div><span class="vscode-title">LeerFichObject.java</span></div>
+<div class="vscode-body"><pre><code>import java.io.*;
+public class LeerFichObject {
+  public static void main(String[] args) throws IOException, ClassNotFoundException {
+    Persona persona;
+    File fichero = new File("FichPersona.dat");
+    FileInputStream filein = new FileInputStream(fichero);
+    ObjectInputStream dataIS = new ObjectInputStream(filein);
+    try {
+      while (true) {
+        persona = (Persona) dataIS.readObject();
+        System.out.printf("Nombre: %s, edad: %d %n", persona.getNombre(), persona.getEdad());
+      }
+    } catch (EOFException eo) {
+      System.out.println("FIN DE LECTURA.");
+    }
+    dataIS.close();
+  }
+}</code></pre></div></div>
+<h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+<ol class="interpret-steps">
+<li class="interpret-step"><span class="step-num">1</span><div><code class="step-code">throws IOException, ClassNotFoundException</code><p class="step-desc"><code>readObject()</code> puede lanzar ambas excepciones (<code>ClassNotFoundException</code> si no encuentra la clase del objeto leído).</p></div></li>
+<li class="interpret-step"><span class="step-num">2</span><div><code class="step-code">FileInputStream / ObjectInputStream</code><p class="step-desc">Igual que al escribir, pero de entrada: el <code>FileInputStream</code> lee bytes del fichero y el <code>ObjectInputStream</code> los reconstruye como objetos.</p></div></li>
+<li class="interpret-step"><span class="step-num">3</span><div><code class="step-code">while (true) { ... }</code><p class="step-desc">Bucle infinito: la salida no se controla con una condición, sino con la excepción del <code>catch</code>.</p></div></li>
+<li class="interpret-step"><span class="step-num">4</span><div><code class="step-code">persona = (Persona) dataIS.readObject();</code><p class="step-desc"><code>readObject()</code> devuelve un <code>Object</code>, por eso se hace <em>cast</em> a <code>Persona</code>.</p></div></li>
+<li class="interpret-step"><span class="step-num">5</span><div><code class="step-code">catch (EOFException eo)</code><p class="step-desc">Al llegar al final del fichero se lanza <code>EOFException</code>: es la forma de terminar la lectura y se avisa con "FIN DE LECTURA.".</p></div></li>
+<li class="interpret-step"><span class="step-num">6</span><div><code class="step-code">dataIS.close();</code><p class="step-desc">Cierra el flujo de entrada.</p></div></li>
+</ol>
+<div class="interpret-summary"><strong>En resumen:</strong> con objetos el fin de fichero se detecta con <code>EOFException</code> (no con <code>-1</code> ni <code>null</code>) y hay que hacer <em>cast</em> del resultado de <code>readObject()</code>.</div>
+</section>
+
+<!-- PÁGINAS 21-22: MiObjectOutputStream -->
+<section class="interpret-block" id="pagina-21">
+<span class="interpret-badge">Páginas 21-22 · java.io</span>
+<h2>Páginas 21-22: MiObjectOutputStream (añadir objetos)</h2>
+<p class="interpret-intro">Problema: cada <code>new ObjectOutputStream(fichero)</code> escribe una cabecera. Si se reabre el fichero para añadir, queda una segunda cabecera en medio y al leer salta <code>StreamCorruptedException</code>. Solución: heredar de <code>ObjectOutputStream</code> y anular <code>writeStreamHeader()</code>.</p>
+<div class="vscode-window"><div class="vscode-header"><div class="vscode-buttons"><span class="vscode-dot red"></span><span class="vscode-dot yellow"></span><span class="vscode-dot green"></span></div><span class="vscode-title">MiObjectOutputStream.java + uso</span></div>
+<div class="vscode-body"><pre><code>public class MiObjectOutputStream extends ObjectOutputStream {
+    public MiObjectOutputStream(OutputStream out) throws IOException { super(out); }
+    protected MiObjectOutputStream() throws IOException, SecurityException { super(); }
+    // Redefinición del método de escribir la cabecera para que no haga nada.
+    protected void writeStreamHeader() throws IOException { }
+}
+
+File fichero = new File(nombrefichero);
+ObjectOutputStream dataOS;
+if (!fichero.exists()) {
+    FileOutputStream fileout = new FileOutputStream(fichero);
+    dataOS = new ObjectOutputStream(fileout);
+} else {
+    dataOS = new MiObjectOutputStream(new FileOutputStream(fichero, true));
+}</code></pre></div></div>
+<h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+<ol class="interpret-steps">
+<li class="interpret-step"><span class="step-num">1</span><div><code class="step-code">public class MiObjectOutputStream extends ObjectOutputStream</code><p class="step-desc">Clase propia que hereda todo el comportamiento de <code>ObjectOutputStream</code>.</p></div></li>
+<li class="interpret-step"><span class="step-num">2</span><div><code class="step-code">MiObjectOutputStream(OutputStream out) { super(out); }</code><p class="step-desc">Constructor que pasa el flujo al constructor de la clase padre. El segundo constructor (<code>protected</code>, sin parámetros) llama a <code>super()</code>.</p></div></li>
+<li class="interpret-step"><span class="step-num">3</span><div><code class="step-code">protected void writeStreamHeader() throws IOException { }</code><p class="step-desc">Se <strong>sobrescribe</strong> el método que escribe la cabecera y se deja vacío: esta clase ya no añade cabecera.</p></div></li>
+<li class="interpret-step"><span class="step-num">4</span><div><code class="step-code">if (!fichero.exists()) { ... }</code><p class="step-desc">Si el fichero no existe (primera vez) se usa el <code>ObjectOutputStream</code> normal, que sí escribe la cabecera necesaria.</p></div></li>
+<li class="interpret-step"><span class="step-num">5</span><div><code class="step-code">else { dataOS = new MiObjectOutputStream(new FileOutputStream(fichero, true)); }</code><p class="step-desc">Si ya existe se usa la clase redefinida (sin cabecera) y <code>true</code> en el <code>FileOutputStream</code> para <strong>añadir al final</strong> en vez de sobrescribir.</p></div></li>
+</ol>
+<div class="interpret-summary"><strong>En resumen:</strong> primera vez → <code>ObjectOutputStream</code>; para añadir → <code>MiObjectOutputStream</code> con <code>append = true</code>, así el fichero conserva una única cabecera.</div>
+</section>
+
+<!-- PÁGINAS 22-23: RandomAccessFile + EscribirFichAleatorio -->
+<section class="interpret-block" id="pagina-23">
+<span class="interpret-badge">Páginas 22-23 · java.io</span>
+<h2>Páginas 22-23: EscribirFichAleatorio</h2>
+<p class="interpret-intro"><code>RandomAccessFile</code> permite acceder a cualquier posición del fichero (no solo secuencialmente). Modos: <code>"r"</code> (solo lectura, el fichero debe existir) y <code>"rw"</code> (lectura y escritura, lo crea si no existe). Métodos clave: <code>getFilePointer()</code>, <code>seek(pos)</code>, <code>length()</code> y <code>skipBytes(n)</code>. Cada registro mide <strong>36 bytes</strong>: id (int, 4) + apellido (10 chars × 2 = 20) + departamento (int, 4) + salario (double, 8).</p>
+<div class="vscode-window"><div class="vscode-header"><div class="vscode-buttons"><span class="vscode-dot red"></span><span class="vscode-dot yellow"></span><span class="vscode-dot green"></span></div><span class="vscode-title">EscribirFichAleatorio.java</span></div>
+<div class="vscode-body"><pre><code>import java.io.*;
+public class EscribirFichAleatorio {
+  public static void main(String[] args) throws IOException {
+    File fichero = new File("AleatorioEmple.dat");
+    RandomAccessFile file = new RandomAccessFile(fichero, "rw");
+    String apellido[] = {"FERNANDEZ","GIL","LOPEZ","RAMOS","SEVILLA","CASILLA","REY"};
+    int dep[] = {10, 20, 10, 10, 30, 30, 20};
+    Double salario[] = {1000.45, 2400.60, 3000.0, 1500.56, 2200.0, 1435.87, 2000.0};
+    StringBuffer buffer = null;
+    int n = apellido.length;
+    for (int i = 0; i&lt;n; i++) {
+      file.writeInt(i+1);
+      buffer = new StringBuffer(apellido[i]);
+      buffer.setLength(10);
+      file.writeChars(buffer.toString());
+      file.writeInt(dep[i]);
+      file.writeDouble(salario[i]);
+    }
+    file.close();
+  }
+}</code></pre></div></div>
+<h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+<ol class="interpret-steps">
+<li class="interpret-step"><span class="step-num">1</span><div><code class="step-code">RandomAccessFile file = new RandomAccessFile(fichero, "rw");</code><p class="step-desc">Abre (o crea) el fichero en modo lectura/escritura. El puntero empieza en 0.</p></div></li>
+<li class="interpret-step"><span class="step-num">2</span><div><code class="step-code">String apellido[] / int dep[] / Double salario[]</code><p class="step-desc">Arrays paralelos con los datos de 7 empleados. No hace falta <code>seek()</code> porque se escribe en orden y el puntero avanza solo.</p></div></li>
+<li class="interpret-step"><span class="step-num">3</span><div><code class="step-code">file.writeInt(i+1);</code><p class="step-desc">Escribe el identificador (1, 2, 3...), 4 bytes. Se usa <code>i+1</code> para que sea mayor que 0.</p></div></li>
+<li class="interpret-step"><span class="step-num">4</span><div><code class="step-code">buffer = new StringBuffer(apellido[i]); buffer.setLength(10);</code><p class="step-desc">Se fuerza el apellido a exactamente 10 caracteres (rellena con espacios/nulos o recorta) para que todos los registros midan lo mismo.</p></div></li>
+<li class="interpret-step"><span class="step-num">5</span><div><code class="step-code">file.writeChars(buffer.toString());</code><p class="step-desc">Escribe los 10 caracteres a 2 bytes cada uno: 20 bytes.</p></div></li>
+<li class="interpret-step"><span class="step-num">6</span><div><code class="step-code">file.writeInt(dep[i]); file.writeDouble(salario[i]);</code><p class="step-desc">Escribe departamento (4 bytes) y salario (8 bytes). Total por registro: 4 + 20 + 4 + 8 = 36 bytes.</p></div></li>
+</ol>
+<div class="interpret-summary"><strong>En resumen:</strong> con registros de longitud fija (36 bytes) se puede calcular la posición de cualquier empleado; por eso el apellido se ajusta siempre a 10 caracteres.</div>
+</section>
+
+<!-- PÁGINA 24: LeerFichAleatorio -->
+<section class="interpret-block" id="pagina-24">
+<span class="interpret-badge">Página 24 · java.io</span>
+<h2>Página 24: LeerFichAleatorio</h2>
+<p class="interpret-intro">Recorre todos los registros del fichero anterior. Empieza en la posición 0 y suma 36 (tamaño del registro) para pasar al siguiente.</p>
+<div class="vscode-window"><div class="vscode-header"><div class="vscode-buttons"><span class="vscode-dot red"></span><span class="vscode-dot yellow"></span><span class="vscode-dot green"></span></div><span class="vscode-title">LeerFichAleatorio.java</span></div>
+<div class="vscode-body"><pre><code>import java.io.*;
+public class LeerFichAleatorio {
+  public static void main(String[] args) throws IOException {
+    File fichero = new File("AleatorioEmple.dat");
+    RandomAccessFile file = new RandomAccessFile(fichero, "r");
+    int id, dep, posicion;
+    Double salario;
+    char apellido[] = new char[10], aux;
+    posicion = 0;
+    for (;;) {
+      file.seek(posicion);
+      id = file.readInt();
+      for (int i = 0; i &lt; apellido.length; i++) {
+        aux = file.readChar();
+        apellido[i] = aux;
+      }
+      String apellidos = new String(apellido);
+      dep = file.readInt();
+      salario = file.readDouble();
+      if (id > 0)
+        System.out.printf("ID: %s, Apellido: %s, Departamento: %d, Salario: %.2f %n",
+                          id, apellidos.trim(), dep, salario);
+      posicion = posicion + 36;
+      if (file.getFilePointer() == file.length()) break;
+    }
+    file.close();
+  }
+}</code></pre></div></div>
+<h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+<ol class="interpret-steps">
+<li class="interpret-step"><span class="step-num">1</span><div><code class="step-code">new RandomAccessFile(fichero, "r");</code><p class="step-desc">Modo solo lectura: el fichero debe existir y escribir lanzaría <code>IOException</code>.</p></div></li>
+<li class="interpret-step"><span class="step-num">2</span><div><code class="step-code">char apellido[] = new char[10], aux; posicion = 0;</code><p class="step-desc">Array de 10 caracteres para reconstruir el apellido; <code>posicion</code> empieza en 0 (inicio del primer registro).</p></div></li>
+<li class="interpret-step"><span class="step-num">3</span><div><code class="step-code">for (;;) { file.seek(posicion); id = file.readInt();</code><p class="step-desc">Bucle infinito. Cada vuelta coloca el puntero al inicio del registro y lee el id (4 bytes).</p></div></li>
+<li class="interpret-step"><span class="step-num">4</span><div><code class="step-code">aux = file.readChar(); apellido[i] = aux;</code><p class="step-desc">Lee uno a uno los 10 caracteres del apellido (20 bytes) y los guarda en el array.</p></div></li>
+<li class="interpret-step"><span class="step-num">5</span><div><code class="step-code">String apellidos = new String(apellido);</code><p class="step-desc">Convierte el array de <code>char</code> en <code>String</code>.</p></div></li>
+<li class="interpret-step"><span class="step-num">6</span><div><code class="step-code">dep = file.readInt(); salario = file.readDouble();</code><p class="step-desc">Lee departamento (4 bytes) y salario (8 bytes), que siguen justo después del apellido.</p></div></li>
+<li class="interpret-step"><span class="step-num">7</span><div><code class="step-code">if (id > 0) System.out.printf(...)</code><p class="step-desc">Solo imprime si el id es mayor que 0: así se saltan los registros borrados lógicamente (id = -1). <code>trim()</code> quita los espacios de relleno y <code>%.2f</code> muestra 2 decimales.</p></div></li>
+<li class="interpret-step"><span class="step-num">8</span><div><code class="step-code">posicion = posicion + 36;</code><p class="step-desc">Avanza al siguiente registro (cada empleado ocupa 36 bytes).</p></div></li>
+<li class="interpret-step"><span class="step-num">9</span><div><code class="step-code">if (file.getFilePointer() == file.length()) break;</code><p class="step-desc">Si el puntero llegó al final del fichero, sale del bucle.</p></div></li>
+</ol>
+<h3 style="margin-top: 2rem; font-size: 1.05rem; color: var(--text-main);">Resultado Mostrado por Terminal</h3>
+<div class="terminal-window"><div class="terminal-header">Salida de Consola</div>
+ID: 1, Apellido: FERNANDEZ, Departamento: 10, Salario: 1000.45
+ID: 2, Apellido: GIL, Departamento: 20, Salario: 2400.6
+ID: 3, Apellido: LOPEZ, Departamento: 10, Salario: 3000.0
+ID: 4, Apellido: RAMOS, Departamento: 10, Salario: 1500.56
+ID: 5, Apellido: SEVILLA, Departamento: 30, Salario: 2200.0
+ID: 6, Apellido: CASILLA, Departamento: 30, Salario: 1435.87
+ID: 7, Apellido: REY, Departamento: 20, Salario: 2000.0
+</div>
+<div class="interpret-summary"><strong>En resumen:</strong> se recorre el fichero de 36 en 36 bytes con <code>seek()</code>, leyendo los campos en el mismo orden y tipo en que se escribieron.</div>
+</section>
+
+<!-- PÁGINAS 25-26: consultar, añadir, insertar, modificar -->
+<section class="interpret-block" id="pagina-25">
+<span class="interpret-badge">Páginas 25-26 · java.io</span>
+<h2>Páginas 25-26: Consultar, añadir, insertar y modificar</h2>
+<p class="interpret-intro">Fragmentos sueltos (no programas completos) que usan la fórmula <code>(id - 1) * 36</code> para saltar directamente a un registro sin recorrer el fichero.</p>
+<div class="vscode-window"><div class="vscode-header"><div class="vscode-buttons"><span class="vscode-dot red"></span><span class="vscode-dot yellow"></span><span class="vscode-dot green"></span></div><span class="vscode-title">Fragmentos · acceso directo a un registro</span></div>
+<div class="vscode-body"><pre><code>// CONSULTAR el empleado 5
+int identificador = 5;
+posicion = (identificador - 1) * 36;
+if (posicion >= file.length())
+    System.out.printf("ID: %d, NO EXISTE EMPLEADO...", identificador);
+else {
+    file.seek(posicion);
+    id = file.readInt();
+    // obtener resto de los datos, como en el ejemplo anterior
+}
+
+// AÑADIR al final
+long posicion = file.length();
+file.seek(posicion);
+
+// INSERTAR empleado con id 20
+StringBuffer buffer = null;
+String apellido = "GONZALEZ"; Double salario = 1230.87; int id = 20; int dep = 10;
+long posicion = (id - 1) * 36;
+file.seek(posicion);
+file.writeInt(id);
+buffer = new StringBuffer(apellido);
+buffer.setLength(10);
+file.writeChars(buffer.toString());
+file.writeInt(dep);
+file.writeDouble(salario);
+file.close();
+
+// MODIFICAR departamento y salario del empleado 4
+int registro = 4;
+long posicion = (registro - 1) * 36;
+posicion = posicion + 4 + 20;
+file.seek(posicion);
+file.writeInt(40);
+file.writeDouble(4000.87);</code></pre></div></div>
+<h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-main);">Explicación línea a línea</h3>
+<ol class="interpret-steps">
+<li class="interpret-step"><span class="step-num">1</span><div><code class="step-code">posicion = (identificador - 1) * 36;</code><p class="step-desc">Calcula dónde empieza el registro: el empleado 1 está en 0, el 2 en 36, el 5 en 144...</p></div></li>
+<li class="interpret-step"><span class="step-num">2</span><div><code class="step-code">if (posicion >= file.length())</code><p class="step-desc">Si la posición está fuera del fichero, ese empleado no existe; si no, se hace <code>seek()</code> y se lee con normalidad.</p></div></li>
+<li class="interpret-step"><span class="step-num">3</span><div><code class="step-code">long posicion = file.length(); file.seek(posicion);</code><p class="step-desc">Coloca el puntero al final para añadir registros después del último.</p></div></li>
+<li class="interpret-step"><span class="step-num">4</span><div><code class="step-code">long posicion = (id - 1) * 36; ... writeInt / writeChars / writeInt / writeDouble</code><p class="step-desc">Para insertar el id 20 se calcula su posición y se escriben los cuatro campos en el mismo orden de siempre (id, apellido de 10 chars, dep, salario).</p></div></li>
+<li class="interpret-step"><span class="step-num">5</span><div><code class="step-code">posicion = posicion + 4 + 20;</code><p class="step-desc">Para modificar, se salta el id (4 bytes) y el apellido (20 bytes) y se cae justo en el departamento.</p></div></li>
+<li class="interpret-step"><span class="step-num">6</span><div><code class="step-code">file.writeInt(40); file.writeDouble(4000.87);</code><p class="step-desc">Sobrescribe departamento (40) y salario (4000.87) del empleado 4. Aquí el fichero debe abrirse en modo <code>"rw"</code>.</p></div></li>
+</ol>
+<p class="interpret-intro" style="margin-top: 1.5rem;">La página 26 propone la <strong>Actividad 1.3</strong> (consulta e inserción por línea de comandos) y la <strong>Actividad 1.4</strong> (modificar el salario sumando un importe, y borrado lógico: id = -1, apellido = id borrado, dep y salario = 0, más un programa que liste los borrados). Después empieza el apartado 1.7 de <strong>ficheros XML</strong>, con este ejemplo de estructura:</p>
+<div class="vscode-window"><div class="vscode-header"><div class="vscode-buttons"><span class="vscode-dot red"></span><span class="vscode-dot yellow"></span><span class="vscode-dot green"></span></div><span class="vscode-title">Empleados.xml</span></div>
+<div class="vscode-body"><pre><code>&lt;?xml version="1.0"?&gt;
+&lt;Empleados&gt;
+    &lt;empleado&gt;
+        &lt;id&gt;1&lt;/id&gt;
+        &lt;apellido&gt;FERNANDEZ&lt;/apellido&gt;
+        &lt;dep&gt;10&lt;/dep&gt;
+        &lt;salario&gt;1000.45&lt;/salario&gt;
+    &lt;/empleado&gt;
+    &lt;!-- más empleados ... --&gt;
+&lt;/Empleados&gt;</code></pre></div></div>
+<p class="step-desc" style="margin-top: -0.5rem;">XML es un metalenguaje de marcas jerárquicas: una raíz (<code>&lt;Empleados&gt;</code>) que contiene elementos (<code>&lt;empleado&gt;</code>), cada uno con sus etiquetas de apertura y cierre. Se procesa con un <em>parser</em>: <strong>DOM</strong> (carga todo el árbol en memoria) o <strong>SAX</strong> (secuencial, por eventos).</p>
+<div class="interpret-summary"><strong>En resumen:</strong> en ficheros aleatorios con registros fijos, <code>(id - 1) * tamaño</code> da la posición de cualquier registro, y sumando los tamaños de los campos anteriores (4 + 20) se llega a un campo concreto.</div>
+</section>
+
+<!-- Enlaces para añadir al sidebar (includes/sidebar-interpretacion-tema1.html):
+#pagina-19  #pagina-20  #pagina-21  #pagina-23  #pagina-24  #pagina-25 -->
         </main>
     </div>
 
