@@ -23,22 +23,22 @@
             <section class="tarea-section">
                 <h2>Explicación del Ejercicio</h2>
                 <p>
-                    En esta tarea se implementa un flujo completo de gestión de archivos y directorios mediante la clase <code>java.io.File</code> y colecciones dinámicas (<code>ArrayList</code>)[cite: 9]. El programa crea una carpeta de utilidades, genera dos ficheros de texto en su interior y posteriormente los renombra a extensión <code>.dat</code>[cite: 9].
+                    En esta tarea se implementa un flujo completo de gestión de archivos y directorios mediante la clase <code>java.io.File</code> y colecciones dinámicas (<code>ArrayList</code>). El programa crea una carpeta de utilidades, genera dos ficheros de texto en su interior y posteriormente los renombra a extensión <code>.dat</code>.
                 </p>
 
                 <h3>Conceptos y métodos clave:</h3>
                 <ul>
                     <li>
-                        <strong>Creación de directorios (<code>mkdir()</code>):</strong> Se comprueba mediante <code>exists()</code> si la carpeta <code>"util"</code> existe; si no es así, se crea con el método <code>mkdir()</code>[cite: 9].
+                        <strong>Creación de directorios (<code>mkdir()</code>):</strong> Se comprueba mediante <code>exists()</code> si la carpeta <code>"util"</code> existe; si no es así, se crea con el método <code>mkdir()</code>.
                     </li>
                     <li>
-                        <strong>Uso de Colecciones (<code>ArrayList</code>):</strong> Se emplean listas de cadenas y objetos <code>File</code> para organizar de forma dinámica los nombres originales, sus rutas y los nombres a aplicar tras el renombrado[cite: 9].
+                        <strong>Uso de Colecciones (<code>ArrayList</code>):</strong> Se emplean listas de cadenas y objetos <code>File</code> para organizar de forma dinámica los nombres originales, sus rutas y los nombres a aplicar tras el renombrado.
                     </li>
                     <li>
-                        <strong>Generación de archivos (<code>createNewFile()</code>):</strong> Se instancian objetos <code>File</code> pasando el directorio contenedor (<code>File(carpeta, archivos)</code>) y se crean físicamente en el disco[cite: 9].
+                        <strong>Generación de archivos (<code>createNewFile()</code>):</strong> Se instancian objetos <code>File</code> pasando el directorio contenedor (<code>File(carpeta, archivos)</code>) y se crean físicamente en el disco.
                     </li>
                     <li>
-                        <strong>Renombrado de ficheros (<code>renameTo()</code>):</strong> Se recorren las listas de archivos y nuevos nombres para ejecutar la conversión mediante el método <code>renameTo()</code>[cite: 9].
+                        <strong>Renombrado de ficheros (<code>renameTo()</code>):</strong> Se recorren las listas de archivos y nuevos nombres para ejecutar la conversión mediante el método <code>renameTo()</code>.
                     </li>
                 </ul>
             </section>

@@ -23,19 +23,19 @@
             <section class="tarea-section">
                 <h2>Explicación del Ejercicio</h2>
                 <p>
-                    En esta segunda tarea se amplía la funcionalidad del listado de directorios mediante el paso de argumentos por línea de comandos (<code>args</code>)[cite: 11]. Esto permite consultar dinámicamente cualquier ruta especificada al ejecutar el programa[cite: 11].
+                    En esta segunda tarea se amplía la funcionalidad del listado de directorios mediante el paso de argumentos por línea de comandos (<code>args</code>). Esto permite consultar dinámicamente cualquier ruta especificada al ejecutar el programa.
                 </p>
 
                 <h3>Conceptos y métodos clave:</h3>
                 <ul>
                     <li>
-                        <strong>Control de parámetros de entrada:</strong> Se valida si el array <code>args</code> contiene elementos (<code>args.length == 0</code>) para prevenir excepciones en tiempo de ejecución al intentar acceder a rutas no definidas[cite: 11].
+                        <strong>Control de parámetros de entrada:</strong> Se valida si el array <code>args</code> contiene elementos (<code>args.length == 0</code>) para prevenir excepciones en tiempo de ejecución al intentar acceder a rutas no definidas.
                     </li>
                     <li>
-                        <strong>Comprobación de existencia (<code>exists()</code>):</strong> Antes de procesar el contenido, se verifica mediante <code>directorio.exists()</code> si la ruta introducida existe en el sistema de archivos[cite: 11].
+                        <strong>Comprobación de existencia (<code>exists()</code>):</strong> Antes de procesar el contenido, se verifica mediante <code>directorio.exists()</code> si la ruta introducida existe en el sistema de archivos.
                     </li>
                     <li>
-                        <strong>Gestión de contenido:</strong> Si la ruta es válida y existe, se obtiene el array mediante <code>listFiles()</code> y se muestra el listado por consola; en caso contrario, se notifica el error correspondiente[cite: 11].
+                        <strong>Gestión de contenido:</strong> Si la ruta es válida y existe, se obtiene el array mediante <code>listFiles()</code> y se muestra el listado por consola; en caso contrario, se notifica el error correspondiente.
                     </li>
                 </ul>
             </section>

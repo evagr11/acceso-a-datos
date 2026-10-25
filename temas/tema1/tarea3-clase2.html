@@ -23,25 +23,25 @@
             <section class="tarea-section">
                 <h2>Explicación del Ejercicio</h2>
                 <p>
-                    En esta tercera tarea nos enfocamos en consultar los metadatos e información detallada que el sistema operativo almacena sobre un fichero o directorio específico en Java[cite: 12].
+                    En esta tercera tarea nos enfocamos en consultar los metadatos e información detallada que el sistema operativo almacena sobre un fichero o directorio específico en Java.
                 </p>
 
                 <h3>Conceptos y métodos clave:</h3>
                 <ul>
                     <li>
-                        <strong>Creación del archivo físico (<code>createNewFile()</code>):</strong> Se crea un objeto <code>File</code> asociado a <code>"file.txt"</code> y dentro de un bloque <code>try-catch</code> se fuerza la creación del fichero en disco[cite: 12].
+                        <strong>Creación del archivo físico (<code>createNewFile()</code>):</strong> Se crea un objeto <code>File</code> asociado a <code>"file.txt"</code> y dentro de un bloque <code>try-catch</code> se fuerza la creación del fichero en disco.
                     </li>
                     <li>
-                        <strong>Consulta de nombres y rutas:</strong> Se utiliza <code>getName()</code> para obtener el nombre corto, <code>getPath()</code> para la ruta relativa y <code>getAbsolutePath()</code> para recuperar la ubicación completa dentro del sistema[cite: 12].
+                        <strong>Consulta de nombres y rutas:</strong> Se utiliza <code>getName()</code> para obtener el nombre corto, <code>getPath()</code> para la ruta relativa y <code>getAbsolutePath()</code> para recuperar la ubicación completa dentro del sistema.
                     </li>
                     <li>
-                        <strong>Comprobación de permisos y propiedades:</strong> Métodos como <code>canRead()</code> y <code>canWrite()</code> evalúan los permisos del sistema de archivos[cite: 12]. <code>length()</code> devuelve el tamaño en bytes, mientras que <code>isFile()</code> y <code>isDirectory()</code> determinan la naturaleza del elemento[cite: 12].
+                        <strong>Comprobación de permisos y propiedades:</strong> Métodos como <code>canRead()</code> y <code>canWrite()</code> evalúan los permisos del sistema de archivos. <code>length()</code> devuelve el tamaño en bytes, mientras que <code>isFile()</code> y <code>isDirectory()</code> determinan la naturaleza del elemento.
                     </li>
                     <li>
-                        <strong>Obtención del directorio padre:</strong> Se encadenan los métodos <code>getAbsoluteFile().getParentFile().getName()</code> para resolver de forma precisa el nombre del directorio contenedor[cite: 12].
+                        <strong>Obtención del directorio padre:</strong> Se encadenan los métodos <code>getAbsoluteFile().getParentFile().getName()</code> para resolver de forma precisa el nombre del directorio contenedor.
                     </li>
                     <li>
-                        <strong>Limpieza final (bloque <code>finally</code>):</strong> Para asegurar la limpieza de archivos temporales generados durante la prueba, se invoca <code>fichero.delete()</code> tras comprobar su existencia con <code>exists()</code>[cite: 12].
+                        <strong>Limpieza final (bloque <code>finally</code>):</strong> Para asegurar la limpieza de archivos temporales generados durante la prueba, se invoca <code>fichero.delete()</code> tras comprobar su existencia con <code>exists()</code>.
                     </li>
                 </ul>
             </section>

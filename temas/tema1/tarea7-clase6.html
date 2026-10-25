@@ -23,25 +23,25 @@
             <section class="tarea-section">
                 <h2>Explicación del Ejercicio</h2>
                 <p>
-                    En esta tarea se analiza la lectura básica de archivos mediante flujos de caracteres en Java utilizando directamente la clase <code>FileReader</code>[cite: 8]. El programa localiza su propio código fuente (<code>Clase6.java</code>), verifica su presencia y procesa el contenido lectura a lectura, carácter por carácter[cite: 8].
+                    En esta tarea se analiza la lectura básica de archivos mediante flujos de caracteres en Java utilizando directamente la clase <code>FileReader</code>. El programa localiza su propio código fuente (<code>Clase6.java</code>), verifica su presencia y procesa el contenido lectura a lectura, carácter por carácter.
                 </p>
 
                 <h3>Conceptos y métodos clave:</h3>
                 <ul>
                     <li>
-                        <strong>Comprobación de existencia (<code>exists()</code>):</strong> Se instancia el objeto <code>File</code> y se valida la existencia previa del archivo en disco antes de inicializar el flujo de lectura[cite: 8].
+                        <strong>Comprobación de existencia (<code>exists()</code>):</strong> Se instancia el objeto <code>File</code> y se valida la existencia previa del archivo en disco antes de inicializar el flujo de lectura.
                     </li>
                     <li>
-                        <strong>Flujo de entrada de caracteres (<code>FileReader</code>):</strong> Permite abrir un flujo directo de lectura sobre el archivo objetivo[cite: 8].
+                        <strong>Flujo de entrada de caracteres (<code>FileReader</code>):</strong> Permite abrir un flujo directo de lectura sobre el archivo objetivo.
                     </li>
                     <li>
-                        <strong>Lectura individual (<code>fr.read()</code>):</strong> El método <code>read()</code> devuelve el código entero del carácter leído en un rango de 0 a 65535, o el valor <code>-1</code> cuando alcanza el final del fichero (EOF)[cite: 8].
+                        <strong>Lectura individual (<code>fr.read()</code>):</strong> El método <code>read()</code> devuelve el código entero del carácter leído en un rango de 0 a 65535, o el valor <code>-1</code> cuando alcanza el final del fichero (EOF).
                     </li>
                     <li>
-                        <strong>Casteo explícito (<code>(char) caracter</code>):</strong> Dado que <code>read()</code> retorna un <code>int</code>, se convierte explícitamente a tipo <code>char</code> para reconstruir y mostrar el texto por consola[cite: 8].
+                        <strong>Casteo explícito (<code>(char) caracter</code>):</strong> Dado que <code>read()</code> retorna un <code>int</code>, se convierte explícitamente a tipo <code>char</code> para reconstruir y mostrar el texto por consola.
                     </li>
                     <li>
-                        <strong>Gestión automática de recursos (<code>try-with-resources</code>):</strong> Garantiza que el recurso del <code>FileReader</code> se cierre correctamente al finalizar el bloque de ejecución o ante una excepción de entrada/salida (<code>IOException</code>)[cite: 8].
+                        <strong>Gestión automática de recursos (<code>try-with-resources</code>):</strong> Garantiza que el recurso del <code>FileReader</code> se cierre correctamente al finalizar el bloque de ejecución o ante una excepción de entrada/salida (<code>IOException</code>).
                     </li>
                 </ul>
             </section>

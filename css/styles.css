@@ -312,6 +312,26 @@ a:hover {
   color: var(--text-muted);
 }
 
+/* Portada: cabecera y contenido de las tarjetas */
+.home { max-width: var(--max-width); margin: 0 auto; padding: 2rem 1rem; }
+.home-header { text-align: center; margin-bottom: 3rem; }
+.home .card-grid { align-items: start; }
+.home-header h1 { border: none; }
+.home-header p { font-size: 1.1rem; color: var(--text-muted); }
+
+.card { justify-content: flex-start; }
+.card > p { margin: 0.8rem 0; }
+.card h4 { font-size: 0.95rem; color: var(--text-main); margin-bottom: 0.5rem; }
+.card-divider { margin: 1rem 0; border: 0; border-top: 1px solid var(--border-color); }
+.card-list { padding-left: 1.2rem; font-size: 0.9rem; line-height: 1.7; }
+.card-list a { color: var(--accent-color); text-decoration: none; }
+.card-list a:hover { text-decoration: underline; }
+
+/* Tarjeta de tema futuro */
+.card-soon { opacity: 0.55; border-style: dashed; }
+.card-soon:hover { transform: none; border-color: var(--border-color); }
+.card-badge { font-size: 0.85rem; font-style: italic; }
+
 /* Footer */
 .footer {
   background-color: var(--surface-color);
