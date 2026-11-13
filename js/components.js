@@ -1,3 +1,7 @@
+/**
+ * Carga la barra de navegación y la barra lateral de `includes/` en cada página, con las rutas corregidas para que funcionen en local y en GitHub Pages. Al terminar la lateral lanza el evento `sidebar:loaded`.
+ * @file
+ */
 document.addEventListener("DOMContentLoaded", () => {
     // Calcula la ruta base relativa según la profundidad de la página actual.
     // Así funciona tanto en local (raíz) como en GitHub Pages (subcarpeta del repo),
@@ -7,6 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Convierte los enlaces absolutos (href="/...") del HTML inyectado
     // en enlaces relativos válidos desde la página actual.
+    /**
+     * Convierte los enlaces absolutos (`href="/..."`) en relativos a la página actual.
+     * @param {string} html HTML cargado.
+     * @returns {string} HTML con los enlaces corregidos.
+     */
     function fixLinks(html) {
         return html.replace(/href="\//g, `href="${basePath}`);
     }

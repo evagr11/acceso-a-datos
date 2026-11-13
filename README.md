@@ -4,6 +4,7 @@
 
 <div align="center">
   <a href="https://github.com/evagr11/acceso-a-datos" target="_blank"><img src="https://img.shields.io/badge/Ver_Código-0F172A?style=for-the-badge&logo=github&logoColor=white" alt="Ver Código"></a>
+  <a href="https://evagr11.github.io/acceso-a-datos/docs/" target="_blank"><img src="https://img.shields.io/badge/Documentación_(JSDoc)-0F172A?style=for-the-badge&logo=javascript&logoColor=white" alt="Documentación del código"></a>
   <a href="https://evagr11.github.io/acceso-a-datos/" target="_blank"><img src="https://img.shields.io/badge/Ver_Web-0284C7?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Ver Web"></a>
 </div>
 

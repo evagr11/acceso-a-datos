@@ -1,3 +1,7 @@
+/**
+ * Utilidades de las páginas de apuntes: botón de copiar en los bloques de código, desplazamiento suave y sección activa en la barra lateral.
+ * @file
+ */
 /* ==========================================================================
    LÓGICA GLOBAL Y UTILIDADES INTERACTIVAS (main.js)
    Garantiza interactividad general, copia de código y adaptabilidad UI
