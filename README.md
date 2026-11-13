@@ -12,7 +12,7 @@
   <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com/?font=JetBrains+Mono&size=18&duration=3500&pause=800&color=38BDF8&center=true&vCenter=true&width=600&lines=Ficheros+en+Java+con+java.io;19+tareas+resueltas+y+explicadas;C%C3%B3digo+interpretado+l%C3%ADnea+a+l%C3%ADnea;Publicado+como+web+en+GitHub+Pages" alt="Typing SVG" /></a>
 </div>
 
-# 🚀 Sobre el Proyecto
+# Sobre el Proyecto
 
 **Acceso a Datos** es mi cuaderno de la asignatura de 2º DAM convertido en web. En lugar de dejar los ejercicios sueltos en carpetas, cada tarea tiene su propia página con la explicación del ejercicio, los conceptos clave, el código fuente con resaltado de sintaxis y la salida por terminal, todo navegable desde un menú común.
 
@@ -21,14 +21,14 @@
   <p><em>Portada con los temas del curso</em></p>
 </div>
 
-✨ **Características principales:**
+**Características principales:**
 
-*   📖 **Apuntes teóricos:** Resumen del Tema 1 (manejo de ficheros): conceptos base, serialización, clasificación de ficheros y metadatos.
-*   💻 **19 tareas resueltas:** Desde listar un directorio con `File` hasta consultar, insertar y modificar registros con `RandomAccessFile`. Cada una explica el porqué del código, no solo el qué.
-*   🧩 **Código interpretado línea a línea:** Los ejemplos del libro de la asignatura desmenuzados instrucción por instrucción, con un menú lateral para saltar entre ellos.
-*   ⚠️ **Diccionario de excepciones:** Tabla con cada excepción que aparece (`IOException`, `EOFException`, `ClassNotFoundException`…), si es *checked* o *unchecked*, cuándo salta y en qué tareas se usa.
-*   🖥️ **Bloques de código estilo VS Code:** Ventanas con resaltado de sintaxis y botón de **Copiar** en cada fragmento.
-*   🧱 **Componentes reutilizables:** El navbar y los sidebars se escriben una sola vez en `includes/` y se inyectan con JavaScript en todas las páginas.
+*   **Apuntes teóricos:** Resumen del Tema 1 (manejo de ficheros): conceptos base, serialización, clasificación de ficheros y metadatos.
+*   **19 tareas resueltas:** Desde listar un directorio con `File` hasta consultar, insertar y modificar registros con `RandomAccessFile`. Cada una explica el porqué del código, no solo el qué.
+*   **Código interpretado línea a línea:** Los ejemplos del libro de la asignatura desmenuzados instrucción por instrucción, con un menú lateral para saltar entre ellos.
+*   **Diccionario de excepciones:** Tabla con cada excepción que aparece (`IOException`, `EOFException`, `ClassNotFoundException`…), si es *checked* o *unchecked*, cuándo salta y en qué tareas se usa.
+*   **Bloques de código estilo VS Code:** Ventanas con resaltado de sintaxis y botón de **Copiar** en cada fragmento.
+*   **Componentes reutilizables:** El navbar y los sidebars se escriben una sola vez en `includes/` y se inyectan con JavaScript en todas las páginas.
 
 ### Galería de Funcionalidades
 
@@ -40,19 +40,19 @@
 | <img src="assets/readme/excepciones.png" alt="Tabla del diccionario de excepciones" width="100%"/> | <img src="assets/readme/apuntes.png" alt="Apuntes teóricos del Tema 1" width="100%"/> |
 | *Qué significa cada excepción y dónde aparece.* | *Teoría del tema con su propio menú lateral.* |
 
-# 🧠 Contexto del Proyecto
+# Contexto del Proyecto
 
 Este repositorio forma parte de la asignatura **Acceso a Datos**, del segundo año del ciclo formativo de **Desarrollo de Aplicaciones Multiplataforma (DAM)** en el IES Donoso Cortés. Lo creé para repasar y entender de verdad lo que hago en clase: explicar cada tarea por escrito me obliga a saber qué hace cada línea, y tenerlo publicado como web me permite consultarlo desde cualquier sitio.
 
 Es la continuación de [ADD-NDT](https://github.com/evagr11/ADD-NDT), donde documenté la primera etapa de la asignatura.
 
-# 📚 Contenido por Temas
+# Contenido por Temas
 
 | Tema | Contenido | Estado |
 | :--- | :-------- | :----: |
-| **Tema 1: Manejo de Ficheros** | Apuntes · 19 tareas · Interpretación de código | ✅ |
-| **Diccionario de Excepciones** | Excepciones de todas las tareas y códigos | ✅ |
-| **Tema 2: Conectores y Bases de Datos (JDBC)** | — | 🔜 |
+| **Tema 1: Manejo de Ficheros** | Apuntes · 19 tareas · Interpretación de código | Hecho |
+| **Diccionario de Excepciones** | Excepciones de todas las tareas y códigos | Hecho |
+| **Tema 2: Conectores y Bases de Datos (JDBC)** | — | Pendiente |
 
 <details>
 <summary><strong>Ver las 19 tareas del Tema 1</strong></summary>
@@ -83,7 +83,7 @@ Es la continuación de [ADD-NDT](https://github.com/evagr11/ADD-NDT), donde docu
 
 </details>
 
-# 🛠️ Stack Tecnológico
+# Stack Tecnológico
 
 <div align="center">
   <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java">
@@ -107,7 +107,7 @@ Es la continuación de [ADD-NDT](https://github.com/evagr11/ADD-NDT), donde docu
 
 </div>
 
-# 📂 Estructura del Proyecto
+# Estructura del Proyecto
 
 ```bash
 acceso-a-datos/
@@ -137,9 +137,9 @@ acceso-a-datos/
 └── README.md
 ```
 
-> 💡 Cada página indica qué menú lateral necesita con el atributo `data-sidebar` (por ejemplo `data-sidebar="excepciones"`), y `components.js` calcula la ruta base para que los enlaces funcionen igual en local que en GitHub Pages.
+> Cada página indica qué menú lateral necesita con el atributo `data-sidebar` (por ejemplo `data-sidebar="excepciones"`), y `components.js` calcula la ruta base para que los enlaces funcionen igual en local que en GitHub Pages.
 
-# 🚀 Cómo Utilizar el Proyecto
+# Cómo Utilizar el Proyecto
 
 ### 1. Verlo online
 
